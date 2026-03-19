@@ -1,0 +1,170 @@
+Galaxy,t50_text,Tier,Confidence,MethodNum,MethodClass,ParentID,MethodTitle
+CamB,4.1 (+2.2/−1.7) Gyr,T2 (borderline T1/T2),MEDIUM-LOW,1,Broadband color → SPS,C21,B-V integrated color (Begum+2003) → BC03 τ-model → t₅₀
+D512-2,4.3 (+1.6/−1.4) Gyr,T2 (borderline T1/T2),MEDIUM-LOW,2,Hα / SFR-based,,V-I integrated color (Pildis+1997) → BC03 τ-model → t₅₀
+D564-8,5.2 (±1.5) Gyr,T2,MEDIUM,2,Hα / SFR-based,,V-I integrated color (Pildis+1997) → BC03 τ-model → t₅₀
+D631-7,3.6 (+1.6/−0.9) Gyr,T1,MEDIUM,3,Broadband color → SPS,C22,B-V integrated color (Begum+2008) → BC03 τ-model → t₅₀ [Direct spectroscopic metallicity]
+DDO 64,6.2 (±2) Gyr,T2,MEDIUM,4,Broadband color → SPS,C23,B-R integrated color (Schulte-Ladbeck+1998) → BC03 extended SFH → t₅₀ [Direct T_e metallicity]
+DDO 154,5.0 (±1.5) Gyr,T2,MEDIUM-LOW,5,Broadband color → SPS,C28,Dual-color (FUV-NUV + B-V) → BC03 continuous SFH → t₅₀ [Spectroscopic metallicity]
+DDO 161,5.0 (±1.5) Gyr,T2,MEDIUM-LOW,6,sSFR / mass-based,C61,sSFR (Karachentsev+2017) → BC03 mass-return bookkeeping → t₅₀ [Spectroscopic metallicity + resolved stellar constraint]
+DDO 168,7.7 (+0.7/−0.7) Gyr,T2 (borderline T3),MEDIUM,7,Compiled / SPARC-derived,C81,LITTLE THINGS b₁ birthrate parameter → τ-model → t₅₀
+ESO 444-G084,2.2 (+1.8/−1.0) Gyr,T1 (borderline),MEDIUM,8,Resolved CMD / SFH,,sSFR (Wang+2017 LVHIS) → constant SFH mass-return → t₅₀ [Direct metallicity + TRGB constraint]
+ESO 079-G014,7.2 Gyr,T2,MEDIUM,9,Compiled / SPARC-derived,C86,SPARC mass + compiled SFR → b-parameter → session anchor interpolation → t₅₀
+F561-1,5.2 Gyr (range 4.0–7.0),T2,MEDIUM,10,Broadband color → SPS,C19,"Multi-color ""SED Lock"" (de Blok+1995, 4 colors) → BC03 extended SFH → t₅₀ [Per-object strong-line metallicity]"
+F565-V2,~5 Gyr (range 4–7),T2,MEDIUM-LOW,10,Broadband color → SPS,C19,"Multi-color ""SED Lock"" (de Blok+1995, 4 colors) → BC03 extended SFH → t₅₀ [Per-object strong-line metallicity]"
+F568-V1 ⏳,5.7 (+1.1/−0.9) Gyr,T2,MEDIUM,10,Broadband color → SPS,C19,"Multi-color ""SED Lock"" (de Blok+1995, 4 colors) → BC03 extended SFH → t₅₀ [Per-object strong-line metallicity]"
+F574-2,6.0 (+1.0/−1.0) Gyr,T2,MEDIUM,10,Broadband color → SPS,C19,"Multi-color ""SED Lock"" (de Blok+1995, 4 colors) → BC03 extended SFH → t₅₀ [Per-object strong-line metallicity]"
+F563-1,5.6 Gyr (range 4.0–7.5),T2,MEDIUM,11,Broadband color → SPS,C20,V-I color (Pildis+1997) → explicit BC03 τ-model interpolation → t₅₀ [Direct T_e metallicity]
+F563-V1,6.5 Gyr,T2,MEDIUM,12,Broadband color → SPS,C39,B-V color (LSB photometry catalogs) → BC03 mapping with LSB metallicity correction → t₅₀
+F563-V2,6.0 Gyr,T2,MEDIUM,12,Broadband color → SPS,C39,B-V color (LSB photometry catalogs) → BC03 mapping with LSB metallicity correction → t₅₀
+F567-2,7.2 Gyr (range 5.8–8.8),T2 (borderline T3),MEDIUM-LOW,12,Broadband color → SPS,C39,B-V color (LSB photometry catalogs) → BC03 mapping with LSB metallicity correction → t₅₀
+F571-V1 🔄,5.5 (+1.3/−1.0) Gyr,T2,MEDIUM-LOW,12,Broadband color → SPS,C39,B-V color (LSB photometry catalogs) → BC03 mapping with LSB metallicity correction → t₅₀
+F583-1,5.0 Gyr (range 4.5–5.5),T2,MEDIUM,12,Broadband color → SPS,C39,B-V color (LSB photometry catalogs) → BC03 mapping with LSB metallicity correction → t₅₀
+F568-1,7.1 Gyr (range 6.2–8.6),T2 (borderline T3),MEDIUM-LOW,13,UV survey photometry,C41,sSFR (Boissier+2008 GALEX LSB survey) → extended SFH → t₅₀
+F568-3,7.6 ± 1.3 Gyr (range 6.3–8.9),T2 (borderline T3),MEDIUM-LOW,13,UV survey photometry,C41,sSFR (Boissier+2008 GALEX LSB survey) → extended SFH → t₅₀
+F571-8,8.0 Gyr,T2 (Inefficient LSB),MEDIUM,14,Compiled / SPARC-derived,C86,SPARC L[3.6] + z0MGS catalog SFR → sSFR → t₅₀ [Gas fraction override]
+F574-1,5.5 Gyr,T2 (Gas-Rich LSB),HIGH (tier) / MEDIUM (age),15,Broadband color → SPS,C40,Schombert+2011 color + birthrate parameter + gas fraction → t₅₀
+F579-V1,7.5 Gyr (range 6.5–8.5),T2 (borderline T3),MEDIUM-LOW,16,Broadband color → SPS,C31,BVRK per-object photometry (Bell+2000) → multi-color BC03 with B-K constraint → t₅₀
+IC 2574,11.7 Gyr (f₁₀ = 0.86),T3,HIGH,17,Resolved CMD / SFH,C01,ANGST resolved-star CMD → cumulative SFH fractions (Weisz+2011 Table 2) → t₅₀
+NGC 55,10.8 Gyr (f₁₀ = 0.63),T3,HIGH,17,Resolved CMD / SFH,C01,ANGST resolved-star CMD → cumulative SFH fractions (Weisz+2011 Table 2) → t₅₀
+NGC 2366,11.0 Gyr (f₁₀ = 0.67),T3,HIGH,17,Resolved CMD / SFH,C01,ANGST resolved-star CMD → cumulative SFH fractions (Weisz+2011 Table 2) → t₅₀
+NGC 3109,11.5 Gyr (f₁₀ = 0.79),T3,HIGH,17,Resolved CMD / SFH,C01,ANGST resolved-star CMD → cumulative SFH fractions (Weisz+2011 Table 2) → t₅₀
+NGC 3741,11.1 Gyr (f₁₀ = 0.68),T3,HIGH,17,Resolved CMD / SFH,C01,ANGST resolved-star CMD → cumulative SFH fractions (Weisz+2011 Table 2) → t₅₀
+NGC 4214,11.2 Gyr (f₁₀ = 0.71),T3,HIGH,17,Resolved CMD / SFH,C01,ANGST resolved-star CMD → cumulative SFH fractions (Weisz+2011 Table 2) → t₅₀
+IC4202,7.8 Gyr,T2 (Edge-On Massive Spiral),MEDIUM,18,Compiled / SPARC-derived,C86,SPARC mass + Hα activity confirmation → age by analog
+KK 251,3.6 Gyr (range 2.5–5.0),T2 (borderline T1),LOW,19,Broadband color → SPS,C22,Single B-V color (FIGGS/Begum+2008) → BC03 with assumed Z → t₅₀ [Quality Floor]
+NGC 0024,6.5 Gyr,T2 (Steady State),MEDIUM,20,Compiled / SPARC-derived,C86,SFR catalog presence (K&K 2013) + SPARC mass → unverified b → session anchor interpolation → t₅₀
+NGC 0100,7.5 Gyr,T2 (Inefficient Super-Thin),MEDIUM,21,IR / radio SFR,C80,SPARC mass + FIR SFR (Rossa & Dettmar 2003) → sSFR → b → anchor interpolation → t₅₀
+NGC 0247,7.4 Gyr,T2 (Winding Down),HIGH,22,Compiled / SPARC-derived,C86,SPARC mass + dual SFR (resolved stars + LVL catalog) → sSFR → b → anchor interpolation → t₅₀
+NGC 289,6.7 Gyr (range 5.5–7.5),T2,MEDIUM,23,Broadband color → SPS,C26,BVR integrated color (Kassin+2006 Table 3) → BC03 τ-model (near-solar Z) → t₅₀
+NGC 300,11.1 Gyr (range 10.3–11.9),T3,HIGH,24,Resolved CMD / SFH,C04,Resolved-star CMD → cumulative SFH figure read (Gogarten+2010 Figure 8) → t₅₀
+NGC 801,8.3 Gyr (range 8.0–9.5),T3 (borderline),MEDIUM,25,Hα / SFR-based,C58,Regional outer-disk color (Hunter+2013) + global sSFR → BC03 declining τ-model → t₅₀
+NGC 0891,7.8 Gyr,T2 (Oldest Active),MEDIUM,26,sSFR / mass-based,C73,3.6μm mass decomposition (Fraternali+2011) + tabulated SFR (Yoon+2021) → sSFR → Downsizing-adjusted anchor → t₅₀
+NGC 1003,6.0 Gyr,T2 (Steady State),MEDIUM,27,Compiled / SPARC-derived,C87,HALOGAS SFR + SPARC/WISE M★ → sSFR → b → Main Sequence anchor → t₅₀
+NGC 1090,8.0 Gyr,T2 (Inefficient Spiral),MEDIUM,28,IR / radio SFR,C79,SPARC mass + IRAS FIR SFR (CGS Ho+2011) → sSFR → b → anchor → t₅₀ [Hα tiebreaker]
+NGC 2403,10.8 Gyr,T3,HIGH (tier) / MEDIUM (value),29,Resolved CMD / SFH,C03,Resolved-star CMD → spatially-resolved median age profile (Williams+2013) → t₅₀
+NGC 2683,~10.0 Gyr,T3,HIGH,30,IFU / Spectroscopic,C15,GC spectroscopy (Proctor+2008) + boxy bulge morphology (Kuzio de Naray+2009) → proxy age → t₅₀
+NGC 2841,9.0 Gyr (range 8–11),T3,MEDIUM,31,sSFR / mass-based,C74,"HERACLES sSFR (Leroy+2013) + backbone colors (B-V, B-K) → sSFR-to-age mapping → t₅₀"
+NGC 2903,6.2 Gyr,T2 (Main Sequence),MEDIUM,32,Broadband color → SPS,C28,GALEX UV (FUV-NUV) + optical B-V (Gil de Paz+2007) → BC03 color mapping → t₅₀
+NGC 2915,8.5 Gyr,T3 (Ancient / Rejuvenated),MEDIUM,33,Hα / SFR-based,C82,BCD burst/backbone decomposition — disk color (Meurer+1994) + mass fractions (Tang+2022) → t₅₀
+NGC 2955,7.4 Gyr,T2 (Vigorous Super-Spiral),HIGH,34,Compiled / SPARC-derived,C86,SPARC mass + SFRS TIR (Ashby+2011) → sSFR → b → super-spiral anchor → t₅₀
+NGC 2976,10.0 Gyr,T3,MEDIUM,35,Resolved CMD / SFH,C02,Resolved-star CMD → cumulative SFH figure read (Williams+2010 ANGST IV Figure 10) → t₅₀ [Outside-In Quenching proxy]
+NGC 2998,6.8 Gyr,T2 (Massive Steady State),HIGH,36,Broadband color → SPS,C24,B-V color (McGaugh & Schombert 2014) + IRAS SFR (Seigar 2005) → b + Downsizing penalty → t₅₀
+NGC 3198,7.0 Gyr (range 5.5–7.5),T2 (Main Sequence),MEDIUM,37,sSFR / mass-based,C72,Pezzulli+2015 νM (specific mass growth rate) + GALEX UV + optical B-V → sSFR limit check → t₅₀
+NGC 3521,3.2 Gyr,T1 (Rejuvenated Spiral),MEDIUM,38,IFU / Spectroscopic,C11,IFU spectroscopic decomposition (Coccato+2018) → mass fractions → median age → t₅₀
+NGC 3726,5.5 Gyr,T2 (Vigorous Spiral),MEDIUM,39,Broadband color → SPS,C29,"B-V color (Conselice+2000 Table 2, RC3-based) → BC03 mapping → t₅₀"
+NGC 3769,6.0 Gyr (range 4.5–7.5),T2,MEDIUM,40,Broadband color → SPS,C25,"Tully+1996 Table 5 global multi-color (B-R, B-I, B-K') + Pak+2014 GALEX UV → BC03 → t₅₀"
+NGC 3877,7.3 Gyr (range 5.5–8.0),"T2 (upper bound, dust)",MEDIUM,41,Broadband color → SPS,C27,Bouquin+2018 GALEX UV + RC3 B-V + 2MASS B-K → BC03 → t₅₀ [Edge-on dust caveat]
+NGC 3893,6.5 Gyr (range 5.0–7.5),T2,MEDIUM,42,Broadband color → SPS,C25,"Tully+1996 Table 5 (B-R, B-K') + Hernández-Toledo+2001 Table 3 (B-V) + Bouquin+2018 UV → t₅₀ [Phantom data correction]"
+NGC 3917,7.0 Gyr,T2 (Winding Down),HIGH,43,Compiled / SPARC-derived,C86,"B-V (""Nonlocal Gravity"" galaxy table) + SPARC gas fraction + Hα (VS01) + Downsizing calibration → t₅₀"
+NGC 3949,5.4 Gyr (range 4.5–6.5),T2,MEDIUM,44,Broadband color → SPS,,"Kassin+2006 Table 3 integrated B, R, K photometry → B-R, B-K → BC03 → t₅₀"
+NGC 3953,8.8 Gyr (range 8.0–9.5),T3 (Valley Rule),MEDIUM-HIGH,45,Broadband color → SPS,C25,"Tully+1996 Table 5 global colors (B-R, B-K') → Valley Rule → t₅₀"
+NGC 3972,7.3 Gyr,"T2 (Winding Down, Cluster Twin)",HIGH,46,Compiled / SPARC-derived,C83,SPARC mass + Tucker+2024 SFR → b + VS01 Hα + morphology calibration (Cluster Twin) → t₅₀
+NGC 3992 (M109),7.2 Gyr (range 6.5–7.8),"T2 (Soft Valley, UV-confirmed)",MEDIUM-HIGH,47,Broadband color → SPS,C25,Kassin+2006 + Tully+1996 multi-color + NED UV → Soft Valley Protocol → t₅₀
+NGC 4010,6.0 Gyr (range 5.0–7.0),T2,MEDIUM,48,Broadband color → SPS,C25,"Tully+1996 Table 5 edge-on corrected colors (B-R, B-K') → Soft Valley Protocol → t₅₀ [Differential Correction pair]"
+NGC 4013,9.0 Gyr (range 8.0–10.0),T3,MEDIUM,48,Broadband color → SPS,C25,"Tully+1996 Table 5 edge-on corrected colors (B-R, B-K') → Soft Valley Protocol → t₅₀ [Differential Correction pair]"
+NGC 4051,7.6 Gyr,T2 (Terminal Active / Starving Spiral),HIGH,49,IR / radio SFR,,SPARC mass + IRAS fluxes (Chen et al. RAA) → SFR → b → t₅₀ [AGN cold dust diagnostic]
+NGC 4068,9.1 Gyr (range 8.5–10.5),T3 (Hidden T3 #8),MEDIUM,50,Resolved CMD / SFH,,McQuinn+2010b tabulated ⟨SFR⟩ + M★ → mass fraction → t₅₀ [Resolved CMD-derived]
+NGC 4085,6.6 Gyr (range 5.5–7.5),T2,MEDIUM,51,Broadband color → SPS,C25,"Tully+1996 Table 5 global colors (B-R, B-I, B-K') → Soft Valley Protocol → t₅₀ [Standard Ursa Major spirals]"
+NGC 4100,7.0 Gyr (range 6.0–8.0),T2,MEDIUM,51,Broadband color → SPS,C25,"Tully+1996 Table 5 global colors (B-R, B-I, B-K') → Soft Valley Protocol → t₅₀ [Standard Ursa Major spirals]"
+NGC 4157,8.4 Gyr (range 7.5–9.5),"T3 (borderline, R-K confirmed)",MEDIUM,51,Broadband color → SPS,C25,"Tully+1996 Table 5 global colors (B-R, B-I, B-K') → Soft Valley Protocol → t₅₀ [Standard Ursa Major spirals]"
+NGC 4183,5.2 Gyr (range 4.0–6.5),T2 (Blue Anchor),MEDIUM,51,Broadband color → SPS,C25,"Tully+1996 Table 5 global colors (B-R, B-I, B-K') → Soft Valley Protocol → t₅₀ [Standard Ursa Major spirals]"
+NGC 4088 (Arp 18),6.8 Gyr (range 5.5–7.5),T2,MEDIUM,52,Broadband color → SPS,C25,Tully+1996 Table 5 global colors + Bouquin+2018 GALEX UV → Soft Valley Protocol → t₅₀ [disk/μ₀ correction]
+NGC 4138,6.2 Gyr (range 5.0–7.5),T2,MEDIUM,53,IFU / Spectroscopic,,Spectroscopic component decomposition (Pizzella+2014) → mass-weighted t₅₀ [Counter-rotating disks]
+NGC 4217,9.0 Gyr (range 8.0–10.0),T3 (Backbone Tiebreaker),HIGH,54,Broadband color → SPS,C25,Tully+1996 Table 5 Valley Zone + Backbone Tiebreaker Protocol → t₅₀ [UV catalog conflict]
+NGC 4389,7.2 Gyr (range 6.0–8.0),T2 (Infrared Supremacy),MEDIUM+,55,IR / radio SFR,,Tully+1996 Table 5 + Bouquin+2018 GALEX UV → Infrared Supremacy Protocol → t₅₀ [B-K overrides B-R]
+NGC 4559,6.3 Gyr (range 5.0–7.5),T2 (Hyper-Active Control),HIGH,56,Broadband color → SPS,C28,Gil de Paz+2007 GALEX Atlas UV (Table 3) + optical B-V (Table 4) → BC03 SPS mapping → t₅₀
+NGC 5005,9.3 Gyr (range 8.5–10.0),T3 (Anemic Spiral),HIGH,57,sSFR / mass-based,C66,"Richards+2015 Table 1 (M★, SFR, gas) → sSFR → b → passive threshold → t₅₀ [Anemic Spiral]"
+NGC 5033,7.4 Gyr,T2 (Winding Down),MEDIUM,58,Parametric SED fitting,C17,"Noll+2009 CIGALE SED Table 2 (log M★, log SFR) → sSFR → b → anchor interpolation → t₅₀"
+NGC 5055 (M63),7.6 Gyr (range 7.0–8.0),"T2 (Late T2, UV Active)",MEDIUM-HIGH,59,UV survey photometry,C43,Muñoz-Mateos+2009 SINGS Table 6 UV/optical asymptotic photometry → FUV-NUV + NUV-r → t₅₀ [NUV-r < 4.0 = Active]
+NGC 5229 (UGC 8550),~5.0 Gyr,T2 (Steady Edge-On Builder),MEDIUM,60,Parametric SED fitting,C16,Smith+2022 Table 4 CIGALE sfh2exp SED parameters → f_burst = 0.20 → **Smith bracket crosses T2/T3 — TIER C FALLBACK** [First Smith et al. galaxy]
+NGC 5371,7.5 Gyr,T2 (Super-Spiral),MEDIUM,61,sSFR / mass-based,C75,SPARC/WISE M★ + Misiriotis+2004 SFR → sSFR → Mass Penalty (Downsizing) → t₅₀ [Super-Spiral]
+NGC 5585,5.0 Gyr (range 4.0–6.0),T2 (Hyper-Active),MEDIUM,62,Broadband color → SPS,C27,Bouquin+2018 GALEX asymptotic UV + RC3 integrated B-V → BC03 + Downsizing → t₅₀ [Chain-of-custody correction]
+NGC 5907,7.0 Gyr (range 6.0–8.0),T2 (Edge-On Dust Trap resolved),MEDIUM,63,Broadband color → SPS,C27,Bouquin+2018 GALEX asymptotic UV + RC3 extinction-corrected optical → Edge-On Dust Trap resolution → t₅₀
+NGC 5985 (UGC 09969),10.0 Gyr,T3 (Suppressed Super-Spiral),HIGH,64,sSFR / mass-based,C65,"Di Teodoro & Fraternali (2014) Table 2 (M_bary, M_HI, SFR) → sSFR → Seyfert correction → Downsizing → t₅₀ [Suppressed Super-Spiral]"
+NGC 6015,6.0 Gyr (range 5.0–7.0),T2 (Conservative Anchor),MEDIUM,65,Broadband color → SPS,C30,Hernández-Toledo+2007 Table 3 (observed BVRI) + Table 4 (corrected colors) → BC03 → t₅₀ [Conservative mass-weighted anchor]
+NGC 6195,7.9 Gyr,T2 (Fading Super-Spiral),HIGH,66,Compiled / SPARC-derived,C86,SPARC L[3.6] → M★ + IRAS FIR → SFR → sSFR + cold dust diagnostic → t₅₀ [Fading Super-Spiral]
+NGC 6503,6.5 Gyr,T2 (Field Spiral / Lonely Galaxy),MEDIUM-HIGH,67,sSFR / mass-based,C76,SPARC M★ + Strickland+2003 SFR_IR → distance-corrected sSFR → t₅₀ [Void isolation]
+NGC 6674,6.2 Gyr (range 5.0–7.0),T2 (Control),HIGH,68,Broadband color → SPS,C24,McGaugh & Schombert (2014) Table 1 B-V + J-Ks → BC03 → t₅₀ [SPARC source elevated]
+NGC 6789 (UGC 11425),9.0 Gyr,"T3 (BCD, duty cycle corrected)",MEDIUM-HIGH,69,Hα / SFR-based,,McQuinn+2010 Paper II Table 2 burst mass fraction + Lelli+2014 b-parameter (corrected for duty cycle) → t₅₀ [BCD Bi-Modal Trap #2]
+NGC 6946,6.0 Gyr (range 5.0–7.0),T2 (Fireworks Galaxy),MEDIUM,70,UV survey photometry,C43,"Muñoz-Mateos+2009 SINGS Table 5 UV → FUV-NUV + discrepant source resolution → t₅₀ [""Fireworks Galaxy""]"
+UGC 11914 (NGC 7217),10.5 Gyr,T3 (Bulge-Dominated Fossil),HIGH,71,IFU / Spectroscopic,C14,Fabricius+2014 structural decomposition + Sil'chenko+2011 component SSP ages + De Looze+2011 SFR → mass-weighted component reconstruction → t₅₀ [Bulge-Dominated Fossil]
+NGC 7331,7.0 Gyr (range 6.0–8.0),T2 (Late T2 / Blue Survival),HIGH,72,Broadband color → SPS,C28,Gil de Paz+2007 Table 3 GALEX UV asymptotic → FUV-NUV + Blue Survival Principle → t₅₀
+NGC 7793,6.5 Gyr (range 5.5–7.5),T2 (Hyper-Active Blue Limit),PLATINUM,73,Broadband color → SPS,C28,Gil de Paz+2007 Table 3 GALEX UV asymptotic + resolved RGB context (GHOSTS) → t₅₀ [Hyper-Active Blue Limit]
+NGC 7814,10.5 Gyr,T3 (Fossil Spiral),HIGH,74,sSFR / mass-based,C64,Wang+2016 Table 1 WISE 22μm SFR + 2MASS K-band M★ → sSFR → t₅₀ [Fossil Spiral]
+PGC 51017 (SBS 1415+437),2.2 Gyr,T1 (Late Bloomer BCD),MEDIUM,75,Resolved CMD / SFH,,Aloisi+2005 HST/ACS resolved CMD (RGB/AGB/TRGB) + SPARC distance consistency → t₅₀ [Late Bloomer BCD]
+UGC 00128,6.0 Gyr (range 5.0–7.0),T2 (LSB Control),HIGH,76,Broadband color → SPS,C19,de Blok+1995 Table 4 luminosity-weighted B-V + van der Hulst+1993 cross-check → BC03 → t₅₀ [LSB Transparency Principle]
+UGC 00191,5.0 Gyr,T2 (Active Steady Builder),MEDIUM,77,Hα / SFR-based,C47,Gavilán+2013 Table 3 B-V + SFR → b parameter + t_dbl → t₅₀ [Active Builder]
+UGC 00634 (DDO 7),6.0 Gyr (range 5.0–7.0),T2 (Blue Dwarf Trap resolved),HIGH,78,Resolved CMD / SFH,,van Zee (2001) Table 1 (B-V)₀ + Table 2 birthrate + §3.3.1 author SFH interpretation → t₅₀ [Blue Dwarf Trap — T1 REJECTED]
+UGC 00731 (DDO 9),3.7 Gyr,T1 (Delayed Assembly),MEDIUM,79,Hα / SFR-based,C54,SPARC L[3.6] → M★ + Kaisin & Karachentsev (2011) Hα SFR → assembly timescale + gas fraction override → t₅₀ [Delayed Assembly]
+UGC 00891,6.5 Gyr,T2 (Gas-Rich Steady State),HIGH,80,Broadband color → SPS,,Gavilán+2013 Table 3 B-V + SFR + SPARC mass → b/t_dbl T1/T2 discriminator → t₅₀ [Gas-Rich Steady State]
+UGC 01230,6.0 Gyr (range 5.5–7.0),T2 (LSB Stability Block),HIGH,81,Broadband color → SPS,C33,van der Hulst+1993 B-V + LSB Stability Block + Metallicity Trap correction → t₅₀
+UGC 01281,6.5 Gyr (range 5.5–7.5),T2 (Edge-On UV Rescue),MEDIUM,82,UV survey photometry,C42,Lee+2011 Table 2 GALEX UV asymptotic → FUV-NUV + Edge-On Optical Exclusion (Source Veto) → t₅₀ [UV Rescue]
+UGC 02023 (DDO 25),7.8 Gyr,T2 (Inefficient Gas-Rich Dwarf),HIGH,83,IR / radio SFR,,Gavilán+2013 Table 3 B-V + SFR + metallicity + SPARC mass → Metallicity Trap + Gas Veto → t₅₀ [Inefficient Gas-Rich Dwarf]
+NGC 1156 (UGC 02455),5.5 Gyr,T2 (Starburst Anchor),HIGH,84,Broadband color → SPS,C28,Gil de Paz+2007 GALEX UV + GALEX Table 4 optical + Kaisin+2011 Hα SFR + SPARC mass → Fuel Limit discriminator → t₅₀ [Starburst Anchor]
+NGC 1167 (UGC 02487),10.8 Gyr,T3 (Ancient S0 — OLDEST),HIGHEST,85,IFU / Spectroscopic,C13,"CALIFA IFU mass fractions by age bin (MNRAS 484, 4298 Table 3) + B/T decomposition + Downsizing → t₅₀ [Ancient S0 — OLDEST IN SAMPLE]"
+"UGC 02885 (""Rubin's Galaxy"")",9.0 Gyr (range 8.0–11.0),T3 (Quiescent Massive Spiral),PLATINUM,86,sSFR / mass-based,C67,Carvalho+2024 direct M★ + SFR → sSFR diagnostic → t₅₀ [sSFR Protocol Established]
+UGC 02916,7.4 Gyr,T2 (Stabilized Spiral),HIGH,87,sSFR / mass-based,C65,Di Teodoro & Fraternali (2014) Table A.1 IRAS SFR + SPARC mass → b + morphological stabilization → t₅₀ [Twin Convergence]
+"IC 356 (UGC 02953, Arp 213)",8.8 Gyr,T3 (Quenched Spiral),MEDIUM-HIGH,88,IR / radio SFR,C77,IRAS RBGS Table 1 far-IR fluxes + Cold Dust Diagnostic (S100/S60) + SPARC gas fraction → Cirrus Correction → t₅₀ [Dust-Bypassed Anchor]
+UGC 03205,7.9 Gyr,T2 (Fading Sab),HIGH,89,sSFR / mass-based,C65,Di Teodoro & Fraternali (2014) Table A.1 IRAS SFR + SPARC mass → b + Sab evolutionary track calibration → t₅₀ [Fading Sab]
+NGC 2273 (UGC 03546),7.9 Gyr,T2 (Nuclear Ring Sa),HIGH,90,IR / radio SFR,C77,IRAS RBGS Table 1 + AGN Warm Dust correction (S100/S60) + hidden H₂ via bar-driven phase transition → t₅₀ [AGN/Molecular Correction]
+UGC 03580,7.0 Gyr,T2 (Blue Early-Type),HIGH,91,sSFR / mass-based,C65,Di Teodoro & Fraternali (2014) Table A.1 SFR + Noordermeer B-R + Hameed Hα EW + SPARC → Scale Paradox → t₅₀ [Blue Early-Type]
+UGC 04278,6.0 Gyr (range 5.5–7.0),T2 (Transparent Edge-On),HIGH,92,Broadband color → SPS,C28,Gil de Paz+2007 GALEX Table 3 UV + Table 4 optical + Edge-On Bifurcation + LSB Stability Block → t₅₀ [Transparent Edge-On]
+UGC 04305 (Holmberg II),11.5 Gyr,T3 (Ancient dIrr),HIGH (tier) / MEDIUM (numeric),93,Resolved CMD / SFH,C01,Weisz+2011 ANGST Table 2 cumulative mass fractions → interpolated t₅₀ [Starburst Frosting on Ancient Cake]
+NGC 2552 (UGC 04325),5.7 Gyr,T2 (Post-Burst Dwarf),HIGH,94,Hα / SFR-based,C56,Hunter+2009 Table 2 (B-V)₀ + Table 3 (FUV-NUV)₀ + Table 6 dual SFR (FUV + Hα) → Post-Burst Diagnostic → t₅₀ [Post-Burst Anchor]
+UGC 4483,5.0 Gyr,T2 (Late Bloomer),HIGH,95,Resolved CMD / SFH,C10,"Sacchi+2021 ApJ 911, 62 resolved stellar populations (HB + RR Lyrae + regional t₅₀) + ANGST Table 2 cross-check → Onset vs Dominance → t₅₀ [Late Bloomer — NOT Zombie]"
+UGC 04499,5.4 Gyr,T2 (Simmering Dwarf),HIGH,96,Hα / SFR-based,C52,Lelli+Table B.4 SFR + EW(Hα) + τ_global/τ_local + SPARC mass → Local vs Global paradox → t₅₀ [Simmering Dwarf]
+UGC 05005,6.0 Gyr,T2 (LSB Stability Block),HIGH,97,Broadband color → SPS,C24,McGaugh & Schombert (2014) Table 1 B-V → LSB Stability Block + Metallicity Trap → t₅₀ [T1 REJECTED — Bluest Galaxy]
+NGC 2985 (UGC 05253),8.0 Gyr,T2 (Terminal Sab),HIGH,98,Hα / SFR-based,C53,Hameed & Devereux (2005) Table 3 Hα EW + L_FIR + SPARC mass → Hα Tiebreaker at T2/T3 boundary → t₅₀ [Terminal T2 Anchor]
+NGC 3104 (UGC 05414),5.8 Gyr,T2 (Steady State Dwarf),HIGH,99,IR / radio SFR,,van Zee (2001) Table 1 (B-V)₀ + Table 2 SFR + ⟨SFR⟩_past → dual birthrate validation → t₅₀ [Gold Standard Anchor]
+UGC 05716,5.3 Gyr,T2 (Extreme Simmering Dwarf),HIGH,100,Hα / SFR-based,C47,Gavilán+2013 Table 3 B-V + SFR + metallicity + SPARC mass → Sub-Critical Envelope + metallicity correction → t₅₀ [Extreme Simmering Anchor]
+UGC 05721 (NGC 3274),6.0 Gyr (range 5.5–6.5),T2 (Hyper-Active),HIGH,101,UV survey photometry,C44,Ashby+2013 SFRS Table 1 GALEX UV → FUV-NUV + Hyper-Active Mass Gradient → t₅₀ [Aggregator Veto]
+UGC 05750,5.7 Gyr,T2 (Vigorous LSB Dwarf),HIGH,102,UV survey photometry,C45,Wyder+2009 GALEX LSB Survey Tables 4-6 UV + SFR + SPARC mass → Twin Test with NGC 2552 → t₅₀ [LSB Twin Anchor]
+UGC 05764 (DDO 83),7.6 Gyr,T2 (Fading Dwarf),MEDIUM,103,Hα / SFR-based,C47,Gavilán+2013 Table 3 B-V + log M★ + SFR (Kennicutt+2008) → BC03 τ-model → t₅₀ [Fading Dwarf — Standard Verification]
+UGC 05829 (Spider Galaxy),4.5 Gyr,T2 (Youngest T2 — Burst Peak),HIGH,104,Hα / SFR-based,C47,Gavilán+2013 Table 3 SFR + (B-V) + SPARC mass → Broken Twin paradox → t₅₀ [YOUNGEST T2 — Burst Peak]
+DDO 87 (UGC 05918),7.3 Gyr,T2 (Declining Dwarf),HIGH,105,Hα / SFR-based,C55,Hunter & Elmegreen (2004) Table 3 SFR + log Σ_SFR + SPARC mass → Sub-Critical Density → t₅₀ [Declining Dwarf Anchor]
+NGC 3432 (UGC 05986),5.8 Gyr,T2 (Vigorous Edge-On),HIGH,106,Hα / SFR-based,C49,Kennicutt+2008 11HUGS Table 3 EW(Hα) + SPARC mass/gas → Edge-On Twin Test with NGC 3104 → t₅₀ [Edge-On Twin Anchor]
+UGC 05999,5.5 Gyr,T2 (Simmering LSB Dwarf),HIGH,107,Hα / SFR-based,,Wyder+2009 GALEX LSB Survey Tables 4-6 UV + SFR + SPARC mass → Fuel-Retention Gradient interpolation → t₅₀ [Simmering LSB]
+UGC 06399,7.6 Gyr,T2 (Fading LSB Dwarf),HIGH,108,UV survey photometry,C46,Magaña-Serrano+2020 Table 2 SFR(FUV) + Pak+2014 UV + SPARC mass → Kroupa-corrected b + Fading sequence → t₅₀ [Pro Override — Toy Model Trap]
+UGC 06446,4.6 Gyr,T2 (Vigorous Starburst Dwarf),HIGH,109,Hα / SFR-based,C48,James+2004 HaGS Table 3 SFR + Pak+2014 photometry + SPARC mass → IMF-corrected b → t₅₀ [IMF Trap + Distance Paradox]
+UGC 06614,8.0 Gyr (range 7.5–9.0),T3 (Boundary / Giant LSB),MEDIUM,110,Broadband color → SPS,C35,Sprayberry+1995 B-V + Rahman+2007 SFR(TIR) → inferred sSFR → Giant LSB Bifurcation → t₅₀ [GLSB distinct from dwarf LSB]
+UGC 06628,5.8 Gyr,T2 (Vigorous Face-On Dwarf),HIGH,111,Hα / SFR-based,,James+2004 HaGS Table 3 SFR + SPARC mass → IMF-corrected b + Iso-Age Diagonal → t₅₀ [Face-On Precision]
+UGC 06667,5.7 Gyr,T2 (Vigorous Edge-On),HIGH,112,sSFR / mass-based,C85,Rahvar+2014 Table II M_B + SPARC M★ → M★/L_B override (no direct SFR) + Fuel Retention Gradient → t₅₀ [Mass-to-Light Bypass]
+NGC 3900 (UGC 06786),8.6 Gyr,T3 (Fossil S0),HIGH,113,sSFR / mass-based,C65,Di Teodoro & Fraternali (2014) Table A.1 SFR + Noordermeer spectroscopy (Hα absorption) + bulge decomposition (Lb/Ld) → Morphological Quenching → t₅₀ [Fossil S0]
+NGC 3898 (UGC 06787),9.0 Gyr (range 8.5–10.0),T3 (Early-Type Spiral),HIGH,114,Broadband color → SPS,C34,"Noordermeer & van der Hulst (2007) MNRAS 376, 1480 surface photometry B-R → Optical Lock → t₅₀ [Relative Terminology Trap — Astra T2 REJECTED]"
+UGC 06818,— (pre-approved 7.0 Gyr),DATA GAP,—,115,IR / radio SFR,,DATA GAP — UGC 06818 (PGC 37550)
+UGC 06917,6.0 Gyr,T2 (LSB Stability Block),HIGH,116,Broadband color → SPS,C38,Moffat & Rahvar (2013) Table 2 + Zonoozi & Haghi (2010) Table 1 B-V → LSB Stability Block → t₅₀ [Dual-source UMa photometry]
+UGC 06923,5.4 Gyr,T2 (Late-Stage Starburst),HIGH,117,IR / radio SFR,,James+2004 HaGS Table 3 SFR + Sanders (1998) B-V + SPARC mass → IMF-corrected b + Iso-Age Diagonal → t₅₀ [Late-Stage Starburst]
+UGC 06930,— (REJECTED),POISON DATA,—,118,Broadband color → SPS,,REJECTED — UGC 06930 (Poison Data / Aperture Fallacy)
+UGC 06973 (IC 750),8.2 Gyr,T2 (Terminal Circumnuclear Burn),HIGH,119,Hα / SFR-based,C48,James+2004 HaGS Table 3 SFR + Sanders (1998) B-V + SPARC mass → distance + IMF corrected b → Quenching Hierarchy → t₅₀ [Terminal Circumnuclear Burn]
+UGC 06983,5.1 Gyr,T2 (Bar-Driven LSB Burst),HIGH,120,IR / radio SFR,C78,Wiegert PhD Table 6.9 radio SFR (M>5 M☉) + Tully+1996 Table 5 B-R + SPARC mass → Radio IMF Scaling (×3.44) → t₅₀ [Bar-Driven LSB Burst]
+UGC 07089,5.9 Gyr,T2 (Steady-State Edge-On),HIGH,121,IR / radio SFR,C78,Wiegert+2013 Table 9 radio SFR (M>5 M☉) + Tully+1996 B-R + SPARC mass → Radio IMF Scaling (×3.44) + Bivariate Interpolation → t₅₀ [Edge-On Steady-State]
+UGC 07125,"— (T2 confirmed, age uncalibrated)",DATA GAP,—,122,IR / radio SFR,,DATA GAP — UGC 07125 (Twin Degeneracy)
+UGC 07151 (NGC 4144),6.0 Gyr,T2,MEDIUM,123,sSFR / mass-based,C70,Liu+2024 Table D2 log M★ + log SFR(Hα/FUV) → sSFR → BC03 → t₅₀ [Phoenix Protocol — Identity Contamination Recovery]
+UGC 07232 (NGC 4190),5.0 Gyr,T2 (Active),MEDIUM,124,Resolved CMD / SFH,,"McQuinn+2015 MNRAS 450, 3886, Table 2 resolved CMD burst fraction + b-parameter back-calculation → t₅₀ [Tier 1 data — HST/ACS CMD]"
+UGC 07261 (NGC 4204),4.8 Gyr,T2 (Face-On Barred Starburst),HIGH,125,IR / radio SFR,,SFRS Table 2 UV+IR SFR + HaGS Table 3 (overcorrection demonstrated) + SPARC mass → Multiwavelength Harmony → t₅₀ [Face-On Barred Starburst]
+UGC 07323 (NGC 4242),6.4 Gyr,T2 (Steady-State Disk),HIGH,126,Hα / SFR-based,C59,Botticella+Table 2 UV SFR + HaGS HÎ± + GHASP B-V + SPARC mass → Stochastic Flicker (UV > Hα) + Fuel Retention → t₅₀ [Steady-State Disk]
+UGC 07399 (NGC 4288),5.4 Gyr,T2 (Active),HIGH,127,sSFR / mass-based,C70,Liu+2024 Table D2 log M★ + log SFR(Hα/FUV) → sSFR + b-parameter → t₅₀ [Clean Verification — M106 Group]
+UGC 07524 (NGC 4395),4.7 Gyr,T2 (Extreme Boundary Starburst),HIGH,128,Hα / SFR-based,C60,Nandi+2023 Table 7 multi-tracer SFR + GALEX Atlas FUV/NUV + O'Neill+2006 nuclear UV + SPARC mass → Stochastic Flicker + Structural Veto → t₅₀ [Extreme Boundary — AGN Hypothesis Retracted]
+UGC 07559 (DDO 126),4.9 Gyr,T2 (Vigorous Sub-Critical Dwarf),HIGH,129,IR / radio SFR,,Hunter+2010 Table 6 SFR(FUV) + Table 2 (B-V)₀ + SPARC mass → Double Error Correction + Bivariate Interpolation → t₅₀ [Column Misread + Gas Denominator Trap]
+UGC 07577 (DDO 125),6.0 Gyr,T2 (LSB Stability Block),HIGH,130,Broadband color → SPS,C22,FIGGS (2008MNRAS.383..809B) + Makarova (1999) dual-source B-V → LSB Stability Block → t₅₀ [Twin Anchor Standardization]
+UGC 07603 (NGC 4455),5.7 Gyr,T2 (Obscured Steady-State),HIGH,131,Hα / SFR-based,C49,Kennicutt+2008 11HUGS Table 3 EW(Hα) → extinction-proof b + SPARC mass/gas → Fuel Retention Gradient → t₅₀ [Multi-Wavelength Extinction Trap]
+UGC 07608,6.0 Gyr,T2 (LSB Stability Block / Grid Cap),HIGH,132,Parametric SED fitting,C18,Grasha+2013 Table 2 SED fit (constant-SF duration) → Grid Cap / Ceiling Veto → LSB Stability Block → t₅₀ [Censored Datum]
+UGC 07690,6.0 Gyr,T2 (LSB Stability Block / Interpolation),HIGH,133,IR / radio SFR,,Dunn (2015) Table 6 UBVR at R₂₅ → B-V = 0.38±0.05 → Interpolation Principle → LSB Stability Block → t₅₀
+UGC 07866 (IC 3687 / DDO 141),[NULL],**DATA GAP**,NONE,134,Resolved CMD / SFH,,"Smith+2022 MNRAS 515, 3270, Table 4 SED parameters (f_burst, τ_burst, t_burst) → **DATA GAP** — Protocol 18 + Tier C compromised by burst contamination"
+UGC 08286 (NGC 5023),5.6 Gyr,T2 (Vigorous Edge-On Disk),HIGH,135,sSFR / mass-based,C62,LVGDB FUV SFR (Karachentsev & Kaisina 2013) + SPARC mass → Kroupa correction (÷1.59) + Scale-Height Extinction Differential → Bivariate Interpolation → t₅₀ [Edge-On FUV Baseline]
+UGC 08490 (NGC 5204),5.0 Gyr,T2 (Mass-Sequence),MEDIUM,136,Broadband color → SPS,C32,Larsen & Richtler (2000) Table 2 RC3 B-V = 0.41 → Mass-Sequence Alignment (Sm) → t₅₀ [Excel Error Corrected]
+UGC 08699 (NGC 5289),8.8 Gyr,"T3 (Morphology-Anchored, upper limit)",MEDIUM-LOW,137,Broadband color → SPS,C34,"Noordermeer & van der Hulst (2007) MNRAS 376, 1480, Table A3 B-R = 1.31±0.26 + S4G morphology (S0/a) → Morphology-Anchored T3 → t₅₀ [Dust Trap — Upper Limit]"
+UGC 08837 (Holmberg IV),5.0 Gyr,T2 (Sm/IBm Cohort),MEDIUM,138,Broadband color → SPS,C36,"de los Reyes & Kennicutt (2019) ApJ 872, Table 1 RC3 B-V = 0.43±0.04 → False Precision + Interpolation Principle → t₅₀ [Sm/IBm Cohort Standardization]"
+UGC 09037,5.0 Gyr,T2 (Active T2 Floor / HIghMass),MEDIUM,139,sSFR / mass-based,C68,Hallenbeck+2016 Table 1 log M★ + log SFR → sSFR → b-parameter gradient → t₅₀ [HIghMass — Data Correction + Birthrate Inversion Fix]
+UGC 09133 (NGC 5533),9.3 Gyr,T3 (Anchor),MEDIUM-HIGH,140,Broadband color → SPS,C34,Noordermeer & van der Hulst (2007) Table A3 B-R = 1.48±0.13 + moderate inclination (53°) + hot disk dynamics → T3 Anchor → t₅₀ [Forensic Distinction from UGC 08699]
+UGC 09992,6.0 Gyr,T2 (Stability Block),MEDIUM-HIGH,141,IR / radio SFR,,"Gavilán+2013 MNRAS 434, Table 3 B-V + SFR/M★ → sSFR → b-parameter → Local Maximum Avoidance → Stability Block → t₅₀"
+UGC 10310 (DDO 204 / Arp 2),5.0 Gyr,T2 (Active Cohort),MEDIUM-HIGH,142,IR / radio SFR,,"van Zee (2001) AJ 121, Table 1 (B-V)₀ + (U-B)₀ → Second Axis Override (U-B Youth Flag) → Active T2 Cohort → t₅₀"
+UGC 11455,10.3 Gyr,T3 (Massive Depleted Disk),MEDIUM,143,sSFR / mass-based,C71,MANGROVE/GLADE catalog log M★ + log SFR + SPARC gas fraction → τ-model (massive spiral) → t₅₀ [Cosmic Downsizing Anchor]
+UGC 11557,7.8 Gyr,T2 (Mature Steady Builder),MEDIUM,144,Hα / SFR-based,C52,Lelli+2013 Table B.4 Hα SFR (Salpeter→Kroupa ×0.68) + SPARC M★ → b-parameter + τ-model → T2/T3 Boundary Anchor → t₅₀
+UGC 11820,6.0 Gyr,T2 (Stability Block),MEDIUM-HIGH,145,Hα / SFR-based,C51,"van Zee & Haynes (2006) ApJ 636, Table 6 (B-V)₀ = 0.37±0.02 → Twin Anchor (UGC 09992) → Stability Block → t₅₀ [Blue Inversion Physics]"
+UGC 12506,6.0 Gyr,T2 (Stability Block / High Spin),MEDIUM-HIGH,146,sSFR / mass-based,C69,Hallenbeck+2014 HIghMass Table 1 log M★ + log SFR (column corrected) → sSFR → b → False Precision Twin (UGC 09992) → Stability Block → t₅₀ [High Spin Delayed Assembly]
+UGC 12632,7.0 Gyr,T2 (Steady Builder),HIGH,147,Hα / SFR-based,C52,"Lelli+2013 Table B.4 Hα SFR (Salpeter→Kroupa ×0.68, distance-harmonized) + SPARC M★/gas → b ≈ 0.97 → Constant-SFH benchmark → t₅₀ [Steady-State Archetype]"
+UGC 12732,7.0 Gyr,T2 (Steady Builder),HIGH,148,Hα / SFR-based,C52,Lelli+2014 Table B.4 Hα SFR (Salpeter→Kroupa ×0.68) + SPARC M★/gas → b ≈ 0.96 → Constant-SFH → t₅₀ [Metal-Poor EW Calibration Anchor — Galaxy #100]
+UGCA 281 (I Zw 36 / Mrk 209),[NULL],DATA GAP,NONE,149,Resolved CMD / SFH,,UGCA 281 (I Zw 36 / Mrk 209 / Haro 29) — DATA GAP [Reconciliation Exemplar — Prior T3/9.0 RESCINDED]
+UGCA 442,[NULL],**DATA GAP**,NONE,150,Resolved CMD / SFH,,"Smith+2022 Table 4 f_burst=0.41, τ_burst=100, t_burst=504, t₉₀=369 → **DATA GAP** [Both inference methods retired — Protocol 18]"
+UGCA 444 (WLM / DDO 221),5.1 Gyr,T2 (Active / Intermediate),HIGH,151,Resolved CMD / SFH,C05,"Albers+2019 MNRAS 490, Table 2 — Resolved CMD SFH (Tier A Gold Standard) → tabulated log(τ₅₀) = 9.71 → t₅₀ = 5.1 Gyr [WLM — Isolated Local Group dIrr]"

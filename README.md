@@ -84,6 +84,8 @@ These numbers match the paper's Table 1 (median chi-squared 1.312, MOND 1.141) t
 | `verify_hermes.py` | Main verification script — reads SPARC data, computes Hermes + MOND fits |
 | `hermes_gate_phi.py` | Standalone gate function phi(R), verified to floating-point precision |
 | `ages_133.csv` | Age table for 133 galaxies (galaxy name, t50 in Gyr, g98 in (km/s)^2/kpc) |
+| `docs/supp_methods_age_derivation_structured.md` | Supplementary methods: full age derivation procedures for all 133 galaxies |
+| `docs/galaxy_age_method_index.csv` | Per-galaxy index of age derivation method, tier, confidence, and source citations |
 
 ## How It Works
 
