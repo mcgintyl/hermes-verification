@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 You need two things:
 
-1. **SPARC rotation curve files** — the `Rotmod_LTG` folder from the [SPARC database](http://astroweb.cwru.edu/SPARC/). Each file is `<GalaxyName>_rotmod.dat` with columns: R (kpc), Vobs, errV, Vgas, Vdisk, Vbul (all km/s), SBdisk, SBbul.
+1. **SPARC rotation curve files** — the `Rotmod_LTG` folder from the [SPARC database](https://zenodo.org/records/16284118) ([![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16284118.svg)](https://doi.org/10.5281/zenodo.16284118)). Each file is `<GalaxyName>_rotmod.dat` with columns: R (kpc), Vobs, errV, Vgas, Vdisk, Vbul (all km/s), SBdisk, SBbul.
 
 2. **Galaxy age table** — included as `ages_133.csv` in this repo. Contains the 133 galaxies with verified stellar ages from 77 published sources. Columns: `galaxy`, `t50_gyr`, `g98`.
 
@@ -147,6 +147,14 @@ If you use this tool, please cite the original paper:
 ```
 McGinty, L. A. (2026). The Hermes Equation: Galaxy Rotation Curves from Age
 with No Free Constants.
+```
+
+The SPARC rotation curve data used in this work is archived on Zenodo:
+
+```
+Lelli, F., McGaugh, S. S., & Schombert, J. M. (2016). SPARC: Mass Models
+for 175 Disk Galaxies with Spitzer Photometry and Accurate Rotation Curves.
+doi:10.5281/zenodo.16284118
 ```
 
 ## License
