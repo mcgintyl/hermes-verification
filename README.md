@@ -86,6 +86,7 @@ These numbers match the paper's Table 1 (median chi-squared 1.312, MOND 1.141) t
 | `ages_133.csv` | Age table for 133 galaxies (galaxy name, t50 in Gyr, g98 in (km/s)^2/kpc) |
 | `docs/supp_methods_age_derivation_structured.md` | Supplementary methods: full age derivation procedures for all 133 galaxies |
 | `docs/galaxy_age_method_index.csv` | Per-galaxy index of age derivation method, tier, confidence, and source citations |
+| `verify_ages.py` | Age derivation verification — re-derives t₅₀ via three documented conversion paths |
 
 ## How It Works
 
