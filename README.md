@@ -1,12 +1,29 @@
-# Hermes Equation Verification Tool
+# Hermes Verification Repository
 
-Independent verification of the per-galaxy rotation curve fits from:
+Independent verification tools for two papers by McGinty (2026):
 
-> McGinty, L. A. (2026). *The Hermes Equation: Galaxy Rotation Curves from Age with No Free Constants.*
+| Folder | Paper | What it verifies |
+|--------|-------|-----------------|
+| `paper1/` | *The Hermes Equation: Galaxy Rotation Curves from Age with No Free Constants* | Rotation curve fits + age derivations for 133 galaxies |
+| `paper2/` | *Testing Gravity at Encounter Speed: Geometric Prediction of Earth Flyby Anomalies* | Geometric scores + sign predictions for 12 Earth flybys |
+| `docs/` | Supplementary materials | Age derivation audit trail (151 methods, 77 sources) |
 
-This tool reads SPARC rotation curve files and a galaxy age table, then computes reduced chi-squared scores for both the **Hermes equation** and **MOND** (simple interpolation function), matching the published results.
+## Requirements
 
-## The Hermes Equation
+- Python 3.8+
+- numpy >= 1.20 (Paper 1 only)
+- scipy >= 1.7 (Paper 1 only)
+- Paper 2 uses only the standard library (math, csv)
+
+```
+pip install -r requirements.txt
+```
+
+---
+
+## Paper 1 — The Hermes Equation (`paper1/`)
+
+### The Equation
 
 The model predicts galaxy rotation curves from two inputs per galaxy: stellar age and peak baryonic acceleration.
 
@@ -22,44 +39,21 @@ The model predicts galaxy rotation curves from two inputs per galaxy: stellar ag
 
     g_model(R) = g_bar(R) * [1 + beta * phi(R)]
 
-- `g_bar(R)` — Newtonian gravity from visible mass (disk + bulge + gas)
-- `phi(R)` — gate function in [0, 1], built from the baryonic acceleration profile
+The gate function phi(R) opens in low-acceleration outer regions and closes in dense inner regions. All gate parameters are globally fixed — no per-galaxy tuning.
 
-The gate opens in low-acceleration outer regions and closes in the dense inner regions. All gate parameters are globally fixed — no per-galaxy tuning.
+### Data
 
-## Requirements
+1. **SPARC rotation curve files** — the `Rotmod_LTG` folder from the [SPARC database](https://zenodo.org/records/16284118) ([![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16284118.svg)](https://doi.org/10.5281/zenodo.16284118))
+2. **Galaxy age table** — included as `paper1/ages_133.csv`
 
-- Python 3.8+
-- numpy >= 1.20
-- scipy >= 1.7
-
-Install:
+### Rotation Curve Verification
 
 ```
-pip install -r requirements.txt
+python paper1/verify_hermes.py --sparc /path/to/Rotmod_LTG --ages paper1/ages_133.csv
+python paper1/verify_hermes.py --sparc /path/to/Rotmod_LTG --ages paper1/ages_133.csv --csv results.csv
 ```
 
-## Data
-
-You need two things:
-
-1. **SPARC rotation curve files** — the `Rotmod_LTG` folder from the [SPARC database](https://zenodo.org/records/16284118) ([![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16284118.svg)](https://doi.org/10.5281/zenodo.16284118)). Each file is `<GalaxyName>_rotmod.dat` with columns: R (kpc), Vobs, errV, Vgas, Vdisk, Vbul (all km/s), SBdisk, SBbul.
-
-2. **Galaxy age table** — included as `ages_133.csv` in this repo. Contains the 133 galaxies with verified stellar ages from 77 published sources. Columns: `galaxy`, `t50_gyr`, `g98`.
-
-## Usage
-
-```
-python verify_hermes.py --sparc /path/to/Rotmod_LTG --ages ages_133.csv
-```
-
-Optional: write results to CSV:
-
-```
-python verify_hermes.py --sparc /path/to/Rotmod_LTG --ages ages_133.csv --csv results.csv
-```
-
-## Expected Output
+**Expected output:**
 
 ```
 Hermes Equation Verification  (133 galaxies, 0 missing)
@@ -75,28 +69,11 @@ Hermes wins                     68 / 133 (51.1%)
 Below chi2=5.0                  Hermes: 112 (84.2%)   MOND: 95 (71.4%)
 ```
 
-These numbers match the paper's Table 1 (median chi-squared 1.312, MOND 1.141) to within minor floating-point differences in the gate's Savitzky-Golay smoothing step.
+### Age Derivation Verification
 
-## File Overview
-
-| File | Description |
-|---|---|
-| `verify_hermes.py` | Main verification script — reads SPARC data, computes Hermes + MOND fits |
-| `hermes_gate_phi.py` | Standalone gate function phi(R), verified to floating-point precision |
-| `ages_133.csv` | Age table for 133 galaxies (galaxy name, t50 in Gyr, g98 in (km/s)^2/kpc) |
-| `docs/supp_methods_age_derivation_structured.md` | Supplementary methods: full age derivation procedures for all 133 galaxies |
-| `docs/galaxy_age_method_index.csv` | Per-galaxy index of age derivation method, tier, confidence, and source citations |
-| `verify_ages.py` | Age derivation verification — re-derives t₅₀ via three documented conversion paths |
-
-## Age Derivation Verification
-
-`verify_ages.py` independently re-derives the stellar half-mass age (t₅₀) for each galaxy using the three conversion paths documented in the supplementary methods audit. Every intermediate step is printed so an auditor can inspect the full chain from published measurement to final t₅₀.
-
-### The Three Conversion Paths
+`paper1/verify_ages.py` independently re-derives the stellar half-mass age (t₅₀) for each galaxy using three documented conversion paths. Every intermediate step is printed for auditing.
 
 **Path 1 — Cumulative SFH Interpolation** (Resolved CMD / SFH)
-
-For galaxies with resolved star-formation histories (e.g. ANGST Table 2), t₅₀ is the lookback time where the cumulative formed-mass fraction crosses 0.5:
 
     t50 = t_young + (F_young - 0.5) / (F_young - F_old) * (t_old - t_young)
 
@@ -104,52 +81,100 @@ For galaxies with resolved star-formation histories (e.g. ANGST Table 2), t₅�
 
 **Path 2 — sSFR / Birthrate Parameter** (Hα, UV, IR/radio SFR)
 
-Given a specific star-formation rate (sSFR = SFR / M★), compute the birthrate parameter:
-
     b = sSFR × T_Hubble        (T_Hubble = 13.8 Gyr)
 
-Then map b → t₅₀ using the audit's empirical calibration from 34 anchor galaxies. The exponential τ-model inversion is also shown for reference. 30 galaxies verified — **87% match**.
+Then map b → t₅₀ using the audit's empirical calibration from 34 anchor galaxies. 30 galaxies verified — **87% match**.
 
 **Path 3 — Broadband Color → SPS Lookup** (B-V, B-R, FUV-NUV)
 
-Interpolate observed colors against calibration tables built from the audit's documented BC03 conversions (25 B-V anchors, 8 B-R anchors, 9 FUV-NUV anchors). Protocol overrides (LSB Stability Block, Metallicity Trap, Edge-On Dust Trap) are encoded in the lookup values. 29 galaxies verified — **90% match**.
+Interpolate observed colors against calibration tables built from the audit's documented BC03 conversions. 29 galaxies verified — **90% match**.
 
-### Overall Result
+**Overall: 91% match** (73/80 verified within ±0.5 Gyr). Remaining mismatches trace to documented multi-step protocol overrides.
 
-**91% of computationally verified galaxies match their published t₅₀ within ±0.5 Gyr** (73 / 80). The remaining mismatches trace to documented multi-step protocol overrides (Cosmic Downsizing penalties, composite color frosting traps, edge-on dust corrections) that require the full audit logic.
+```
+python paper1/verify_ages.py                          # all 137 galaxies, full steps
+python paper1/verify_ages.py --quiet                  # compact table only
+python paper1/verify_ages.py --galaxy "NGC 55"        # single galaxy with steps
+python paper1/verify_ages.py --path 1                 # only cumulative SFH path
+python paper1/verify_ages.py --csv age_results.csv    # write results to CSV
+```
+
+### Paper 1 Files
+
+| File | Description |
+|---|---|
+| `paper1/verify_hermes.py` | Rotation curve verification — reads SPARC data, computes Hermes + MOND fits |
+| `paper1/verify_ages.py` | Age derivation verification — re-derives t₅₀ via three conversion paths |
+| `paper1/hermes_gate_phi.py` | Standalone gate function phi(R), verified to floating-point precision |
+| `paper1/ages_133.csv` | Age table for 133 galaxies (galaxy, t50 in Gyr, g98 in (km/s)^2/kpc) |
+
+---
+
+## Paper 2 — Flyby Anomaly Geometric Score (`paper2/`)
+
+### The Score
+
+A geometric scoring function classifies all 12 documented Earth flybys (1990–2013) using three fixed parameters and no mission-specific tuning:
+
+    S = |Δcos δ| × exp(−h/H) × (V₀/V∞)^p
+
+**Fixed parameters:**
+- `H = 2500 km` — altitude scale height
+- `V₀ = 10 km/s` — reference velocity
+- `p = 1.0` — velocity exponent
+
+**Inputs per flyby:**
+- `δ_in, δ_out` — incoming/outgoing asymptotic declinations (degrees)
+- `h` — perigee altitude above Earth's surface (km)
+- `V∞` — hyperbolic excess speed (km/s)
+
+**Sign prediction:** The sign of `cos(δ_in) − cos(δ_out)` predicts the direction of the anomaly (speed increase vs decrease).
+
+### Results
+
+- **11/12 flybys correctly classified** (anomaly vs null). Every confirmed null is predicted null; every confirmed anomaly is predicted anomaly.
+- **5/5 sign predictions correct** for all detected anomalies (including low-confidence Cassini).
+- **Juno paradox:** Juno scores higher than Galileo I but showed no anomaly — explained by the GRACE absorption hypothesis (see paper Section 5).
+- **All 12 computed scores match published values** to floating-point precision.
 
 ### Usage
 
 ```
-python verify_ages.py                          # all 137 galaxies, full steps
-python verify_ages.py --quiet                  # compact table only
-python verify_ages.py --galaxy "NGC 55"        # single galaxy with steps
-python verify_ages.py --path 1                 # only cumulative SFH path
-python verify_ages.py --path 2                 # only sSFR / birthrate path
-python verify_ages.py --path 3                 # only broadband color path
-python verify_ages.py --csv age_results.csv    # write results to CSV
+python paper2/verify_flyby.py                      # full verification, all 12 flybys
+python paper2/verify_flyby.py --mission NEAR        # single mission with detailed steps
+python paper2/verify_flyby.py --p 0.5               # sensitivity check with p=0.5
+python paper2/verify_flyby.py --csv results.csv     # write results to CSV
 ```
 
-## How the Rotation Curve Verification Works
+### Paper 2 Files
 
-1. For each galaxy, read the SPARC rotmod file to get R, Vobs, errV, Vgas, Vdisk, Vbul
-2. Compute baryonic acceleration: `g_bar = (Vdisk^2 + Vbul^2 + sgn(Vgas)*Vgas^2) / R`
-3. Compute the gate `phi(R)` from the g_bar profile (6 fixed processing steps)
-4. Compute beta from the galaxy's age (t50) and peak acceleration (g98)
-5. Predict: `V_model = sqrt(g_bar * (1 + beta * phi) * R)`
-6. Score: `chi2_nu = mean((Vobs - Vmodel)^2 / (errV^2 + 386))`
-7. Compare against MOND: `g_MOND = g_bar * nu(g_bar/a0)` with `nu(y) = (1 + sqrt(1 + 4/y)) / 2`
+| File | Description |
+|---|---|
+| `paper2/verify_flyby.py` | Flyby score verification — computes S for all 12 flybys, checks against published table |
+| `paper2/flyby_data.csv` | Input data for 12 Earth flybys (Section 3.3 of the paper), every value source-traced |
+
+---
+
+## Supplementary Documentation (`docs/`)
+
+| File | Description |
+|---|---|
+| `docs/supp_methods_age_derivation_structured.md` | Full age derivation procedures for all 133 galaxies (151 methods, 77 published sources) |
+| `docs/galaxy_age_method_index.csv` | Per-galaxy index: method class, tier, confidence, and source citations |
+
+---
 
 ## Citation
-
-If you use this tool, please cite the original paper:
 
 ```
 McGinty, L. A. (2026). The Hermes Equation: Galaxy Rotation Curves from Age
 with No Free Constants.
+
+McGinty, L. A. (2026). Testing Gravity at Encounter Speed: Geometric
+Prediction of Earth Flyby Anomalies and the GRACE Absorption Hypothesis.
 ```
 
-The SPARC rotation curve data used in this work is archived on Zenodo:
+The SPARC rotation curve data used in Paper 1 is archived on Zenodo:
 
 ```
 Lelli, F., McGaugh, S. S., & Schombert, J. M. (2016). SPARC: Mass Models
