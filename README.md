@@ -1,11 +1,12 @@
 # Hermes Verification Repository
 
-Independent verification tools for two papers by McGinty (2026):
+Independent verification tools for three papers by McGinty (2026):
 
 | Folder | Paper | What it verifies |
 |--------|-------|-----------------|
 | `paper1/` | *The Hermes Equation: Galaxy Rotation Curves from Age with No Free Constants* | Rotation curve fits + age derivations for 133 galaxies |
 | `paper2/` | *Testing Gravity at Encounter Speed: Geometric Prediction of Earth Flyby Anomalies* | Geometric scores + sign predictions for 12 Earth flybys |
+| `paper4/` | *The Emergent Plane at Cosmological Scale: Chirality Prediction and Exclusion Limits* | Internal consistency of 10 supplementary data files, 185 checks |
 | `docs/` | Supplementary materials | Age derivation audit trail (151 methods, 77 sources) |
 
 ## Requirements
@@ -155,6 +156,48 @@ python paper2/verify_flyby.py --csv results.csv     # write results to CSV
 
 ---
 
+## Paper 4 — Chirality at Cosmological Scale (`paper4/`)
+
+### What It Tests
+
+The chirality paper tested 273,055 spin-labeled galaxies against 26,111 galaxy clusters and 82,458 galaxy groups for chirality coherence in dense environments. The paper's conclusion: no signal at any scale. The verification tool checks that all 10 supplementary data files are internally consistent and that every number in the paper's tables matches the data.
+
+### Checks Performed (185 total)
+
+1. **Cross-match counts** — ALFALFA membership totals self-consistent (31,502 sources, 39 deep-void-interior)
+2. **Histogram integrity** — bin counts sum to reported N for each void membership group
+3. **Summary statistics** — N values consistent across files
+4. **Cluster chirality** — CW + CCW = N_galaxies for every cut; all p-values > 0.01 (null result)
+5. **Excess variance** — chi-squared degrees of freedom match cluster counts; chi2/df ratios near 1.0
+6. **Per-void summary** — 117 deepest voids; source counts consistent with cross-match totals
+7. **Dark candidates** — zero candidates found (header-only file, as documented)
+8. **Paper Table 1** — all published galaxy/system counts match CSV data exactly
+9. **Binomial p-values** — recomputed from CW/N using normal approximation; all consistent
+
+### Usage
+
+```
+python paper4/verify_chirality.py              # run all 185 checks
+python paper4/verify_chirality.py --verbose    # show every intermediate step
+```
+
+### Paper 4 Files
+
+| File | Description |
+|---|---|
+| `paper4/verify_chirality.py` | Verification tool — 9 check groups, 185 individual checks |
+| `paper4/paper4_step2_crossmatch_counts.csv` | ALFALFA x VAST membership counts |
+| `paper4/paper4_hi_property_summary_stats.csv` | HI property summary statistics by void membership |
+| `paper4/paper4_hist_logMHI.csv` | Histogram: log HI mass by void group |
+| `paper4/paper4_hist_W50.csv` | Histogram: velocity width by void group |
+| `paper4/paper4_hist_logMHI_over_Ms.csv` | Histogram: gas fraction by void group |
+| `paper4/paper4_per_void_summary.csv` | Per-void summary for 117 deepest voids |
+| `paper4/paper4_dark_candidates.csv` | Dark galaxy candidates (zero found) |
+| `paper4/paper4_pure_cluster_member_cuts_summary.csv` | Chirality tests per cluster membership cut |
+| `paper4/paper4_excess_variance_summary_by_richness.csv` | Excess variance by richness bin and radius |
+
+---
+
 ## Supplementary Documentation (`docs/`)
 
 | File | Description |
@@ -172,6 +215,9 @@ with No Free Constants.
 
 McGinty, L. A. (2026). Testing Gravity at Encounter Speed: Geometric
 Prediction of Earth Flyby Anomalies and the GRACE Absorption Hypothesis.
+
+McGinty, L. A. (2026). The Emergent Plane at Cosmological Scale: A Geometric
+Chirality Prediction, Empirical Exclusion Limits, and a Falsifiable Roadmap.
 ```
 
 The SPARC rotation curve data used in Paper 1 is archived on Zenodo:

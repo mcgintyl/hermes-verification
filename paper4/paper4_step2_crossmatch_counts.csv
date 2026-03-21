@@ -1,0 +1,6 @@
+metric,value
+N_total_ALFALFA,31502
+N_in_deep_void_interior_Rlt0p5,39
+N_in_deep_void_body_Rlt1,939
+N_in_deep_void_shell_0p75to1p25,2087
+N_wall_not_in_any_void,23374
