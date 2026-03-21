@@ -1,0 +1,7 @@
+mass_bin,slope_dDeltaSigma_dDn4000,slope_error,significance_sigma,source_note
+9.5-9.8,-0.825,0.546,1.5,reconstructed_from_relayed_Script3_results
+9.8-10.1,-0.581,0.382,1.5,reconstructed_from_relayed_Script3_results
+10.1-10.4,0.297,0.292,1.0,reconstructed_from_relayed_Script3_results
+10.4-10.7,-0.499,0.262,1.9,reconstructed_from_relayed_Script3_results
+10.7-11.0,0.119,0.298,0.4,reconstructed_from_relayed_Script3_results
+11.0-11.3,-0.643,0.553,1.2,reconstructed_from_relayed_Script3_results

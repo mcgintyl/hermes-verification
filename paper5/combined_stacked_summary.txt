@@ -1,0 +1,11 @@
+Reconstructed from relayed corrected pipeline results (not original pipeline output file).
+
+Combined stacked result:
+Young DeltaSigma = +7.36 +/- 2.79
+Old   DeltaSigma = +4.62 +/- 2.71
+Ratio (Young/Old) = 1.59 +/- 1.11
+Difference significance = 0.7 sigma
+
+Interpretation:
+Pipeline validated; both signals positive after systematics fixes.
+Direction is EP-consistent but difference is not statistically significant.

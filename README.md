@@ -1,12 +1,13 @@
 # Hermes Verification Repository
 
-Independent verification tools for three papers by McGinty (2026):
+Independent verification tools for four papers by McGinty (2026):
 
 | Folder | Paper | What it verifies |
 |--------|-------|-----------------|
 | `paper1/` | *The Hermes Equation: Galaxy Rotation Curves from Age with No Free Constants* | Rotation curve fits + age derivations for 133 galaxies |
 | `paper2/` | *Testing Gravity at Encounter Speed: Geometric Prediction of Earth Flyby Anomalies* | Geometric scores + sign predictions for 12 Earth flybys |
 | `paper4/` | *The Emergent Plane at Cosmological Scale: Chirality Prediction and Exclusion Limits* | Internal consistency of 10 supplementary data files, 185 checks |
+| `paper5/` | *Weak Lensing Pilot: Age-Dependent Shear Signal (KiDS x GAMA)* | Pipeline output consistency, 142 checks across 8 test groups |
 | `docs/` | Supplementary materials | Age derivation audit trail (151 methods, 77 sources) |
 
 ## Requirements
@@ -14,7 +15,7 @@ Independent verification tools for three papers by McGinty (2026):
 - Python 3.8+
 - numpy >= 1.20 (Paper 1 only)
 - scipy >= 1.7 (Paper 1 only)
-- Paper 2 uses only the standard library (math, csv)
+- Papers 2, 4, 5 use only the standard library (math, csv, re)
 
 ```
 pip install -r requirements.txt
@@ -198,6 +199,48 @@ python paper4/verify_chirality.py --verbose    # show every intermediate step
 
 ---
 
+## Paper 5 — Weak Lensing Pilot (`paper5/`)
+
+### What It Tests
+
+The lensing pilot measured galaxy-galaxy lensing signals around 9,004 GAMA lenses using KiDS DR4 source shapes, split by stellar age (Dn4000) to test whether younger stellar populations produce stronger shear at fixed mass. The verification tool checks that all pipeline output files are internally consistent.
+
+### Checks Performed (142 total)
+
+1. **Summary slopes (Table 1)** — significance = |slope|/error recomputed; 6 per-R radial bins present per mass bin
+2. **Lens counts across files** — N per (mass_bin, Dn4000 slice) consistent across group summary, median table, and profile files (60 cross-checks)
+3. **Combined beta** — inverse-variance weighted mean recomputed from 6 per-bin slopes
+4. **Cross-shear null** — all 6 mass bins have cross-component slopes consistent with zero (< 3 sigma)
+5. **Diagnostic summary** — 9,004 lenses, 21,162,005 sources, S/N = 7.2, null test chi2/dof values match
+6. **Profile completeness** — every (mass_bin, slice) combination has exactly 12 radial bins
+7. **Total lens count** — 9,004 in per-lens file; quintile slices balanced within each mass bin
+8. **Stacked signal** — Young DS = +7.36, Old DS = +4.62, ratio = 1.59, difference = 0.7 sigma
+
+### Usage
+
+```
+python paper5/verify_lensing.py              # run all 142 checks
+python paper5/verify_lensing.py --verbose    # show every intermediate step
+```
+
+### Paper 5 Files
+
+| File | Description |
+|---|---|
+| `paper5/verify_lensing.py` | Verification tool — 8 check groups, 142 individual checks |
+| `paper5/FULL_summary_slopes_by_massbin.csv` | Table 1: per-mass-bin slope of DeltaSigma vs Dn4000 |
+| `paper5/FULL_summary_slopesX_by_massbin.csv` | Cross-shear (45-deg) slopes — null test |
+| `paper5/FULL_fits_slope_by_R_massbin.csv` | Per-radial-bin slopes for each mass bin |
+| `paper5/FULL_fits_slopeX_by_R_massbin.csv` | Per-radial-bin cross-shear slopes |
+| `paper5/FULL_group_summary_massbin_dn4000_q5.csv` | Group summary: N lenses per (mass, Dn4000 slice) |
+| `paper5/FULL_dn4000_medians_by_massbin_slice.csv` | Dn4000 median/mean per (mass, slice) |
+| `paper5/FULL_deltasigma_profiles_massbin_dn4000_q5.csv` | Full DeltaSigma profiles (12 R bins x 30 groups) |
+| `paper5/FULL_lenses_with_massbin_dn4000slice_q5.csv` | Per-lens catalog (9,004 lenses with all properties) |
+| `paper5/combined_stacked_summary.txt` | Stacked young vs old DeltaSigma result |
+| `paper5/diagnostic_summary.txt` | Pipeline diagnostic: null tests, S/N, configuration |
+
+---
+
 ## Supplementary Documentation (`docs/`)
 
 | File | Description |
@@ -218,6 +261,9 @@ Prediction of Earth Flyby Anomalies and the GRACE Absorption Hypothesis.
 
 McGinty, L. A. (2026). The Emergent Plane at Cosmological Scale: A Geometric
 Chirality Prediction, Empirical Exclusion Limits, and a Falsifiable Roadmap.
+
+McGinty, L. A. (2026). Weak Lensing Pilot: Age-Dependent Shear Signal
+in the Emergent Plane Framework (KiDS x GAMA).
 ```
 
 The SPARC rotation curve data used in Paper 1 is archived on Zenodo:
