@@ -277,3 +277,36 @@ doi:10.5281/zenodo.16284118
 ## License
 
 MIT
+
+## Independent Audit Tools (Ari Joury, PhD — April 2026)
+
+The following scripts were authored by Dr. Ari Joury as part of an independent four-milestone data and code audit. All AI-generated analyses were independently cross-verified by the auditor. The full audit report is available alongside the paper on Zenodo.
+
+### paper1/verify_paper_claims.py
+
+Verifies all 54 quantitative claims in McGinty (2026) against computed data from the SPARC rotation curves and age measurements. Checks claims across Sections 3, 5, 6, 7, and Appendix A.
+
+```bash
+python paper1/verify_paper_claims.py --sparc <path_to_Rotmod_LTG>
+```
+
+**Result: 54/54 claims PASS.**
+
+### paper1/verify_appendix_a.py
+
+Sensitivity analysis replicating Appendix A results (σ²_int variation and a_knee variation).
+
+### paper1/verify_gate_audit.py
+
+52 automated checks comparing the gate function code to the paper specification. Covers all six construction steps, β formula, model equation, chi-squared scoring, MOND, and cross-file consistency.
+
+**Result: 52/52 checks PASS.**
+
+### Audit Summary
+
+| Milestone | Scope | Result |
+|-----------|-------|--------|
+| 1 | Reproduce chi-squared scores | All per-galaxy values match; median deviation 0.011 (floating-point) |
+| 2 | Code-vs-paper consistency | No discrepancies found |
+| 3 | Age derivation spot-checks | 54/54 claims pass; 73/80 ages within 0.5 Gyr tolerance |
+| 4 | Gate function code review | 52/52 automated checks pass |
