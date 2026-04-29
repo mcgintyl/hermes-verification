@@ -124,6 +124,13 @@ def load_flyby_data(csv_path):
     return data
 
 
+# Classification heuristics for observed outcomes.
+# These thresholds reproduce the paper's prose classification (Section 3.5)
+# but are not formally specified in the manuscript. They would change behavior
+# for a future borderline flyby. Flagged by Ari Joury during P2 audit (April 2026).
+# - null_cut: 0.001 mm/s (below this, treat as null)
+# - near_zero_cut: 3-sigma/|DV| < 0.1 (MESSENGER-class near-zero results)
+# - ambiguous_cut: 2.5-sigma (captures Cassini as AMBIGUOUS given its large uncertainty)
 def classify_observed(dv_obs, dv_unc, mission=""):
     """
     Classify the observed result following the paper's convention:

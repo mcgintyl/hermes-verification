@@ -278,6 +278,16 @@ doi:10.5281/zenodo.16284118
 
 MIT
 
+## Independent Audits
+
+### Paper 1 — The Hermes Equation
+Data reproducibility audit performed by Ari Joury, PhD (particle physics, CERN background), April 2026. Four-milestone audit verified all 54 quantitative claims and all 52 gate function checks. Median chi-squared deviation: 0.011.
+
+### Paper 2 — Flyby Anomalies
+Data and code audit performed by Ari Joury, PhD, April 2026. Three-milestone audit reproduced all twelve geometric scores (max absolute error 4.2 × 10⁻⁵), verified source tracing for all orbital parameters, and confirmed consistency between computed results and textual claims. Audit identified citation attribution corrections incorporated in current version.
+
+Audit reports available on request. These audits cover data reproducibility and do not constitute endorsement of the theoretical framework.
+
 ## Independent Audit Tools (Ari Joury, PhD — April 2026)
 
 The following scripts were authored by Dr. Ari Joury as part of an independent four-milestone data and code audit. All AI-generated analyses were independently cross-verified by the auditor. The full audit report is available alongside the paper on Zenodo.
