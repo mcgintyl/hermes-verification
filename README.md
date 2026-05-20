@@ -1,6 +1,6 @@
 # Hermes Verification Repository
 
-Independent verification tools for four papers by McGinty (2026):
+Independent verification tools for five papers by McGinty (2026):
 
 | Folder | Paper | What it verifies |
 |--------|-------|-----------------|
@@ -8,6 +8,7 @@ Independent verification tools for four papers by McGinty (2026):
 | `paper2/` | *Testing Gravity at Encounter Speed: Geometric Prediction of Earth Flyby Anomalies* | Geometric scores + sign predictions for 12 Earth flybys |
 | `paper4/` | *The Emergent Plane at Cosmological Scale: Chirality Prediction and Exclusion Limits* | Internal consistency of 10 supplementary data files, 185 checks |
 | `paper5/` | *Weak Lensing Pilot: Age-Dependent Shear Signal (KiDS x GAMA)* | Pipeline output consistency, 142 checks across 8 test groups |
+| `paper8/` | *A Wear-Activated Density-Release Refinement of the Hermes Gravity Equation* (Paper 1 addendum) | Wear-gated eta operator for SPARC rotation curves |
 | `docs/` | Supplementary materials | Age derivation audit trail (151 methods, 77 sources) |
 
 ## Requirements
@@ -238,6 +239,34 @@ python paper5/verify_lensing.py --verbose    # show every intermediate step
 | `paper5/FULL_lenses_with_massbin_dn4000slice_q5.csv` | Per-lens catalog (9,004 lenses with all properties) |
 | `paper5/combined_stacked_summary.txt` | Stacked young vs old DeltaSigma result |
 | `paper5/diagnostic_summary.txt` | Pipeline diagnostic: null tests, S/N, configuration |
+
+---
+
+## Paper 8 — Wear-Activated Density-Release Refinement (`paper8/`)
+
+### What It Implements
+
+A Paper 1 addendum introducing the wear-activated density-release operator `eta_WA(R)`, which modulates the baseline Hermes acceleration in low-density outer regions of galaxies with significant stellar wear. The refinement is BTFR-safe and adds no free parameters — all constants are derived in closed form from the Paper 1 inheritance set (`pi`, `e`, `a_k = 1585`, `K = c/(2*pi)`, `sigma_int^2 = 386`).
+
+**Modified acceleration:**
+
+    g_model(R) = g_bar(R) * [1 + phi(R) * (pi * exp(-psi(R)) * eta_WA(R) - 1/sqrt(2*pi))]
+
+where `eta_WA(R) = 1 + W(psi_sys) * (eta_U(R) - 1)` combines a global wear activation `W = 1 - exp(-2*pi^2 * psi_sys)` with a local density-release branch `eta_U(R)` capped at `pi`. The Paper 1 gate `phi(R)` is inherited unchanged.
+
+### Usage
+
+```
+python paper8/verify_eta.py            # print derived constants and load operator
+```
+
+The script exposes `compute_eta_WA`, `compute_g_model_eta`, `compute_g_model_baseline`, and `compute_g_mond_simple` for use against SPARC rotation curves with the Paper 1 gate.
+
+### Paper 8 Files
+
+| File | Description |
+|---|---|
+| `paper8/verify_eta.py` | Wear-activated eta operator — defines `eta_WA(R)` and the Paper 8 modified `g_model(R)`, plus baseline Hermes and MOND-simple comparisons |
 
 ---
 
