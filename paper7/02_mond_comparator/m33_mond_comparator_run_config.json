@@ -1,0 +1,24 @@
+{
+  "lane_label": "M33-Corbelli source-native thick-disk reconstruction",
+  "execution": "MOND comparator only; Hermes package unchanged; no board edits",
+  "board_path_used": "/mnt/data/m33_corbelli_final_board_freeze_package/m33_corbelli_reconstructed_board.csv",
+  "hermes_locked_per_point_path_used_for_comparison": "/mnt/data/m33_first_external_hermes_execution_v2/m33_hermes_per_point_predictions.csv",
+  "board_equivalence_max_abs_diff_vs_hermes_input_columns": {
+    "R_kpc": 0.0,
+    "Vobs_kms": 0.0,
+    "errV_kms": 0.0,
+    "Vgas_kms": 0.0,
+    "Vdisk_kms": 0.0,
+    "Vbulge_kms": 0.0,
+    "Vbar_kms": 0.0
+  },
+  "mond_interpolation": "simple MOND: mu(x)=x/(1+x), equivalent nu(y)=0.5+sqrt(0.25+1/y)",
+  "a0_SI_m_per_s2": 1.2e-10,
+  "a0_kms2_per_kpc": 3702.813097789641,
+  "a0_fitted": false,
+  "stellar_ML_adjustment_allowed": false,
+  "board_adjustments_after_hermes": false,
+  "sigma_int2_kms2": 386.0,
+  "chi2_denominator": "errV_kms^2 + 386",
+  "canon_hermes_only_package_sha256": "81720668c8d76538047b67c7b5f2415f87f9ec869a654830af4c0874fe099fa2"
+}

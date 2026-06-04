@@ -8,6 +8,7 @@ Independent verification tools for five papers by McGinty (2026):
 | `paper2/` | *Testing Gravity at Encounter Speed: Geometric Prediction of Earth Flyby Anomalies* | Geometric scores + sign predictions for 12 Earth flybys |
 | `paper4/` | *The Emergent Plane at Cosmological Scale: Chirality Prediction and Exclusion Limits* | Internal consistency of 10 supplementary data files, 185 checks |
 | `paper5/` | *Weak Lensing Pilot: Age-Dependent Shear Signal (KiDS x GAMA)* | Pipeline output consistency, 142 checks across 8 test groups |
+| `paper7/` | *Field Audit: Board-Complete Data and the Limits of External Gravity-Model Testing* | M33 external test data package: source-native board, locked Hermes result, MOND comparator, sensitivity + outer-disk audits |
 | `paper8/` | *A Wear-Activated Density-Release Refinement of the Hermes Gravity Equation* (Paper 1 addendum) | Wear-gated eta operator for SPARC rotation curves |
 | `docs/` | Supplementary materials | Age derivation audit trail (151 methods, 77 sources) |
 
@@ -239,6 +240,40 @@ python paper5/verify_lensing.py --verbose    # show every intermediate step
 | `paper5/FULL_lenses_with_massbin_dn4000slice_q5.csv` | Per-lens catalog (9,004 lenses with all properties) |
 | `paper5/combined_stacked_summary.txt` | Stacked young vs old DeltaSigma result |
 | `paper5/diagnostic_summary.txt` | Pipeline diagnostic: null tests, S/N, configuration |
+
+---
+
+## Paper 7 — M33 External Test (`paper7/`)
+
+### What It Contains
+
+The complete M33 external test data package supporting Paper 7, *Field Audit: Board-Complete Data and the Limits of External Gravity-Model Testing*. This is the first external (non-SPARC) test of the Hermes equation, applied to a source-native thick-disk reconstruction of M33 built from Corbelli et al. (2014) public profiles rather than a SPARC rotmod board.
+
+The board is **source-native, not SPARC-equivalent**: SPS/pixel-SED stellar mass profile, radially varying M/L, helium factor 1.33, an H2 prescription, a flaring stellar disk, gas half-thickness 0.5 kpc, and `Vbul=0`. The age is reported under two locked Amber brackets (primary t50 = 6.0 ± 1.2 Gyr, conservative 7.1 ± 1.3 Gyr).
+
+### Result
+
+- **Hermes:** pass/elevated under both bracketed age lanes — main disk clean/near-clean, outer disk a localized stress zone.
+- **MOND fixed-simple comparator:** clean on the same frozen board (no M/L tuning, no a0 fitting).
+- **Interpretation:** boundary-case roadmap; the outer-disk stress zone maps to warp, break, disturbed HI, and accretion-sensitive features (disequilibrium audit).
+
+This is a frozen data package — no board edits, reruns, or model reinterpretations are performed within it.
+
+### Folder Map
+
+| Folder | Contents |
+|---|---|
+| `paper7/00_final_board/` | Final reconstructed Format B board, table provenance, kernel, mass closure, overlay benchmark, age-bracket lock |
+| `paper7/01_hermes_result_locked/` | Locked Hermes-only execution package (script, summary, per-point predictions, plots) |
+| `paper7/02_mond_comparator/` | Fixed-simple MOND comparator on the exact same frozen board |
+| `paper7/03_baryonic_convention_sensitivity/` | M/L and stellar-mass convention sensitivity diagnostic |
+| `paper7/04_outer_disk_disequilibrium_audit/` | Outer-disk disequilibrium and radial-mask audit |
+| `paper7/05_interpretive_notes/` | Single-system age assumption note, origin-trail addendum, archive lock |
+| `paper7/99_archive_locks/` | Canon/archive-lock memo preserving the Hermes-only result |
+| `paper7/README.md` | Full package README with per-file inventory |
+| `paper7/file_manifest.csv` | Machine-readable manifest: path, byte size, SHA256, description for every file |
+
+See `paper7/README.md` for the complete per-file inventory and provenance notes.
 
 ---
 

@@ -1,0 +1,6 @@
+quantity,integrated_value_Msun,source_reference,ratio_to_source,status
+Stellar mass,4890000000.0,4.9e9 Msun,0.998,pass
+H2 mass,304000000.0,3.0e8 Msun,1.013,pass
+HI profile mass,1710000000.0,1.53e9 Msun true HI,1.118,accepted: source warns radial HI integration exceeds true mass due to outer-ring filling
+Total gas with He,2678000000.0,derived from 1.33*(HI+H2),,derived
+Total baryonic mass,7569000000.0,derived stars + gas,,derived

@@ -1,0 +1,33 @@
+{
+  "row_count": 58,
+  "radius_min_kpc": 0.24,
+  "radius_max_kpc": 22.72,
+  "vobs_min_kms": 37.3,
+  "vobs_max_kms": 136.0,
+  "vgas_max_kms": 39.50752467795544,
+  "vdisk_max_kms": 61.7992995904298,
+  "vbar_max_kms": 66.70619682133548,
+  "vbulge_rule": "Vbulge_kms = 0 at all radii",
+  "kernel": "annular_quadrature_thick_disk_source_geometry_provisionally_frozen_for_M33_Corbelli",
+  "lane_label": "M33-Corbelli source-native thick-disk reconstruction",
+  "source_ml_convention": "Corbelli2014_BVIgi_pixel_SED_stellar_surface_density_not_SPARC_unit_ML",
+  "age_status": "Amber bracketed t50 locked for sensitivity use; no single Green global t50",
+  "age_bracket": [
+    {
+      "lane": "primary_source_native_mass_weighted",
+      "t50_gyr": 6.0,
+      "sigma_gyr": 1.2,
+      "confidence": "Amber",
+      "must_report": true
+    },
+    {
+      "lane": "conservative_older_weighted_bracket",
+      "t50_gyr": 7.1,
+      "sigma_gyr": 1.3,
+      "confidence": "Amber",
+      "must_report": true
+    }
+  ],
+  "model_execution_authorized": false,
+  "model_results_exist": false
+}

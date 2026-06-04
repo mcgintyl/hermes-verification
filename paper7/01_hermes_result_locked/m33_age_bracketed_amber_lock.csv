@@ -1,0 +1,3 @@
+age_lane,t50_gyr,t50_sigma_gyr,confidence,method_class,use_rule
+primary_source_native_mass_weighted,6.0,1.2,Amber,A-method resolved CMD/SFH converted to board-level t50,must_report_in_eventual_Hermes_run
+conservative_older_weighted_bracket,7.1,1.3,Amber,A-method resolved CMD/SFH conservative sensitivity bracket,must_report_in_eventual_Hermes_run
