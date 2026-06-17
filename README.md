@@ -279,6 +279,8 @@ See `paper7/README.md` for the complete per-file inventory and provenance notes.
 
 ## Paper 8 — Wear-Activated Density-Release Refinement (`paper8/`)
 
+Published on Zenodo: DOI: 10.5281/zenodo.20699991
+
 ### What It Implements
 
 A Paper 1 addendum introducing the wear-activated density-release operator `eta_WA(R)`, which modulates the baseline Hermes acceleration in low-density outer regions of galaxies with significant stellar wear. The refinement is BTFR-safe and adds no free parameters — all constants are derived in closed form from the Paper 1 inheritance set (`pi`, `e`, `a_k = 1585`, `K = c/(2*pi)`, `sigma_int^2 = 386`).
