@@ -344,6 +344,10 @@ doi:10.5281/zenodo.16284118
 
 MIT
 
+## Feedback
+
+Anonymous or private technical feedback on the physics, datasets, code, and methodology is welcome: hermesphysics@proton.me. Please do not send confidential, proprietary, personal, restricted, or legally protected material.
+
 ## Independent Audits
 
 ### Paper 1 — The Hermes Equation
