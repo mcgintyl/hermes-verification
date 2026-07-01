@@ -1,6 +1,6 @@
 # Hermes Verification Repository
 
-Independent verification tools for five papers by McGinty (2026):
+Independent verification tools for seven papers by McGinty (2026):
 
 | Folder | Paper | What it verifies |
 |--------|-------|-----------------|
