@@ -10,6 +10,7 @@ Independent verification tools for five papers by McGinty (2026):
 | `paper5/` | *Weak Lensing Pilot: Age-Dependent Shear Signal (KiDS x GAMA)* | Pipeline output consistency, 142 checks across 8 test groups |
 | `paper7/` | *Field Audit: Board-Complete Data and the Limits of External Gravity-Model Testing* | M33 external test data package: source-native board, locked Hermes result, MOND comparator, sensitivity + outer-disk audits |
 | `paper8/` | *A Wear-Activated Density-Release Refinement of the Hermes Gravity Equation* (Paper 1 addendum) | Wear-gated eta operator for SPARC rotation curves |
+| `paper10/` | *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept* | Two-layer age structure in MaNGA DynPop DR17: a dominant SPS mass-to-light layer and a smaller controlled dynamical residual (7/8 mass bins) |
 | `docs/` | Supplementary materials | Age derivation audit trail (151 methods, 77 sources) |
 
 ## Requirements
@@ -304,6 +305,37 @@ The script exposes `compute_eta_WA`, `compute_g_model_eta`, `compute_g_model_bas
 | File | Description |
 |---|---|
 | `paper8/verify_eta.py` | Wear-activated eta operator — defines `eta_WA(R)` and the Paper 8 modified `g_model(R)`, plus baseline Hermes and MOND-simple comparisons |
+
+---
+
+## Paper 10 — Two Layers of Galaxy Aging in MaNGA DynPop (`paper10/`)
+
+Published on Zenodo: DOI: 10.5281/zenodo.21088606
+
+### What It Contains
+
+The complete reproducibility and verification package for Paper 10, *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept*. It tests a principle-level prediction — that at fixed stellar mass, younger galaxies show larger mass-to-light discrepancies between dynamical and stellar-population estimates — using three joined public MaNGA DynPop DR17 products (JAM dynamical catalogs, stellar-population/star-formation-history catalogs, and circular-velocity-curve tables). After quality cuts, 5,952 galaxies are split into eight equal-count stellar-mass bins and the youngest and oldest quartiles are compared within each bin.
+
+This is a **principle-level test, not a strict test of the Hermes rotation-curve equation**: DML is a JAM/SPS mass-to-light construction, not a board-complete observed rotation curve.
+
+### Result
+
+- **Layer 1 (visible SPS layer).** The raw mass-to-light discrepancy (DML) is larger for young galaxies in 8/8 mass bins (observed SPS) and 6/8 bins (intrinsic SPS). A component decomposition shows this is mostly driven by the SPS denominator — older stellar populations have higher stellar mass-to-light ratios, as standard stellar-population synthesis predicts. This is not a discovery.
+- **Layer 2 (controlled dynamical residual).** Under a collinearity-free strict-control model removing SPS mass-to-light, metallicity, and structural variables, a smaller dynamical residual persists in **7/8 mass bins** across all three SPS control sets. Parametric NFW/gNFW dark-matter fractions do not show the same signal, and the strongest residual tracks the dust-carrying SPS definition.
+- **Interpretation:** a proof of concept and invitation to specialist replication, not a detection claim. The residual is modest, one-bin-sensitive, and could still arise from IMF variation, assembly bias, dust conventions, cold gas, or JAM covariance. No cosmological-mock comparator has been run.
+
+### Folder Map
+
+| Path | Contents |
+|---|---|
+| `paper10/manga_two_layers_paper10_final.md` | The main paper |
+| `paper10/manga_two_layers_paper10_supplementary_appendix.md` | Detailed methodology, literature passes, control-variable specifications, limitation analyses, and sensitivity documentation |
+| `paper10/00_strict_control_rerun/` | **Primary result.** Strict-control rerun outputs: collinearity-free reduced-control model, controlled dynamical-residual scoreboards and per-bin tables, model-term and age-coefficient tables, reduced-spec sensitivity grid (12 variants, all 7/8), handoff note, and the rerun pipeline script |
+| `paper10/01_clean_pipeline_v0_6/` | Original clean-pipeline (v0.6) outputs: DML sledgehammer report and scoreboards, M/L split / controlled-residual hardening report (kitchen-sink 8/8 specification), figures, simulation/assembly-bias literature pass, and the working draft with revision notes |
+| `paper10/README.md` | Full package README with per-folder inventory |
+| `paper10/file_manifest.csv` | Machine-readable manifest: path, byte size, SHA256, and description for every file |
+
+See `paper10/README.md` for the complete per-file inventory and guardrails.
 
 ---
 

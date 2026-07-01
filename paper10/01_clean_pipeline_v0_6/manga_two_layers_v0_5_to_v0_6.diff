@@ -1,0 +1,120 @@
+--- /mnt/data/manga_two_layers_clean_pipeline_draft_v0_5.md	2026-06-27 02:24:55.385263498 +0000
++++ /mnt/data/manga_two_layers_clean_pipeline_draft_v0_6.md	2026-06-27 02:27:51.403614104 +0000
+@@ -1,6 +1,6 @@
+ # Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept
+ 
+-**Draft status:** Step 1 clean technical draft, v0.5 with simulation/assembly-bias comparator status integrated  
++**Draft status:** v0.6 public-facing technical draft with research passes integrated and internal scaffolding removed  
+ **Prepared for:** Team Hermes voice pass and Zenodo packaging  
+ **Primary dataset:** MaNGA DynPop DR17 public catalogs  
+ **Primary analysis date:** 2026-06-26  
+@@ -8,47 +8,17 @@
+ 
+ ---
+ 
+-## Internal SAO blueprint for the voice pass
+-
+-**Subject:** Galaxy aging.  
+-**Attitude:** MaNGA DynPop shows a two-layer age structure: a dominant, expected stellar-population mass-to-light layer and a smaller controlled dynamical mass-to-light residual that remains after the obvious stellar-model layer is stripped away. The standard separation between these layers is methodologically useful, but the note asks whether that separation is necessarily ontological.  
+-**Order:**
+-
+-1. Explain why this is a principle-level MaNGA test, not a strict Hermes-equation board.
+-2. Freeze the public data sources and quality cuts.
+-3. Run the blunt young-versus-old sledgehammer split at fixed stellar mass.
+-4. Separate the mass-to-light discrepancy into its dynamical numerator and stellar-population denominator.
+-5. Test whether a smaller dynamical age residual survives after SPS, metallicity, and structural controls.
+-6. State the interpretation and limitations without claiming proof.
+-7. Hand the result to groups with the domain infrastructure to test it harder.
+-
+-This blueprint is included for drafting discipline. It can be removed from the public note.
+-
+----
+-
+ ## Abstract
+ 
+-The Hermes/Emergent Plane framework predicts that the gravity gap in galaxies should not be a permanent quantity. It should change with galactic age. The locked Hermes rotation-curve equation cannot be tested directly on MaNGA DynPop, because MaNGA provides JAM-inferred circular-velocity curves and stellar-dynamical mass models rather than observed H I/Hα rotation curves with independent per-radius gas, disk, and bulge components. MaNGA can still test a weaker principle-level prediction: whether galaxy age organizes dynamical mass-to-light structure after stellar mass and standard galaxy structure are held fixed.
++MaNGA DynPop cannot be used as a strict board for the locked Hermes rotation-curve equation, because its circular velocities and masses are inferred from stellar-dynamical JAM models rather than observed H I/Hα rotation curves with independent gas, disk, and bulge components. It can, however, test a weaker principle-level question: whether galaxy age organizes dynamical mass-to-light structure after stellar mass and standard structural variables are held fixed.
+ 
+-We tested this using the public MaNGA DynPop JAM, stellar-population/star-formation-history, and circular-velocity-curve catalogs. The joined catalog contains 10,296 galaxies. Applying the conservative `Qual >= 1` quality cut and requiring finite `T50`, stellar mass, and mass-to-light outputs gives a primary decision sample of 5,952 galaxies. We split the sample into eight equal-count stellar-mass bins. Within each bin, the youngest 25% by `T50` were compared to the oldest 25%, discarding the middle 50%. Larger `T50` means older stellar assembly.
++We joined the public MaNGA DynPop JAM, stellar-population/star-formation-history, and circular-velocity-curve catalogs. The matched catalog contains 10,296 galaxies; after the conservative `Qual >= 1` cut and finite-value requirements, the primary decision sample contains 5,952 galaxies. We split this sample into eight equal-count stellar-mass bins and compared the youngest 25% and oldest 25% by `T50` within each bin.
+ 
+-The first blunt test used the mass-to-light discrepancy
++The blunt mass-to-light discrepancy test used \(D_{ML}=\log_{10}(M/L)_{dyn}-\log_{10}(M_*/L)_{SPS}\). Young galaxies show larger observed-SPS DML than old galaxies in 8/8 stellar-mass bins and larger intrinsic-SPS DML in 6/8 bins. A hardening test shows that this raw result is mostly carried by the SPS denominator: older stellar populations have higher SPS stellar mass-to-light ratios, as standard stellar-population synthesis predicts. Raw JAM dynamical mass-to-light alone goes the opposite way, with old galaxies higher in all eight bins.
+ 
+-\[
+-D_{ML} = \log_{10}(M/L)_{dyn} - \log_{10}(M_*/L)_{SPS}.
+-\]
++The candidate result is therefore not the raw DML split. It is the smaller controlled dynamical mass-to-light residual that remains after SPS mass-to-light, metallicity, stellar mass, size, surface density, Sérsic structure, flattening, \(\lambda_R\), and velocity dispersion are included as controls. In that residual split, young galaxies remain higher in 8/8 mass bins for the observed-SPS and both-SPS control sets, and in 6/8 bins for the intrinsic-SPS control set.
+ 
+-Young galaxies show larger `DML_mfl_obs` than old galaxies in 8/8 stellar-mass bins and larger `DML_mfl_int` in 6/8 bins. The mass-adjusted young-old difference is +0.0669 for observed SPS and +0.0772 for intrinsic SPS, with bootstrap 95% intervals of [+0.0498, +0.0828] and [+0.0562, +0.0959], respectively. A 5,000-shuffle null test within mass bins gives a joint p-value at the shuffle floor, 0.0002, for both outcomes.
+-
+-A hardening test then separated the two sides of the DML construction. The raw signal is mostly carried by the stellar-population denominator: old galaxies have higher SPS stellar mass-to-light ratios in all eight mass bins. Raw JAM dynamical mass-to-light goes the opposite way: old galaxies have higher raw dynamical mass-to-light in all eight bins. Therefore the raw DML split cannot be presented as clean evidence for age-dependent gravity. It is strongly entangled with the known age behavior of stellar-population models.
+-
+-However, after controlling for SPS mass-to-light ratio, metallicity, stellar mass, size, surface density, Sérsic structure, flattening, \(\lambda_R\), and velocity dispersion, a smaller dynamical age residual remains. In the residual young-versus-old split, young galaxies have larger controlled dynamical residuals in 8/8 mass bins for the observed-SPS and both-SPS control sets, and in 6/8 bins for the intrinsic-SPS control set. The mass-adjusted residual differences are +0.0358, +0.0311, and +0.0188, respectively, each with positive bootstrap intervals and joint shuffle p-values at the 0.0002 floor.
+-
+-A targeted novelty check found substantial prior MaNGA DynPop work connecting stellar age, stellar-population mass-to-light ratio, dynamical mass-to-light ratio, dark-matter fraction, circular-velocity-curve shape, velocity dispersion, and IMF variation. That literature is directly relevant and limits the novelty claim. However, we did not locate a prior DynPop publication that reports this exact young-versus-old quartile DML split at fixed stellar mass, then decomposes DML into its JAM dynamical numerator and SPS denominator, then repeats the age split on controlled dynamical residuals after SPS, metallicity, and structural controls. The novelty claim should therefore be methodological and organizational, not variable-level: the inputs are known DynPop quantities, but the two-layer decision test appears not to have been published in this form.
+-
+-A second literature pass grounds the dominant layer in standard stellar-population work. Stellar-population synthesis explicitly predicts that age, star-formation history, metallicity, dust, and IMF assumptions affect inferred stellar mass-to-light ratios. Older stellar populations are expected to have larger \(M_*/L\), so the raw DML split is not surprising and should not be presented as a gravitational result. Existing JAM/SPS comparison work also treats offsets between dynamical and SPS mass-to-light ratios as possible signatures of dark matter, IMF variation, or modeling systematics; MaNGA DynPop V reports weak positive age correlations in the stellar mass-excess factor and no metallicity correlation in its best early-type sample. The residual layer documented here must therefore be read as a candidate dynamical residual requiring specialist hardening, not as proof of age-dependent gravity.
+-
+-We interpret this as a two-layer age structure in MaNGA and introduce the one-box interpretation as a hypothesis, not a result. In conventional analysis, the stellar-population layer belongs to SPS modeling and stellar evolution, while the residual layer belongs to dynamical modeling, IMF variation, dark-matter fraction, JAM covariance, and structural systematics. That separation is methodologically useful. It is not automatically ontological. A wrinkle can be explained by collagen loss without ceasing to be a sign of aging; likewise, the SPS layer can be explained by stellar evolution without exhausting the meaning of the age structure. This note does not claim a detection of age-dependent gravity. It documents why the one-box interpretation is worth testing: after the expected stellar-population layer is granted, a smaller controlled dynamical residual remains in the same age direction. Remaining work includes quantitative SPS hardening, IMF and dust-systematics checks, JAM covariance tests, a true cosmological mock replication of the residual pipeline, and independent gravitational validation through weak lensing.
++We interpret this as a two-layer age structure in MaNGA DynPop: a dominant, expected stellar-population mass-to-light layer and a smaller controlled dynamical mass-to-light residual layer. The first layer is standard astrophysics. The second is not yet anomalous; existing JAM/SPS, IMF, structural-covariance, assembly-history, and simulation pathways could plausibly contribute. A targeted simulation pass found adjacent MaNGA-like mock infrastructure, but not an exact mock-MaNGA/JAM/SPS replication of this residual pipeline. The note therefore makes a limited proof-of-concept claim: the public DynPop catalogs contain a reproducible two-layer age pattern, and the conventional separation between the visible SPS layer and the controlled dynamical residual is a testable filing-system question, not a settled ontological boundary.
+ 
+ ---
+ 
+@@ -99,7 +69,9 @@
+ 
+ The principle is simple:
+ 
+-> If the galaxy gravity gap is age-organized, then age should carry information about dynamical mass-to-light structure after stellar mass and standard structural variables are controlled.
++> If the mass-to-light discrepancy is age-organized, then age should carry information about dynamical mass-to-light structure after stellar mass and standard structural variables are controlled.
++
++In the broader Hermes framework, the corresponding physical interpretation is called the **gravity gap**: the part of a galaxy's dynamical behavior that exceeds what its visible matter would naively predict. In this MaNGA note we mostly avoid that phrase in public-facing summary sections, because the observable here is not a board-complete rotation-curve discrepancy. It is a JAM/SPS mass-to-light construction.
+ 
+ This is closer in logic to the weak-lensing pilot than to the original rotation-curve work. The weak-lensing pilot did not insert the Hermes rotation-curve equation into a lensing pipeline. It extracted the age principle and tested whether the gravitational signal changed with an age proxy at fixed mass. MaNGA is treated the same way here.
+ 
+@@ -298,7 +270,7 @@
+ DML_{young} > DML_{old}.
+ \]
+ 
+-This follows the framework prediction that younger galaxies should retain a larger gravity gap, while older galaxies should have a smaller one.
++This follows the framework prediction that younger galaxies should retain a larger mass-to-light discrepancy, while older galaxies should have a smaller one. In framework language, that discrepancy is interpreted as the gravity gap; in this MaNGA note we treat it operationally as DML, not as a direct gravity measurement.
+ 
+ For each outcome and mass bin, the pipeline reports:
+ 
+@@ -640,7 +612,7 @@
+ 
+ ---
+ 
+-## 15. Public-facing conclusion draft
++## 15. Conclusion
+ 
+ MaNGA does not provide a strict board for the Hermes rotation-curve equation. It does provide a large public population in which age, stellar population, internal dynamics, and dynamical mass-to-light can be tested together.
+ 
+@@ -656,9 +628,9 @@
+ 
+ ---
+ 
+-## 16. Remaining hardening before public release
++## 16. Remaining hardening and future work
+ 
+-The 15.2 novelty check is now folded into Section 3. The medium-depth SPS/IMF/JAM-SPS literature pass is folded into Section 3.2, Section 3.3, Section 9, Section 10, and the public-facing conclusion. The v0.4 interpretive pass is folded into Section 1, Section 9, Section 10, Section 11, and Section 15. The simulation/assembly-bias pass is now folded into Section 3.4, Section 10.8, Section 15, and Section 16.2. One quantitative SPS check remains useful before Zenodo release; the true standard-model mock comparator remains a future-work item rather than a prerelease requirement.
++The research-front passes are now folded into the draft: the novelty check appears in Section 3, the SPS/IMF/JAM-SPS literature pass appears in Sections 3.2, 3.3, 9, 10, and 15, the one-box interpretive pass appears in Sections 1, 9, 10, 11, and 15, and the simulation/assembly-bias pass appears in Sections 3.4, 10.8, 15, and 16.2. One quantitative SPS check remains useful before Zenodo release; the true standard-model mock comparator remains a future-work item rather than a prerelease requirement.
+ 
+ ### 16.1 Quantitative SPS expectation and dust convention check
+ 
+@@ -692,13 +664,13 @@
+ 
+ > A cosmological mock comparison has not been performed. Existing \(\Lambda\)CDM and hydrodynamic simulation literature provides plausible standard routes for an age-linked dynamical residual through assembly history, feedback, IMF variation, morphology, and JAM/SPS covariance. The present note therefore does not claim the residual is anomalous relative to \(\Lambda\)CDM; it identifies the exact mock-MaNGA comparator required to decide that question.
+ 
+-### 16.3 Recommended public wording after Step 2
++### 16.3 Recommended wording
+ 
+ Unless the remaining literature pass finds an exact prior analysis, the public wording should be:
+ 
+ > We did not locate a prior MaNGA DynPop publication reporting this exact fixed-mass young/old DML split, DML component separation, and controlled dynamical-residual age split. Closely related DynPop work has already established age, mass-to-light, velocity-dispersion, CVC-shape, dark-matter-fraction, and IMF-related covariances. The present contribution is therefore a proof-of-concept organization of existing public quantities and a one-box interpretive question: are the visible SPS layer and the controlled dynamical residual merely separate bookkeeping categories, or two age-organized layers that deserve to be tested together?
+ 
+-## 17. Working references added through v0.5
++## 17. Working references added through v0.6
+ 
+ Zhu, K., Lu, S., Cappellari, M., Li, R., Mao, S., & Gao, L. (2023). *MaNGA DynPop -- I. Quality-assessed stellar dynamical modelling from integral-field spectroscopy of 10K nearby galaxies: a catalogue of masses, mass-to-light ratios, density profiles and dark matter.* arXiv:2304.11711.
+ 
