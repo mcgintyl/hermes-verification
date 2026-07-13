@@ -26,34 +26,38 @@ pip install -r requirements.txt
 
 ---
 
-## Two gate implementations (read this before reproducing phi)
+## One frozen gate (reproducing phi)
 
-This project contains two versions of the gate function phi. They are not the same, and they do not produce the same phi values. Each one reproduces a different paper.
+The gate function phi(R) is defined once, in `paper1/hermes_gate_phi.py`, and is
+used unchanged for every result in the project — the 133 SPARC galaxies (Paper 1)
+and M33 (Paper 7). It reproduces the published phi for all 133 SPARC galaxies to
+within 4e-13, and the canonical M33 result to floating-point precision.
 
-- `paper1/hermes_gate_phi.py` reproduces **Paper 1** (the 133 SPARC galaxies). It matches the published phi for all 133 galaxies to within 4e-13.
-- `paper7/01_hermes_result_locked/m33_hermes_execution_script.py` reproduces **Paper 7** (the M33 result). It matches the published M33 phi to within 9e-14.
+**Note on the original M33 execution script.** The first M33 run used a separate
+script, `paper7/01_hermes_result_locked/m33_hermes_execution_script.py`, which
+carried its own copy of the gate with three incidental deviations from the
+canonical gate (knee-radius method, Savitzky-Golay edge mode, and curvature
+epsilon). Those deviations were inconsistent with Paper 7's frozen-chassis
+methodology. They have been corrected: the M33 result is regenerated with the
+canonical gate in `paper7/01b_hermes_result_canonical_gate/`, which changes M33's
+full-board chi2nu from 3.13 to 3.22 and leaves every conclusion unchanged. The
+original locked archive is kept as the historical record; see
+`paper7/01b_hermes_result_canonical_gate/m33_canonical_gate_correction_memo.md`.
 
-These two do not agree with each other. If you use the Paper 1 gate to reproduce M33, or the M33 script to reproduce the SPARC galaxies, you will be off by as much as 0.6 to 0.7 in phi. That is a large disagreement, not a rounding difference. Use the implementation that matches the result you are trying to reproduce:
+To verify, run `verify_gates.py` in the repository root. It confirms the single
+canonical gate reproduces both published datasets (133 SPARC and M33) to 1e-10.
 
-- Paper 1 / any of the 133 SPARC galaxies → `paper1/hermes_gate_phi.py`
-- Paper 7 / M33 → `paper7/01_hermes_result_locked/m33_hermes_execution_script.py`
-
-The two implementations differ in exactly three places:
-
-1. **Knee radius.** Paper 1 interpolates to the exact radius where the baryonic acceleration crosses the threshold. The M33 script instead takes the radius of the first data point already below the threshold, with no interpolation.
-2. **Savitzky-Golay edge handling.** Paper 1 smooths with `mode="mirror"`. The M33 script smooths with `mode="interp"` (the SciPy default).
-3. **Curvature epsilon.** Paper 1 uses a value that scales with each galaxy's data (`1e-4 * median(|dV/dR|)`). The M33 script uses a fixed `1e-6`.
-
-To check both at once, run `verify_gates.py` in the repository root. It confirms each gate reproduces its own published dataset to 1e-10, and prints the cross terms showing the two gates diverge on each other's data.
-
-Everything the test needs ships with the repo **except** the SPARC rotation-curve database (the one external file set). Download SPARC from http://astroweb.cwru.edu/SPARC/ (Lelli, McGaugh & Schombert 2016), then either drop the `*_rotmod.dat` files in `./sparc_database` or point `SPARC_DIR` at them:
+Everything the test needs ships with the repo **except** the SPARC rotation-curve
+database (the one external file set). Download SPARC from
+http://astroweb.cwru.edu/SPARC/ (Lelli, McGaugh & Schombert 2016), then either
+drop the `*_rotmod.dat` files in `./sparc_database` or point `SPARC_DIR` at them:
 
 ```
 # from the repo root, after adding the SPARC *_rotmod.dat files:
 SPARC_DIR=/path/to/sparc_database python verify_gates.py
 ```
 
-The Paper 7 / M33 half of the test runs with no external data at all.
+The M33 half of the test runs with no external data at all.
 
 ## Paper 1 — The Hermes Equation (`paper1/`)
 

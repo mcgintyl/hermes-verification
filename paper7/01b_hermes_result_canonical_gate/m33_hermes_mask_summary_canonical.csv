@@ -1,0 +1,9 @@
+mask,N,chi2nu_primary_t60,chi2nu_conservative_t71,chi2nu_primary_LOCKED,chi2nu_conservative_LOCKED
+Full board,58,3.2238,3.3853,3.1258,3.2956
+Main disk R<=8,27,0.7784,0.7817,0.6384,0.6565
+Warp R>8,31,5.3537,5.6530,5.2923,5.5942
+Main disk R<=10,31,0.9292,0.9592,0.8019,0.8450
+Outer tail R>10,27,5.8584,6.1709,5.7941,6.1094
+Barker break R>=9.1,28,5.7095,6.0196,5.6472,5.9599
+Barker S2 R>=11.6,23,6.3906,6.7021,6.3164,6.6311
+Putman R>=15,16,7.1643,7.4609,7.0613,7.3625
