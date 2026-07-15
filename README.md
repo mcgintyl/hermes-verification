@@ -47,6 +47,10 @@ original locked archive is kept as the historical record; see
 To verify, run `verify_gates.py` in the repository root. It confirms the single
 canonical gate reproduces both published datasets (133 SPARC and M33) to 1e-10.
 
+**Interactive sessions:** if you modify or re-run `hermes_gate_phi.py` inside an
+interactive Python session (Jupyter, IPython), you may need to explicitly reload
+the module with `importlib.reload(hermes_gate_phi)` for changes to take effect.
+
 Everything the test needs ships with the repo **except** the SPARC rotation-curve
 database (the one external file set). Download SPARC from
 http://astroweb.cwru.edu/SPARC/ (Lelli, McGaugh & Schombert 2016), then either
