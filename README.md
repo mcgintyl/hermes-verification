@@ -43,6 +43,9 @@ canonical gate in `paper7/01b_hermes_result_canonical_gate/`, which changes M33'
 full-board chi2nu from 3.13 to 3.22 and leaves every conclusion unchanged. The
 original locked archive is kept as the historical record; see
 `paper7/01b_hermes_result_canonical_gate/m33_canonical_gate_correction_memo.md`.
+The script that performs the M33 Hermes calculation end-to-end (board → phi →
+V_hermes → chi2nu) with the canonical gate is
+`paper7/01b_hermes_result_canonical_gate/compute_m33_hermes_canonical.py`.
 
 To verify, run `verify_gates.py` in the repository root. It confirms the single
 canonical gate reproduces both published datasets (133 SPARC and M33) to 1e-10.
