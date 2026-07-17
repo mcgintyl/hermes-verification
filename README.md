@@ -51,6 +51,9 @@ Corbelli et al. (2014) Table 1; its derivation and the `errR_kpc` scale-uncertai
 column (a coherent 3.2% distance-scale term, not independent per-point error) are
 documented in
 `paper7/01b_hermes_result_canonical_gate/m33_radius_uncertainty_note.md`.
+`compute_m33_hermes_canonical.py --distance-sensitivity` (or `--distance <kpc>`)
+shows how chi2nu responds to the distance scale (V_bar ∝ √D at fixed V_obs), the
+correct way to propagate the distance uncertainty.
 
 To verify, run `verify_gates.py` in the repository root. It confirms the single
 canonical gate reproduces both published datasets (133 SPARC and M33) to 1e-10.

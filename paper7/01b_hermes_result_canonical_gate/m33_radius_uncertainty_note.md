@@ -44,21 +44,36 @@ $$\frac{\delta D}{D} = 0.0322\ (3.2\%), \qquad \delta D \approx 27\ \text{kpc}.$
 
 $$\text{errR\_kpc} = \frac{\delta D}{D}\,R_{\text{kpc}} = 0.0322 \cdot R_{\text{kpc}}$$
 
-This is a **systematic scale uncertainty, not an independent per-point
-measurement error.** For propagation:
+This is the 1σ uncertainty on each physical radius induced by the distance scale.
+It is a **systematic scale uncertainty, not an independent per-point measurement
+error**, and propagating it correctly is where the common mistake happens.
 
-- **It is fully correlated across all rings.** If the true distance differs from
-  840 kpc, every `R_kpc` scales by the same factor. **Do not combine `errR_kpc`
-  values in quadrature as if independent** — a distance shift moves the whole
-  curve coherently.
-- **It propagates into every distance-scaled quantity.** With $R \propto D$:
-  $g_{\text{bar}} = V_{\text{bar}}^2/R \propto D^{-1}$; the age term's
-  $g_{98} \propto D^{-1}$; surface densities $\propto D^{-2}$. If you re-scale
-  $R$, re-scale those consistently with the same $\delta D/D$, or the board is
-  internally inconsistent.
-- Velocities (`Vobs`, `Vbar`) are **not** distance-scaled (they come from the
-  observed line-of-sight field and the tilted-ring $V/\sin i$ deprojection), so
-  `errR_kpc` does not touch them.
+- **It is fully correlated across all rings.** A distance error moves every
+  `R_kpc` by the same fractional amount. **Do not combine `errR_kpc` values in
+  quadrature as if independent** — a distance shift moves the whole curve
+  coherently.
+- **Propagate a distance change self-consistently.** M33's surface densities
+  $\Sigma$ (in $M_\odot\,\text{pc}^{-2}$) come from distance-independent
+  quantities (optical/IR surface brightness and HI column density), so under
+  $D \to D'$ with $\Sigma$ held fixed:
+  $$R \propto D, \qquad V_{\text{gas}},\,V_{\text{disk}},\,V_{\text{bar}} \propto \sqrt{D}, \qquad V_{\text{obs}}\ \text{unchanged (kinematic)},$$
+  which leaves $g_{\text{bar}} = V_{\text{bar}}^2/R$, $g_{98}$, $\beta$, and
+  $\varphi$ **very nearly invariant**. (Total baryonic *masses* scale as $D^2$,
+  but the surface densities that set the velocities do not — so `g_bar` is
+  **not** $\propto 1/D$.)
+- **The fit still moves — through the velocities, not the radii.** The Hermes
+  prediction $V_{\text{model}} = V_{\text{bar}}\sqrt{1+\beta\varphi} \propto
+  \sqrt{D}$ while $V_{\text{obs}}$ is fixed, so a distance error acts as a
+  coherent $\sqrt{D}$ scaling of the model curve, **not** a horizontal shuffling
+  of $R$. This is exactly why treating `errR_kpc` as independent per-point
+  scatter mis-estimates the effect. To see the $\chi^2$ response directly, run
+  `compute_m33_hermes_canonical.py --distance <D_kpc>` or
+  `--distance-sensitivity`, which applies precisely this scaling.
+
+*(Scaling assumption: the standard thin-disk relation $V^2 \propto \Sigma\,R$.
+The fixed physical disk thicknesses adopted in the reconstruction — gas
+half-thickness 0.5 kpc, stellar flare 0.1→1.0 kpc — are held constant and are a
+second-order caveat on the exact $\sqrt{D}$ law.)*
 
 ## 4. Why there are no independent per-point radius errors
 
