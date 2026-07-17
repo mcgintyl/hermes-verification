@@ -46,6 +46,11 @@ original locked archive is kept as the historical record; see
 The script that performs the M33 Hermes calculation end-to-end (board → phi →
 V_hermes → chi2nu) with the canonical gate is
 `paper7/01b_hermes_result_canonical_gate/compute_m33_hermes_canonical.py`.
+The M33 board's galactocentric radius `R_kpc` is imported as-published from
+Corbelli et al. (2014) Table 1; its derivation and the `errR_kpc` scale-uncertainty
+column (a coherent 3.2% distance-scale term, not independent per-point error) are
+documented in
+`paper7/01b_hermes_result_canonical_gate/m33_radius_uncertainty_note.md`.
 
 To verify, run `verify_gates.py` in the repository root. It confirms the single
 canonical gate reproduces both published datasets (133 SPARC and M33) to 1e-10.
