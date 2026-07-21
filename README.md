@@ -1,13 +1,14 @@
 # Hermes Verification Repository
 
-Independent verification tools for seven papers by McGinty (2026):
+Independent verification tools for eight papers by McGinty (2026):
 
 | Folder | Paper | What it verifies |
 |--------|-------|-----------------|
-| `paper1/` | *The Hermes Equation: Galaxy Rotation Curves from Age with No Free Constants* | Rotation curve fits + age derivations for 133 galaxies |
+| `paper1/` | *The Hermes Equation: Galaxy Rotation Curves from Age with No Free Constants* — DOI: 10.5281/zenodo.18809176 | Rotation curve fits + age derivations for 133 galaxies |
 | `paper2/` | *Testing Gravity at Encounter Speed: Geometric Prediction of Earth Flyby Anomalies* | Geometric scores + sign predictions for 12 Earth flybys |
 | `paper4/` | *The Emergent Plane at Cosmological Scale: Chirality Prediction and Exclusion Limits* | Internal consistency of 10 supplementary data files, 185 checks |
 | `paper5/` | *Weak Lensing Pilot: Age-Dependent Shear Signal (KiDS x GAMA)* | Pipeline output consistency, 142 checks across 8 test groups |
+| — | *Polar Ring Galaxies and the Shape of the Extra Gravity: A Proof of Concept Test* — DOI: 10.5281/zenodo.19392646 | Reference only — no verification package in this repository |
 | `paper7/` | *Field Audit: Board-Complete Data and the Limits of External Gravity-Model Testing* | M33 external test data package: source-native board, locked Hermes result, MOND comparator, sensitivity + outer-disk audits |
 | `paper8/` | *A Wear-Activated Density-Release Refinement of the Hermes Gravity Equation* (Paper 1 addendum) | Wear-gated eta operator for SPARC rotation curves |
 | `paper10/` | *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept* | Two-layer age structure in MaNGA DynPop DR17: a dominant SPS mass-to-light layer and a smaller controlled dynamical residual (7/8 mass bins) |
