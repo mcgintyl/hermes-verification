@@ -272,7 +272,7 @@ def mond_model(data):
 def normalize_galaxy_name(csv_name):
     """
     Convert CSV galaxy name to the SPARC filename stem.
-    'NGC 5371' → 'NGC5371',  'DDO 64' → 'DDO064',  'NGC0100' → 'NGC0100'
+    'NGC 5371' → 'NGC5371',  'DDO 64' → 'DDO064',  'NGC 0100' → 'NGC0100'
     """
     name = csv_name.strip().replace(' ', '')
     # Already matches most cases.  Handle DDO 64 -> DDO064 etc.

@@ -751,7 +751,7 @@ def build_galaxy_database() -> dict:
         ("F579-V1", 7.5, None, None, None, "Bell+2000 BVRK multi-color"),
         ("KK 251", 3.6, None, None, None, "FIGGS B-V → BC03 (Quality Floor)"),
         ("NGC 3972", 7.3, None, None, None, "SPARC + Tucker+2024 + morphology"),
-        ("IC4202", 7.8, None, None, None, "SPARC mass + Hα analog"),
+        ("IC 4202", 7.8, None, None, None, "SPARC mass + Hα analog"),
     ]
     for entry in color_galaxies:
         gal, t50, bv, br, fuv_nuv, note = entry
