@@ -29,7 +29,7 @@ PAPER1_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, PAPER1_DIR)
 
 # Use the savgol_filter from verify_hermes.py (which has a fallback if scipy unavailable)
-import importlib
+import importlib.util
 _vh_spec = importlib.util.spec_from_file_location("_vh_savgol",
     os.path.join(PAPER1_DIR, "verify_hermes.py"))
 _vh_mod = importlib.util.module_from_spec(_vh_spec)
