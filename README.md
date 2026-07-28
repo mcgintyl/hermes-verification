@@ -1,5 +1,7 @@
 # Hermes Verification Repository
 
+[![verify](https://github.com/mcgintyl/hermes-verification/actions/workflows/verify.yml/badge.svg)](https://github.com/mcgintyl/hermes-verification/actions/workflows/verify.yml)
+
 Independent verification tools for eight papers by McGinty (2026):
 
 | Folder | Paper | What it verifies |
@@ -16,14 +18,34 @@ Independent verification tools for eight papers by McGinty (2026):
 
 ## Requirements
 
-- Python 3.8+
-- numpy >= 1.20 (Paper 1 only)
-- scipy >= 1.7 (Paper 1 only)
+- Python 3.10 (the pinned reference environment; 3.8+ generally works)
+- numpy and scipy, pinned in `requirements.txt` to the reference versions
+  (numpy 1.26.4, scipy 1.15.3) that reproduce the committed expected values
+  (Papers 1 and 8). Other recent versions run too — the checkers' tolerances
+  absorb platform floating-point drift, so the published numbers and a fresh
+  recomputation are not blurred together.
 - Papers 2, 4, 5 use only the standard library (math, csv, re)
 
 ```
 pip install -r requirements.txt
 ```
+
+**Continuous integration.** `.github/workflows/verify.yml` runs the whole
+verification suite on every push against freshly downloaded SPARC data, so a
+runtime error cannot sit undetected. The Paper 1 scripts (`verify_hermes.py`,
+`verify_ages.py`, `verify_gate_audit.py`, `verify_appendix_a.py`) and the
+top-level `verify_gates.py` all run and pass there.
+
+## Galaxy naming and the calibration sample
+
+Every CSV that uses SPARC galaxy names shares one canonical format, keyed to
+`paper1/ages_133.csv`, so the age table, the per-galaxy export
+(`paper1/Hermes_ConfigG_PerGalaxy_133_Export.csv`), and the age method index
+join cleanly with no alias or zero-padding mismatches. `docs/galaxy_age_method_index.csv`
+adds an `in_calibration_sample` column (TRUE for the 133 calibration galaxies,
+FALSE for galaxies that were age-considered but excluded) and an `alias` column
+for catalog cross-IDs; `docs/galaxy_alias_table.csv` maps alternate designations
+(NGC↔UGC, etc.) to the canonical names.
 
 ---
 

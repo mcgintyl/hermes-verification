@@ -499,3 +499,4 @@ if __name__ == '__main__':
 
     all_passed = all(p for _, p in results)
     print(f"\nOverall: {'PASS' if all_passed else 'FAIL'}")
+    sys.exit(0 if all_passed else 1)

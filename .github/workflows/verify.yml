@@ -1,0 +1,51 @@
+name: verify
+
+# Runs every verification script on each push / PR so a runtime error
+# (e.g. a wrapper that drops a keyword argument) cannot sit undetected.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install pinned dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compile-check every script (catches syntax errors)
+        run: python -m compileall -q paper1 paper2 paper4 paper5 paper8 verify_gates.py
+
+      - name: Download SPARC data (Lelli, McGaugh & Schombert 2016; Zenodo 16284118)
+        run: |
+          curl -sL "https://zenodo.org/api/records/16284118/files/sparc_database.zip/content" -o sparc.zip
+          mkdir -p sparc && unzip -q sparc.zip -d sparc
+          echo "SPARC_DIR=$(dirname "$(find sparc -name '*_rotmod.dat' | head -1)")" >> "$GITHUB_ENV"
+
+      - name: Age-derivation verifier (Paper 1)
+        run: python paper1/verify_ages.py
+
+      - name: Rotation-curve verifier (Paper 1)
+        run: python paper1/verify_hermes.py --sparc "$SPARC_DIR" --ages paper1/ages_133.csv
+
+      - name: Gate audit (Paper 1)
+        run: python paper1/verify_gate_audit.py --sparc "$SPARC_DIR"
+
+      - name: Appendix A sensitivity tables (Paper 1)
+        run: python paper1/verify_appendix_a.py --sparc "$SPARC_DIR"
+
+      - name: One frozen gate reproduces 133 SPARC + M33
+        run: python verify_gates.py
+        env:
+          SPARC_DIR: ${{ env.SPARC_DIR }}

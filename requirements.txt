@@ -1,2 +1,7 @@
-numpy>=1.20
-scipy>=1.7
+# Reference numerical environment for reproducing the committed verification
+# output (Python 3.10; see .github/workflows/verify.yml). Other recent
+# NumPy/SciPy versions also run — the verification tolerances absorb platform
+# floating-point drift — but these exact pins reproduce the values the scripts
+# check against. Papers 2, 4, 5 use only the Python standard library.
+numpy==1.26.4
+scipy==1.15.3
