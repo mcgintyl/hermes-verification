@@ -72,7 +72,7 @@ def info(label, detail=""):
 # ============================================================
 def read_rotmod(path):
     R, Vobs, errV, Vgas, Vdisk, Vbul = [], [], [], [], [], []
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line or line.startswith('#'):
@@ -112,8 +112,8 @@ print("PART 1: FIXED CONSTANTS")
 print("=" * 80)
 
 # Read constants from hermes_gate_phi.py source
-gate_src = open(os.path.join(PAPER1_DIR, 'hermes_gate_phi.py')).read()
-verify_src = open(os.path.join(PAPER1_DIR, 'verify_hermes.py')).read()
+gate_src = open(os.path.join(PAPER1_DIR, 'hermes_gate_phi.py'), encoding="utf-8").read()
+verify_src = open(os.path.join(PAPER1_DIR, 'verify_hermes.py'), encoding="utf-8").read()
 
 check("a_knee = 1585 (km/s)²/kpc in gate code",
       "A_KNEE_DEFAULT = 1585.0" in gate_src,
@@ -177,7 +177,11 @@ print("=" * 80)
 
 # Load test galaxy
 test_galaxy = "NGC 6946"
-test_path = os.path.join(SPARC_DIR, "NGC6946_rotmod.dat")
+test_path = _vh_mod.find_rotmod(SPARC_DIR, test_galaxy)
+if test_path is None:
+    print(f"\n  ERROR: could not locate rotmod data for {test_galaxy} under {SPARC_DIR}")
+    print("  The SPARC database looks incomplete — re-check the download.")
+    sys.exit(2)
 data = read_rotmod(test_path)
 R = data['R']
 gbar = compute_gbar(data)
@@ -488,8 +492,8 @@ print("=" * 80)
 vm = _vh_mod  # already loaded above
 
 # Source-level comparison: extract the hermes_phi function body from both files
-gate_phi_src = open(os.path.join(PAPER1_DIR, 'hermes_gate_phi.py')).read()
-verify_phi_src = open(os.path.join(PAPER1_DIR, 'verify_hermes.py')).read()
+gate_phi_src = open(os.path.join(PAPER1_DIR, 'hermes_gate_phi.py'), encoding="utf-8").read()
+verify_phi_src = open(os.path.join(PAPER1_DIR, 'verify_hermes.py'), encoding="utf-8").read()
 
 # Compare key algorithmic lines between the two files
 # Extract the core gate logic lines that must match
@@ -579,3 +583,5 @@ if fail_count == 0:
     print("  chi-squared scoring are consistent between paper and code.")
 else:
     print(f"\n  WARNING: {fail_count} check(s) failed — see details above.")
+
+sys.exit(1 if fail_count else 0)
