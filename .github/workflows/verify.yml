@@ -44,7 +44,17 @@ jobs:
         run: python paper1/verify_hermes.py --sparc "$SPARC_DIR" --ages paper1/ages_133.csv
 
       - name: Gate audit (Paper 1)
-        run: python paper1/verify_gate_audit.py --sparc "$SPARC_DIR"
+        run: |
+          set +e
+          python paper1/verify_gate_audit.py --sparc "$SPARC_DIR" >ga.out 2>ga.err
+          rc=$?
+          cat ga.out
+          cat ga.err >&2
+          if [ "$rc" -ne 0 ]; then
+            msg="$(grep -hE '\[FAIL\]|Traceback|Error|Exception' ga.out ga.err | tail -n 8)"
+            echo "::error title=gate_audit exited $rc::${msg//$'\n'/ || }"
+          fi
+          exit $rc
 
       - name: Appendix A sensitivity tables (Paper 1)
         run: python paper1/verify_appendix_a.py --sparc "$SPARC_DIR"
