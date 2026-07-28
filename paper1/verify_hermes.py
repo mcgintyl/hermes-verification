@@ -212,18 +212,22 @@ def chi2_nu(Vobs, Vmodel, errV, sigma_int_sq=SIGMA_INT_SQ):
 # ─────────────────────────────────────────────────────────
 # 6.  Hermes model:  V_model(R)
 # ─────────────────────────────────────────────────────────
-def hermes_model(data, t50_gyr, g98_kms2kpc):
+def hermes_model(data, t50_gyr, g98_kms2kpc, a_knee=A_KNEE_DEFAULT):
     """
     g_model(R)  = g_bar(R) · [1 + β · φ(R)]
     V_model(R)  = sqrt( g_model(R) · R )
 
     Returns V_model array and the computed beta.
+
+    a_knee is forwarded to the gate so the Appendix A sensitivity
+    analysis can vary the knee threshold; it defaults to the globally
+    fixed value, so ordinary callers are unaffected.
     """
     R = data['R']
     gbar = compute_gbar(data)
 
     # Gate φ(R) from baryonic profile
-    phi = hermes_phi(R, gbar)
+    phi = hermes_phi(R, gbar, a_knee=a_knee)
 
     # Age score β from age + peak acceleration
     beta = hermes_beta(t50_gyr, g98_kms2kpc)
