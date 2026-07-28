@@ -17,6 +17,13 @@ This script:
 import sys, os, csv
 import numpy as np
 
+# This report prints characters like (km/s)² and φ/β/ψ/✓; make sure that works
+# even when the console/CI stdout is not UTF-8.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 # Add the paper1 directory to path
 PAPER1_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, PAPER1_DIR)

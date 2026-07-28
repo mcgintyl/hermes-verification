@@ -12,6 +12,10 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    env:
+      # Force Python UTF-8 mode so scripts that print e.g. (km/s)^2 as "²"
+      # do not hit UnicodeEncodeError under a non-UTF-8 runner locale.
+      PYTHONUTF8: "1"
     steps:
       - uses: actions/checkout@v4
 

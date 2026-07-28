@@ -13,6 +13,12 @@ import os
 import csv
 import numpy as np
 
+# Output uses σ_int², χ²ν, ΔV etc.; keep it working under a non-UTF-8 stdout.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 # Add paper1 directory to path to import verify_hermes
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
