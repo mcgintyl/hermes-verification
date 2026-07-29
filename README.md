@@ -42,10 +42,17 @@ Every CSV that uses SPARC galaxy names shares one canonical format, keyed to
 `paper1/ages_133.csv`, so the age table, the per-galaxy export
 (`paper1/Hermes_ConfigG_PerGalaxy_133_Export.csv`), and the age method index
 join cleanly with no alias or zero-padding mismatches. `docs/galaxy_age_method_index.csv`
-adds an `in_calibration_sample` column (TRUE for the 133 calibration galaxies,
+adds an `in_calibration_sample` column (TRUE for the 133 final-sample galaxies,
 FALSE for galaxies that were age-considered but excluded) and an `alias` column
 for catalog cross-IDs; `docs/galaxy_alias_table.csv` maps alternate designations
 (NGC↔UGC, etc.) to the canonical names.
+
+The **Stage-1 calibration set** — the seven galaxies the global β parameter was
+first fitted against — is a distinct, smaller grouping from the 133-galaxy final
+sample. It is listed in `docs/stage1_calibration_set.csv` (four survived the
+full-sample age audit into `ages_133.csv`; three did not), with the three-way
+distinction between the Stage-1 set, the Tier-1 data-quality class (3 galaxies),
+and the 22-galaxy Pristine-22 subset explained in `docs/stage1_calibration_set.md`.
 
 ---
 

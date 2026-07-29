@@ -1,0 +1,8 @@
+galaxy,in_final_133,t50_gyr,g98,status
+D631-7,TRUE,3.6,509.2096629629629,Surviving Stage-1 calibration galaxy (in ages_133.csv)
+DDO 154,TRUE,5.0,322.8987283446712,Surviving Stage-1 calibration galaxy (in ages_133.csv)
+DDO 168,TRUE,7.7,578.8923516129032,Surviving Stage-1 calibration galaxy (in ages_133.csv)
+UGC 07608,TRUE,6.0,190.33639803921568,Surviving Stage-1 calibration galaxy (in ages_133.csv)
+ESO 444-G084,FALSE,2.2,,Excluded from final sample: T1/T2 borderline age
+UGC 06930,FALSE,,,Excluded from final sample: aperture-fallacy SFR (poison data; central-aperture SFR scaled to full disk)
+F583-4,FALSE,,,Excluded from final sample: no usable age data (data gap; no clean color/UV/SFR)
