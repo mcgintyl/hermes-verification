@@ -993,7 +993,7 @@ def main():
 
     # CSV output
     if args.csv:
-        with open(args.csv, "w", newline="") as f:
+        with open(args.csv, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["galaxy", "method_class", "path", "published_t50",
                              "derived_t50", "delta_gyr"])

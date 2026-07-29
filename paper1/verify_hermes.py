@@ -408,7 +408,7 @@ def run(sparc_dir, age_csv, output_csv=None):
 
     # ── Optional CSV output ──
     if output_csv:
-        with open(output_csv, 'w', newline='') as f:
+        with open(output_csv, 'w', newline='', encoding='utf-8') as f:
             writer = csv.DictWriter(f, fieldnames=[
                 'galaxy', 't50_gyr', 'g98', 'beta_eff', 'n_points',
                 'chi2nu_hermes', 'chi2nu_mond'])
