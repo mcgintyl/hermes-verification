@@ -110,6 +110,13 @@ Notable non-violations: NGC 0891 (Pro's T3 overruled by activity — "Activity T
 | Data Gap | 11 (DDO 170, ESO116-G012, ESO563-G021, F583-4, NGC 1705, UGC 02259, UGC 06818, UGC 07125, UGC 07866, UGCA 281, UGCA 442) | 0 | 11 |
 | Poison Data | 1 (UGC 06930 — Aperture Fallacy, T1/4.0 Gyr purged) | N/A | 0 |
 
+**Scope of this tally:** the counts above are over all **179 age-considered
+galaxies** (5 + 129 + 33 + 11 + 1), not the final sample. Within the final
+**133-galaxy sample** (`paper1/ages_133.csv`, `Table_S1_Age_Methods.csv`),
+**Tier 1 = 3** — D631-7, NGC 3521, UGC 00731 — because ESO 444-G084 and
+PGC 51017 were considered Tier 1 but excluded from the final sample. This matches
+Paper 1 §5 ("Tier 1 has only 3 galaxies") and `docs/stage1_calibration_set.md`.
+
 ---
 
 ## Notes
