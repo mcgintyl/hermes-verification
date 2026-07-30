@@ -1,21 +1,43 @@
 # Stage-1 calibration set
 
-The global β parameter of the Hermes equation was first fitted, in Stage 1 of
-the derivation, against **seven** young, bulgeless galaxies. Those seven are
-listed in [`stage1_calibration_set.csv`](stage1_calibration_set.csv).
+In Stage 1 of the derivation, the global β parameter of the Hermes equation was
+fitted against **seven** young, bulgeless galaxies, listed in
+[`stage1_calibration_set.csv`](stage1_calibration_set.csv).
 
-**Three of the seven did not survive the later full-sample age audit** and are
-therefore not in the final 133-galaxy sample (`paper1/ages_133.csv`):
+## The Stage-1 β fit is age-free
 
-| Galaxy | Why excluded |
-|---|---|
-| ESO 444-G084 | Age derived (t₅₀ ≈ 2.2 Gyr) but on the T1/T2 boundary; dropped from the final sample. |
-| UGC 06930 | Age traced to an SFR measured in a 21″ central aperture (Watson et al. 2012) scaled to the whole disk — overstates global SFR by ~2 dex. Rejected ("aperture fallacy"). |
-| F583-4 | No usable age data (no clean multi-band color, UV, or SFR). No t₅₀ was derived. |
+β is the single global parameter in a purely *geometric* boost,
 
-**The four that survived — D631-7, DDO 154, DDO 168, UGC 07608 — are the
-calibration galaxies present in the published files**, with `t50_gyr` and `g98`
-for each. They are the ones available to reproduce or cross-validate the β fit.
+    g_model(R) = g_bar(R) · [1 + β · φ(R)]
+
+where φ(R) is built from the shear and curvature of the baryonic rotation curve.
+β was fit by minimizing the unweighted mean per-galaxy χ²/N (V_obs vs V_model)
+across the seven galaxies, using **only their SPARC rotation curves**. Stellar
+age (t₅₀) is **not** an input to this fit (best fit β ≈ 2.807, locked at 2.81).
+
+t₅₀ enters the derivation in two other places — never the Stage-1 β fit: it was
+used to *select* a young, bulgeless sample, and its mean sets the reference age
+t_ref = 3.49 Gyr used from Stage 2 onward (the age-dependent law
+β_eff = 2.81·exp[(t_ref − t₅₀)/τ]).
+
+## Historical working ages and the audit
+
+The seven were selected on pre-audit working ages (mean = 3.49 Gyr = t_ref).
+Both those values and the current post-audit ages are in
+[`stage1_calibration_set.csv`](stage1_calibration_set.csv). The later full-sample
+age audit revised several and dropped three from the final 133-galaxy sample
+(`paper1/ages_133.csv`):
+
+| Galaxy | Pre-audit t₅₀ | Why dropped |
+|---|---|---|
+| ESO 444-G084 | 3.6 | Post-audit age (≈2.2 Gyr) landed on the T1/T2 boundary; excluded. |
+| UGC 06930 | 4.0 | Provisional age traced to a 21″ central-aperture SFR (Watson et al. 2012) scaled to the whole disk — overstates global SFR by ~2 dex. Rejected ("aperture fallacy"). |
+| F583-4 | 4.0 | Provisional only; no reliable age could be established on audit (no clean multi-band color, UV, or SFR). |
+
+The four that survived — D631-7, DDO 154, DDO 168, UGC 07608 — carry current
+t₅₀ and g₉₈ in the published files. Reproducing the Stage-1 β fit itself needs
+only the seven SPARC rotation curves (it is age-free); t₅₀ and g₉₈ are needed for
+the age-dependent stages (2+) and the final validation.
 
 ## Three different "calibration" groupings — do not conflate
 
