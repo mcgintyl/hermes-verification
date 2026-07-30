@@ -29,7 +29,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Compile-check every script (catches syntax errors)
-        run: python -m compileall -q paper1 paper2 paper4 paper5 paper8 verify_gates.py
+        run: python -m compileall -q paper1 paper2 paper4 paper5 paper8 historical verify_gates.py
 
       - name: Download SPARC data (Lelli, McGaugh & Schombert 2016; Zenodo 16284118)
         run: |
@@ -58,6 +58,9 @@ jobs:
 
       - name: Appendix A sensitivity tables (Paper 1)
         run: python paper1/verify_appendix_a.py --sparc "$SPARC_DIR"
+
+      - name: Historical Stage-1 beta reconstruction (means gate)
+        run: python historical/fit_tier1_beta.py --sparc "$SPARC_DIR"
 
       - name: One frozen gate reproduces 133 SPARC + M33
         run: python verify_gates.py

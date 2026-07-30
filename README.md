@@ -88,6 +88,16 @@ correct way to propagate the distance uncertainty.
 To verify, run `verify_gates.py` in the repository root. It confirms the single
 canonical gate reproduces both published datasets (133 SPARC and M33) to 1e-10.
 
+**Historical Stage-1 gate.** The gate above is used for every *published* result.
+The historical Stage-1 β lock (2.807 → 2.81) was produced by an *earlier* version
+of the gate that normalized by zonal means (the current gate uses medians) and
+used different shear/curvature conventions. That earlier gate is reconstructed in
+`historical/tier1_gate_v1.py`; `historical/fit_tier1_beta.py` reproduces both the
+historical lock (2.806585) and the current-gate value (2.508314) from public
+SPARC data, and runs in CI. The differences are catalogued in
+`docs/gate_version_history.md`. The historical gate is retained for
+derivation-path auditing only and is never used in a Config G computation.
+
 **Interactive sessions:** if you modify or re-run `hermes_gate_phi.py` inside an
 interactive Python session (Jupyter, IPython), you may need to explicitly reload
 the module with `importlib.reload(hermes_gate_phi)` for changes to take effect.
