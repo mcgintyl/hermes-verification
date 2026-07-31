@@ -2,6 +2,57 @@
 
 [![verify](https://github.com/mcgintyl/hermes-verification/actions/workflows/verify.yml/badge.svg)](https://github.com/mcgintyl/hermes-verification/actions/workflows/verify.yml)
 
+**What this is.** Hermes is a gravity framework in which the gravitational
+discrepancy depends on the *age* of the stellar population, not only on
+acceleration or mass distribution. Its central equation has **no free parameters
+per galaxy** — every constant is frozen and shared across the whole sample:
+
+```
+psi  = t50 * g98 / 46654            (t50 = median stellar age, g98 = 98th-pct baryonic acceleration)
+beta = pi * exp(-psi) - 1/sqrt(2*pi)
+g_model(R) = g_bar(R) * [1 + beta * phi(R)]
+```
+
+**What this repository does.** It lets anyone check those published numbers
+against public data. The scripts take the frozen constants, apply them to the
+public SPARC rotation curves (and the other papers' datasets), and reproduce the
+published results — or fail loudly. Nothing here is fitted: no parameter is
+tuned per galaxy, and the verification either reproduces the paper or it does
+not. Every script runs in CI on each push against a freshly downloaded copy of
+SPARC, so a silent breakage cannot accumulate.
+
+## Quick start
+
+```bash
+git clone https://github.com/mcgintyl/hermes-verification.git
+cd hermes-verification
+pip install -r requirements.txt
+```
+
+Fetch the public SPARC data (Lelli, McGaugh & Schombert 2016; Zenodo 16284118):
+
+```bash
+curl -sL "https://zenodo.org/api/records/16284118/files/sparc_database.zip/content" -o sparc.zip
+unzip -q sparc.zip -d sparc
+```
+
+Reproduce the Paper 1 rotation-curve result for all 133 galaxies:
+
+```bash
+python paper1/verify_hermes.py --sparc sparc/sparc_database --ages paper1/ages_133.csv
+```
+
+Confirm the single frozen gate reproduces both published datasets (133 SPARC + M33):
+
+```bash
+SPARC_DIR=sparc/sparc_database python verify_gates.py
+```
+
+Each paper folder below is self-contained and can be verified on its own; see
+the per-paper sections for the exact commands.
+
+## What each folder verifies
+
 Independent verification tools for eight papers by McGinty (2026):
 
 | Folder | Paper | What it verifies |
