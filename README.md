@@ -51,6 +51,8 @@ SPARC_DIR=sparc/sparc_database python verify_gates.py
 Each paper folder below is self-contained and can be verified on its own; see
 the per-paper sections for the exact commands.
 
+---
+
 ## What each folder verifies
 
 Independent verification tools for eight papers by McGinty (2026):
@@ -66,6 +68,8 @@ Independent verification tools for eight papers by McGinty (2026):
 | `paper8/` | *A Wear-Activated Density-Release Refinement of the Hermes Gravity Equation* (Paper 1 addendum) | Wear-gated eta operator for SPARC rotation curves |
 | `paper10/` | *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept* | Two-layer age structure in MaNGA DynPop DR17: a dominant SPS mass-to-light layer and a smaller controlled dynamical residual (7/8 mass bins) |
 | `docs/` | Supplementary materials | Age derivation audit trail (151 methods, 77 sources) |
+
+---
 
 ## Requirements
 
@@ -87,83 +91,7 @@ runtime error cannot sit undetected. The Paper 1 scripts (`verify_hermes.py`,
 `verify_ages.py`, `verify_gate_audit.py`, `verify_appendix_a.py`) and the
 top-level `verify_gates.py` all run and pass there.
 
-## Galaxy naming and the calibration sample
-
-Every CSV that uses SPARC galaxy names shares one canonical format, keyed to
-`paper1/ages_133.csv`, so the age table, the per-galaxy export
-(`paper1/Hermes_ConfigG_PerGalaxy_133_Export.csv`), and the age method index
-join cleanly with no alias or zero-padding mismatches. `docs/galaxy_age_method_index.csv`
-adds an `in_calibration_sample` column (TRUE for the 133 final-sample galaxies,
-FALSE for galaxies that were age-considered but excluded) and an `alias` column
-for catalog cross-IDs; `docs/galaxy_alias_table.csv` maps alternate designations
-(NGC↔UGC, etc.) to the canonical names.
-
-The **Stage-1 calibration set** — the seven galaxies the global β parameter was
-first fitted against — is a distinct, smaller grouping from the 133-galaxy final
-sample. It is listed in `docs/stage1_calibration_set.csv` (four survived the
-full-sample age audit into `ages_133.csv`; three did not), with the three-way
-distinction between the Stage-1 set, the Tier-1 data-quality class (3 galaxies),
-and the 22-galaxy Pristine-22 subset explained in `docs/stage1_calibration_set.md`.
-
 ---
-
-## One frozen gate (reproducing phi)
-
-The gate function phi(R) is defined once, in `paper1/hermes_gate_phi.py`, and is
-used unchanged for every result in the project — the 133 SPARC galaxies (Paper 1)
-and M33 (Paper 7). It reproduces the published phi for all 133 SPARC galaxies to
-within 4e-13, and the canonical M33 result to floating-point precision.
-
-**Note on the original M33 execution script.** The first M33 run used a separate
-script, `paper7/01_hermes_result_locked/m33_hermes_execution_script.py`, which
-carried its own copy of the gate with three incidental deviations from the
-canonical gate (knee-radius method, Savitzky-Golay edge mode, and curvature
-epsilon). Those deviations were inconsistent with Paper 7's frozen-chassis
-methodology. They have been corrected: the M33 result is regenerated with the
-canonical gate in `paper7/01b_hermes_result_canonical_gate/`, which changes M33's
-full-board chi2nu from 3.13 to 3.22 and leaves every conclusion unchanged. The
-original locked archive is kept as the historical record; see
-`paper7/01b_hermes_result_canonical_gate/m33_canonical_gate_correction_memo.md`.
-The script that performs the M33 Hermes calculation end-to-end (board → phi →
-V_hermes → chi2nu) with the canonical gate is
-`paper7/01b_hermes_result_canonical_gate/compute_m33_hermes_canonical.py`.
-The M33 board's galactocentric radius `R_kpc` is imported as-published from
-Corbelli et al. (2014) Table 1; its derivation and the `errR_kpc` scale-uncertainty
-column (a coherent 3.2% distance-scale term, not independent per-point error) are
-documented in
-`paper7/01b_hermes_result_canonical_gate/m33_radius_uncertainty_note.md`.
-`compute_m33_hermes_canonical.py --distance-sensitivity` (or `--distance <kpc>`)
-shows how chi2nu responds to the distance scale (V_bar ∝ √D at fixed V_obs), the
-correct way to propagate the distance uncertainty.
-
-To verify, run `verify_gates.py` in the repository root. It confirms the single
-canonical gate reproduces both published datasets (133 SPARC and M33) to 1e-10.
-
-**Historical Stage-1 gate.** The gate above is used for every *published* result.
-The historical Stage-1 β lock (2.807 → 2.81) was produced by an *earlier* version
-of the gate that normalized by zonal means (the current gate uses medians) and
-used different shear/curvature conventions. That earlier gate is reconstructed in
-`historical/tier1_gate_v1.py`; `historical/fit_tier1_beta.py` reproduces both the
-historical lock (2.806585) and the current-gate value (2.508314) from public
-SPARC data, and runs in CI. The differences are catalogued in
-`docs/gate_version_history.md`. The historical gate is retained for
-derivation-path auditing only and is never used in a Config G computation.
-
-**Interactive sessions:** if you modify or re-run `hermes_gate_phi.py` inside an
-interactive Python session (Jupyter, IPython), you may need to explicitly reload
-the module with `importlib.reload(hermes_gate_phi)` for changes to take effect.
-
-Everything the test needs ships with the repo **except** the SPARC rotation-curve
-database (the one external file set). Download SPARC from
-http://astroweb.cwru.edu/SPARC/ (Lelli, McGaugh & Schombert 2016), then either
-drop the `*_rotmod.dat` files in `./sparc_database` or point `SPARC_DIR` at them:
-
-```
-# from the repo root, after adding the SPARC *_rotmod.dat files:
-SPARC_DIR=/path/to/sparc_database python verify_gates.py
-```
-
-The M33 half of the test runs with no external data at all.
 
 ## Paper 1 — The Hermes Equation (`paper1/`)
 
@@ -254,6 +182,8 @@ python paper1/verify_ages.py --csv age_results.csv    # write results to CSV
 
 ---
 
+---
+
 ## Paper 2 — Flyby Anomaly Geometric Score (`paper2/`)
 
 ### The Score
@@ -299,6 +229,8 @@ python paper2/verify_flyby.py --csv results.csv     # write results to CSV
 
 ---
 
+---
+
 ## Paper 4 — Chirality at Cosmological Scale (`paper4/`)
 
 ### What It Tests
@@ -338,6 +270,8 @@ python paper4/verify_chirality.py --verbose    # show every intermediate step
 | `paper4/paper4_dark_candidates.csv` | Dark galaxy candidates (zero found) |
 | `paper4/paper4_pure_cluster_member_cuts_summary.csv` | Chirality tests per cluster membership cut |
 | `paper4/paper4_excess_variance_summary_by_richness.csv` | Excess variance by richness bin and radius |
+
+---
 
 ---
 
@@ -383,6 +317,8 @@ python paper5/verify_lensing.py --verbose    # show every intermediate step
 
 ---
 
+---
+
 ## Paper 7 — M33 External Test (`paper7/`)
 
 ### What It Contains
@@ -417,6 +353,8 @@ See `paper7/README.md` for the complete per-file inventory and provenance notes.
 
 ---
 
+---
+
 ## Paper 8 — Wear-Activated Density-Release Refinement (`paper8/`)
 
 Published on Zenodo: DOI: 10.5281/zenodo.20699991
@@ -444,6 +382,8 @@ The script exposes `compute_eta_WA`, `compute_g_model_eta`, `compute_g_model_bas
 | File | Description |
 |---|---|
 | `paper8/verify_eta.py` | Wear-activated eta operator — defines `eta_WA(R)` and the Paper 8 modified `g_model(R)`, plus baseline Hermes and MOND-simple comparisons |
+
+---
 
 ---
 
@@ -478,6 +418,90 @@ See `paper10/README.md` for the complete per-file inventory and guardrails.
 
 ---
 
+---
+
+## One frozen gate (reproducing phi)
+
+The gate function phi(R) is defined once, in `paper1/hermes_gate_phi.py`, and is
+used unchanged for every result in the project — the 133 SPARC galaxies (Paper 1)
+and M33 (Paper 7). It reproduces the published phi for all 133 SPARC galaxies to
+within 4e-13, and the canonical M33 result to floating-point precision.
+
+**Note on the original M33 execution script.** The first M33 run used a separate
+script, `paper7/01_hermes_result_locked/m33_hermes_execution_script.py`, which
+carried its own copy of the gate with three incidental deviations from the
+canonical gate (knee-radius method, Savitzky-Golay edge mode, and curvature
+epsilon). Those deviations were inconsistent with Paper 7's frozen-chassis
+methodology. They have been corrected: the M33 result is regenerated with the
+canonical gate in `paper7/01b_hermes_result_canonical_gate/`, which changes M33's
+full-board chi2nu from 3.13 to 3.22 and leaves every conclusion unchanged. The
+original locked archive is kept as the historical record; see
+`paper7/01b_hermes_result_canonical_gate/m33_canonical_gate_correction_memo.md`.
+The script that performs the M33 Hermes calculation end-to-end (board → phi →
+V_hermes → chi2nu) with the canonical gate is
+`paper7/01b_hermes_result_canonical_gate/compute_m33_hermes_canonical.py`.
+The M33 board's galactocentric radius `R_kpc` is imported as-published from
+Corbelli et al. (2014) Table 1; its derivation and the `errR_kpc` scale-uncertainty
+column (a coherent 3.2% distance-scale term, not independent per-point error) are
+documented in
+`paper7/01b_hermes_result_canonical_gate/m33_radius_uncertainty_note.md`.
+`compute_m33_hermes_canonical.py --distance-sensitivity` (or `--distance <kpc>`)
+shows how chi2nu responds to the distance scale (V_bar ∝ √D at fixed V_obs), the
+correct way to propagate the distance uncertainty.
+
+To verify, run `verify_gates.py` in the repository root. It confirms the single
+canonical gate reproduces both published datasets (133 SPARC and M33) to 1e-10.
+
+**Historical Stage-1 gate.** The gate above is used for every *published* result.
+The historical Stage-1 β lock (2.807 → 2.81) was produced by an *earlier* version
+of the gate that normalized by zonal means (the current gate uses medians) and
+used different shear/curvature conventions. That earlier gate is reconstructed in
+`historical/tier1_gate_v1.py`; `historical/fit_tier1_beta.py` reproduces both the
+historical lock (2.806585) and the current-gate value (2.508314) from public
+SPARC data, and runs in CI. The differences are catalogued in
+`docs/gate_version_history.md`. The historical gate is retained for
+derivation-path auditing only and is never used in a Config G computation.
+
+**Interactive sessions:** if you modify or re-run `hermes_gate_phi.py` inside an
+interactive Python session (Jupyter, IPython), you may need to explicitly reload
+the module with `importlib.reload(hermes_gate_phi)` for changes to take effect.
+
+Everything the test needs ships with the repo **except** the SPARC rotation-curve
+database (the one external file set). Download SPARC from
+http://astroweb.cwru.edu/SPARC/ (Lelli, McGaugh & Schombert 2016), then either
+drop the `*_rotmod.dat` files in `./sparc_database` or point `SPARC_DIR` at them:
+
+```
+# from the repo root, after adding the SPARC *_rotmod.dat files:
+SPARC_DIR=/path/to/sparc_database python verify_gates.py
+```
+
+The M33 half of the test runs with no external data at all.
+
+---
+
+## Galaxy naming and the calibration sample
+
+Every CSV that uses SPARC galaxy names shares one canonical format, keyed to
+`paper1/ages_133.csv`, so the age table, the per-galaxy export
+(`paper1/Hermes_ConfigG_PerGalaxy_133_Export.csv`), and the age method index
+join cleanly with no alias or zero-padding mismatches. `docs/galaxy_age_method_index.csv`
+adds an `in_calibration_sample` column (TRUE for the 133 final-sample galaxies,
+FALSE for galaxies that were age-considered but excluded) and an `alias` column
+for catalog cross-IDs; `docs/galaxy_alias_table.csv` maps alternate designations
+(NGC↔UGC, etc.) to the canonical names.
+
+The **Stage-1 calibration set** — the seven galaxies the global β parameter was
+first fitted against — is a distinct, smaller grouping from the 133-galaxy final
+sample. It is listed in `docs/stage1_calibration_set.csv` (four survived the
+full-sample age audit into `ages_133.csv`; three did not), with the three-way
+distinction between the Stage-1 set, the Tier-1 data-quality class (3 galaxies),
+and the 22-galaxy Pristine-22 subset explained in `docs/stage1_calibration_set.md`.
+
+---
+
+---
+
 ## Supplementary Documentation (`docs/`)
 
 | File | Description |
@@ -487,37 +511,7 @@ See `paper10/README.md` for the complete per-file inventory and guardrails.
 
 ---
 
-## Citation
-
-```
-McGinty, L. A. (2026). The Hermes Equation: Galaxy Rotation Curves from Age
-with No Free Constants.
-
-McGinty, L. A. (2026). Testing Gravity at Encounter Speed: Geometric
-Prediction of Earth Flyby Anomalies and the GRACE Absorption Hypothesis.
-
-McGinty, L. A. (2026). The Emergent Plane at Cosmological Scale: A Geometric
-Chirality Prediction, Empirical Exclusion Limits, and a Falsifiable Roadmap.
-
-McGinty, L. A. (2026). Weak Lensing Pilot: Age-Dependent Shear Signal
-in the Emergent Plane Framework (KiDS x GAMA).
-```
-
-The SPARC rotation curve data used in Paper 1 is archived on Zenodo:
-
-```
-Lelli, F., McGaugh, S. S., & Schombert, J. M. (2016). SPARC: Mass Models
-for 175 Disk Galaxies with Spitzer Photometry and Accurate Rotation Curves.
-doi:10.5281/zenodo.16284118
-```
-
-## License
-
-MIT
-
-## Feedback
-
-Anonymous or private technical feedback on the physics, datasets, code, and methodology is welcome: hermesphysics@proton.me. Please do not send confidential, proprietary, personal, restricted, or legally protected material.
+---
 
 ## Independent Audits
 
@@ -528,6 +522,8 @@ Data reproducibility audit performed by Ari Joury, PhD (particle physics, CERN b
 Data and code audit performed by Ari Joury, PhD, April 2026. Three-milestone audit reproduced all twelve geometric scores (max absolute error 4.2 × 10⁻⁵), verified source tracing for all orbital parameters, and confirmed consistency between computed results and textual claims. Audit identified citation attribution corrections incorporated in current version.
 
 Audit reports available on request. These audits cover data reproducibility and do not constitute endorsement of the theoretical framework.
+
+---
 
 ## Independent Audit Tools (Ari Joury, PhD — April 2026)
 
@@ -561,3 +557,41 @@ Sensitivity analysis replicating Appendix A results (σ²_int variation and a_kn
 | 2 | Code-vs-paper consistency | No discrepancies found |
 | 3 | Age derivation spot-checks | 54/54 claims pass; 73/80 ages within 0.5 Gyr tolerance |
 | 4 | Gate function code review | 52/52 automated checks pass |
+
+---
+
+## Citation
+
+```
+McGinty, L. A. (2026). The Hermes Equation: Galaxy Rotation Curves from Age
+with No Free Constants.
+
+McGinty, L. A. (2026). Testing Gravity at Encounter Speed: Geometric
+Prediction of Earth Flyby Anomalies and the GRACE Absorption Hypothesis.
+
+McGinty, L. A. (2026). The Emergent Plane at Cosmological Scale: A Geometric
+Chirality Prediction, Empirical Exclusion Limits, and a Falsifiable Roadmap.
+
+McGinty, L. A. (2026). Weak Lensing Pilot: Age-Dependent Shear Signal
+in the Emergent Plane Framework (KiDS x GAMA).
+```
+
+The SPARC rotation curve data used in Paper 1 is archived on Zenodo:
+
+```
+Lelli, F., McGaugh, S. S., & Schombert, J. M. (2016). SPARC: Mass Models
+for 175 Disk Galaxies with Spitzer Photometry and Accurate Rotation Curves.
+doi:10.5281/zenodo.16284118
+```
+
+---
+
+## License
+
+MIT
+
+---
+
+## Feedback
+
+Anonymous or private technical feedback on the physics, datasets, code, and methodology is welcome: hermesphysics@proton.me. Please do not send confidential, proprietary, personal, restricted, or legally protected material.
