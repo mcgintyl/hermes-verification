@@ -46,11 +46,12 @@ These are distinct sets that overlap only slightly:
 | Grouping | Size | Where | Members |
 |---|---|---|---|
 | **Stage-1 calibration set** | 7 (4 surviving) | Derivation Summary | D631-7, DDO 154, DDO 168, ESO 444-G084, F583-4, UGC 06930, UGC 07608 |
-| **Tier 1** (data-quality class) | 3 | Paper 1 §5, `Table_S1_Age_Methods.csv` | D631-7, NGC 3521, UGC 00731 |
+| **T1** (age-state class) | 3 | Paper 1 §5, `Table_S1_Age_Methods.csv` (`Tier` column) | D631-7, NGC 3521, UGC 00731 |
 | **Pristine-22** | 22 | `Table_S3_Pristine22_Calibration.csv` | a separate clean-photometry subset |
 
-Only **D631-7** is common to the Stage-1 set and the Tier-1 data class. "Tier 1"
-in Paper 1 is a *data-reliability* label, **not** the calibration set.
+Only **D631-7** is common to the Stage-1 set and the T1 age-state class. "T1" in
+Paper 1 is an *age-state* label — the youngest of three age bands — **not** the
+calibration set and **not** a statement about method quality.
 
 Note also that `in_calibration_sample` in
 [`galaxy_age_method_index.csv`](galaxy_age_method_index.csv) marks membership in
