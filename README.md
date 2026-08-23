@@ -422,10 +422,29 @@ See `paper10/README.md` for the complete per-file inventory and guardrails.
 
 ## One frozen gate (reproducing phi)
 
-The gate function phi(R) is defined once, in `paper1/hermes_gate_phi.py`, and is
-used unchanged for every result in the project — the 133 SPARC galaxies (Paper 1)
-and M33 (Paper 7). It reproduces the published phi for all 133 SPARC galaxies to
-within 4e-13, and the canonical M33 result to floating-point precision.
+> ### The canonical gate
+>
+> **`paper1/hermes_gate_phi.py` → `hermes_phi()`** is the one and only gate for
+> current work. Use it for anything new.
+>
+> `paper1/verify_hermes.py` carries a self-contained copy of the same function so
+> the verifier runs standalone; the two are cross-checked by
+> `paper1/verify_gate_audit.py` and agree exactly (0.0 difference).
+>
+> **`historical/tier1_gate_v1.py` is superseded** — a reconstruction of a
+> January 2026 gate, kept only so the historical Stage-1 calibration
+> (β ≈ 2.807) stays auditable. Do not use it for new work, and never mix the
+> two: feeding the current signed `g_bar` into the historical gate (or the
+> historical unsigned `g_bar` into `hermes_phi`) produces a hybrid matching no
+> configuration at all. It fails silently, shifting velocities across the 133
+> galaxies by a median 5% and up to 20%. See
+> [`historical/README.md`](historical/README.md) and
+> [`docs/gate_version_history.md`](docs/gate_version_history.md).
+
+The gate function phi(R) is used unchanged for every result in the project — the
+133 SPARC galaxies (Paper 1) and M33 (Paper 7). It reproduces the published phi
+for all 133 SPARC galaxies to within 4e-13, and the canonical M33 result to
+floating-point precision.
 
 **Note on the original M33 execution script.** The first M33 run used a separate
 script, `paper7/01_hermes_result_locked/m33_hermes_execution_script.py`, which

@@ -1,11 +1,24 @@
 #!/usr/bin/env python3
 """
+==============================================================================
+ SUPERSEDED -- HISTORICAL REPRODUCTION ONLY.  DO NOT USE FOR NEW WORK.
+ The canonical gate is  paper1/hermes_gate_phi.py :: hermes_phi()
+ See historical/README.md and docs/gate_version_history.md.
+==============================================================================
+
 HISTORICAL Tier-1 gate (v1) -- reconstruction of the January 2026 gate that
 produced the Stage-1 lock beta ~= 2.807 (rounded 2.81).
 
 This is NOT the current Config G gate. Do not use it for the frozen 133-galaxy
 results. It exists only to reproduce the *historical* Stage-1 calibration so the
 derivation path is auditable.
+
+DO NOT MIX THE TWO GATES. This gate expects the historical *unsigned* g_bar
+(use gbar_unsigned() below). Passing the current signed g_bar into this gate --
+or the historical unsigned g_bar into hermes_phi() -- yields a hybrid matching
+no configuration, current or historical, and fails silently. Across the 133
+galaxies that hybrid moves velocities by a median 5%, up to 20% (NGC 5371).
+Use gbar_unsigned() + tier1_gate() together, or neither.
 
 Difference from the current gate (paper1/hermes_gate_phi.py, verify_hermes.py),
 see docs/gate_version_history.md:

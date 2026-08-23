@@ -30,16 +30,24 @@ import numpy as np
 from scipy.optimize import minimize_scalar
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, HERE)
-sys.path.insert(0, os.path.join(os.path.dirname(HERE), "paper1"))
 
+# Both modules are loaded by explicit path and NOT added to sys.path. That is
+# deliberate: putting historical/ on sys.path would make `import tier1_gate_v1`
+# succeed by bare name anywhere else in the same process, which is exactly how
+# the superseded gate can be pulled into current work by accident.
 import importlib.util
-_vh_path = os.path.join(os.path.dirname(HERE), "paper1", "verify_hermes.py")
-_spec = importlib.util.spec_from_file_location("verify_hermes_hist", _vh_path)
-vh = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(vh)
 
-import tier1_gate_v1 as t1
+
+def _load(mod_name, path):
+    spec = importlib.util.spec_from_file_location(mod_name, path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+vh = _load("verify_hermes_hist",
+           os.path.join(os.path.dirname(HERE), "paper1", "verify_hermes.py"))
+t1 = _load("tier1_gate_v1_hist", os.path.join(HERE, "tier1_gate_v1.py"))
 
 LEGACY_BETA = 2.806585
 CURRENT_BETA = 2.508314
