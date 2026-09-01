@@ -27,10 +27,28 @@ import verify_hermes as vh
 # ─────────────────────────────────────────────────────────
 # Test tolerances
 # ─────────────────────────────────────────────────────────
-# Widened from the original 0.05/0.2/0.005 to absorb documented platform
-# floating-point drift across NumPy/SciPy versions (the same 1.312<->1.323
-# baseline drift noted in the README). The paper's published values remain the
-# target; a genuine error is off by factors, far outside these bounds.
+# Widened from the original 0.05/0.2/0.005 so that BOTH documented derivative
+# conventions pass. The published Paper 1 values and a fresh run of this repo
+# differ by a known, reproducible amount -- the 1.312 <-> 1.323 baseline gap --
+# and that gap is NOT floating-point noise:
+#
+#   published Paper 1 (median 1.3115) : shear s = |(R/V) * dV/dR|   chain rule
+#   current repo gate (median 1.3226) : shear s = |d ln V / d ln R| log grid
+#
+# The two are algebraically identical but not numerically identical, because
+# np.gradient is applied to different arrays on SPARC's non-uniform radial grid.
+# Swapping only that one line moves this checker from 0/133 to 133/133 against
+# the published chi2nu_configg column (max 3.6e-13). See
+# docs/gate_version_history.md.
+#
+# An earlier revision of this comment attributed the gap to platform
+# floating-point drift across NumPy/SciPy versions. That explanation was
+# refuted by experiment: the identical verifier run under the original
+# production environment (Python 3.13.2 / numpy 2.4.3 / scipy 1.17.1) is
+# bit-identical to this one, 0.0 across all 133 galaxies.
+#
+# The paper's published values remain the target; a genuine error is off by
+# factors, far outside these bounds.
 TOL_CHI2_MEDIAN = 0.15
 TOL_CHI2_TRIM = 0.5
 TOL_WIN_RATE = 0.01    # 1% (a single boundary galaxy can flip win/loss)

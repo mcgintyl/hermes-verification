@@ -3,6 +3,51 @@
 All notable changes to this repository are recorded here: what changed, when,
 and why. Entries are newest first.
 
+## 2026-09-01
+
+### Corrected
+
+Documentation only. **No code logic, no expected values, and no numerical
+results changed.** Three files carried an explanation of the 1.312 ↔ 1.323
+baseline-median gap that has since been refuted.
+
+- `paper1/verify_appendix_a.py` — the comment above `TOL_CHI2_MEDIAN` said the
+  tolerance was widened "to absorb documented platform floating-point drift
+  across NumPy/SciPy versions." Replaced with the derivative-lineage
+  explanation. `TOL_CHI2_MEDIAN` stays at `0.15`; only the justification changed.
+- `README.md` — replaced the "tolerances absorb platform floating-point drift"
+  sentence with an explicit note on the two shear conventions.
+- `docs/gate_version_history.md` — added the **third** gate lineage (the Paper 1
+  scoring gate) and corrected a misleading bullet.
+
+  **Why:** the old explanation was wrong. The 1.312 ↔ 1.323 gap is not version
+  noise — it is two algebraically identical but numerically different forms of
+  the gate's shear term on SPARC's non-uniform radial grid:
+
+      published Paper 1 (1.3115) :  s = |(R/V) · dV/dR|     chain rule, linear grid
+      current repo gate (1.3226) :  s = |d ln V / d ln R|   log grid
+
+  Verified for this entry by independent re-implementation:
+
+  | check | result |
+  |---|---|
+  | chain-rule shear vs published `chi2nu_configg` | **133/133**, max 3.6e-13, median 1.311534725 |
+  | log-grid shear vs published `chi2nu_configg` | 0/133, max 1.48e-01, median 1.322593 |
+  | log-grid shear vs published `phi_last` | **133/133**, max 4.2e-13 |
+  | chain-rule shear vs published `phi_last` | 1/133, max 5.3e-02 |
+  | scores, signed vs clipped `g_bar` | difference exactly **0.0** (score-degenerate) |
+
+  Two consequences worth recording. First, the drift explanation was refuted by
+  experiment, not argument: the same verifier under the original production
+  environment (Python 3.13.2 / numpy 2.4.3 / scipy 1.17.1) is bit-identical to
+  the pinned one, 0.0 across all 133 galaxies. Second, the perfect
+  complementarity above means the published export joins **two gate lineages** —
+  `phi_last` from the log-grid gate, `chi2nu_configg` from the chain-rule gate.
+  A `verify_gates.py` pass confirms gate outputs (`phi_last`) only and must not
+  be read as reproducing Paper 1's scores; that inference is what allowed the
+  mismatch to persist. The negative-`g_bar` clipping convention cannot be
+  recovered from the scores, since signed and clipped are numerically identical.
+
 ## 2026-08-16
 
 ### Added

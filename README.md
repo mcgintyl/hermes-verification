@@ -76,9 +76,25 @@ Independent verification tools for eight papers by McGinty (2026):
 - Python 3.10 (the pinned reference environment; 3.8+ generally works)
 - numpy and scipy, pinned in `requirements.txt` to the reference versions
   (numpy 1.26.4, scipy 1.15.3) that reproduce the committed expected values
-  (Papers 1 and 8). Other recent versions run too — the checkers' tolerances
-  absorb platform floating-point drift, so the published numbers and a fresh
-  recomputation are not blurred together.
+  (Papers 1 and 8). Other recent NumPy/SciPy versions give the same numbers —
+  the baseline median has been verified bit-identical under the original
+  production environment (Python 3.13.2 / numpy 2.4.3 / scipy 1.17.1).
+
+**A note on 1.312 vs 1.323.** Paper 1 publishes a baseline median χ²ν of
+**1.312**; a fresh run of this repository gives **1.323**. That is not version
+noise — it is two different, both-documented forms of the gate's shear term:
+
+| | shear term | median χ²ν |
+|---|---|---|
+| Published Paper 1 | `\|(R/V)·dV/dR\|` (chain rule, linear grid) | 1.3115 |
+| Current repo gate | `\|d ln V / d ln R\|` (log grid) | 1.3226 |
+
+The two are algebraically identical, but not numerically identical, because the
+finite difference is taken on SPARC's non-uniform radial grid. Changing only
+that line reproduces the published per-galaxy column exactly (133/133, max
+3.6e-13). Both conventions are recorded in
+[`docs/gate_version_history.md`](docs/gate_version_history.md) and in Paper 1's
+methods; the checkers' tolerances are set so that either one passes.
 - Papers 2, 4, 5 use only the standard library (math, csv, re)
 
 ```

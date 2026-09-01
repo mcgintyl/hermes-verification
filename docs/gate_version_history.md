@@ -35,11 +35,44 @@ gives **2.793**, isolating the normalization change as the dominant effect.
 The historical means gate also reproduces the Tier-1 spec's F583-4 golden φ
 vector to `< 5e-5`.
 
+## A third lineage: the Paper 1 scoring gate (1.312)
+
+The two gates above are not the whole story. Paper 1's published per-galaxy
+score column (`chi2nu_configg`, median **1.3115 ≈ 1.312**) is reproduced by
+**neither** of them. It comes from a third combination:
+
+> **chain-rule shear `|(R/V)·dV/dR|`, with every other component at current
+> settings** (`ε_κ = 1e-4·median`, median zone normalization, same knee, SavGol,
+> mixer and EMA).
+
+Changing only the shear line in the current gate moves the checker from
+**0/133 to 133/133** against the published column (max 3.6e-13, median
+1.311534725). The two shear forms are algebraically identical —
+`d ln V / d ln R = (R/V)(dV/dR)` — but not numerically identical, because
+`np.gradient` is applied to different arrays on SPARC's non-uniform radial grid.
+
+Note this is **not** the historical Tier-1 gate: that gate also changes ε_κ,
+normalization and gas convention, and tested as a unit it does *not* reproduce
+the scores. Only the isolated derivative swap does.
+
+The negative-`g_bar` convention is **score-degenerate** here: signed and clipped
+give identical published scores (difference exactly 0.0), because the affected
+radii produce zero model velocity either way. The derivative convention is
+uniquely identified; the clipping convention is not.
+
+An earlier explanation attributing the 1.312/1.323 gap to NumPy/SciPy version
+drift was **refuted by experiment** — the same verifier under the original
+production environment (Python 3.13.2 / numpy 2.4.3 / scipy 1.17.1) is
+bit-identical, 0.0 across all 133 galaxies.
+
 ## What this does and does not affect
 
-- It **does not** change Config G or the frozen 133-galaxy results. The current
-  gate is the published one and reproduces those outputs to floating-point
-  precision (`verify_gates.py`).
+- It **does not** change Config G's frozen gate outputs. `verify_gates.py`
+  passes — but note carefully what it checks: **gate outputs (`phi_last`), not
+  scores.** The current gate reproduces the published `phi_last` column 133/133
+  and the published *score* column 0/133. Matching one endpoint per galaxy says
+  nothing about the interior φ(R) values the score integrates over. Do not read
+  a `verify_gates.py` pass as reproducing Paper 1's scores.
 - It **does** mean the *historical* Stage-1 lock (2.807) is reproducible only
   with the historical gate. A global fit with the current public gate correctly
   returns ~2.508 — that is the expected result of the current code, not an error.
