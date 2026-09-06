@@ -32,7 +32,31 @@ from scipy.signal import savgol_filter
 # Physical / equation constants
 # ─────────────────────────────────────────────────────────
 A_KNEE_DEFAULT = 1585.0        # (km/s)^2 / kpc
-SIGMA_INT_SQ   = 386.0         # intrinsic variance floor  (km/s)^2
+
+# Intrinsic variance floor (km/s)^2, added to errV^2 in the chi-squared
+# denominator.  sqrt(386) = 19.65 km/s.
+#
+# Provenance: this is SPARC's own ~0.12 dex radial-acceleration-relation scatter
+# budget expressed in velocity space, NOT a value fitted to Hermes.  At fixed R,
+# g ~ V^2/R, so 0.12 dex in g is 0.06 dex in V, i.e. dV/V = 10^0.06 - 1 = 0.148.
+# Setting 19.65 = 0.148 * V implies a characteristic V of 132.6 km/s; SPARC's
+# median Vobs is 134.0 km/s.  The floor is therefore the data source's own
+# reported scatter at the sample's own median velocity — chosen in preference to
+# inventing a Hermes-specific floor.
+#
+# Two consequences the reader should know, both measured over the 133 galaxies /
+# 3073 points and documented in docs/chi2_error_floor.md:
+#   (1) it dominates.  386 > errV^2 at 96.8% of points, and supplies a median
+#       94.9% of the total variance.  Absolute chi-squared values here are
+#       therefore NOT comparable to published fits that use errV alone.
+#   (2) it is a single global constant, so it is not scale-free.  19.65 km/s is
+#       ~34% of a dwarf's peak velocity but ~9% of a giant's, which reorders the
+#       sample: Spearman(chi2 at floor 0, chi2 at floor 386) is only 0.71.
+#
+# Paper 1 Appendix A Table A1 reports the full sensitivity at 0 / 100 / 386 / 900
+# and verify_appendix_a.py checks it.  The Hermes-vs-MOND comparison is unaffected
+# by the choice: the same floor is applied to both models.
+SIGMA_INT_SQ   = 386.0
 A0_MOND        = 1.2e-10       # m/s^2  — MOND acceleration scale
 # Unit conversion: 1 (km/s)^2/kpc  =  3.2408e-14 m/s^2
 KMS2_KPC_TO_MS2 = 3.2408e-14

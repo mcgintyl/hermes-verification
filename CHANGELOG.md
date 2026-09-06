@@ -3,6 +3,50 @@
 All notable changes to this repository are recorded here: what changed, when,
 and why. Entries are newest first.
 
+## 2026-09-06
+
+### Documented
+
+Documentation only. **No code logic, no expected values, and no numerical
+results changed.** The intrinsic variance floor `σ_int² = 386 (km/s)²` was
+present in the code with only the bare comment "intrinsic variance floor" and no
+statement of its origin anywhere in the repository. An external reviewer
+reproducing the pipeline annotated it in their own code as "ACCORDING TO THE
+AUTHOR," which is the correct response to an undocumented constant.
+
+- `docs/chi2_error_floor.md` — **new.** Provenance, both distortions, the
+  Appendix A sensitivity table, and how to reproduce every figure from the
+  repository's own code.
+- `paper1/verify_hermes.py` — provenance and consequences recorded above
+  `SIGMA_INT_SQ`. The value is unchanged at `386.0`.
+- `README.md` — new "A note on the χ² error floor" block beside the existing
+  1.312/1.323 note, linking to the docs file.
+
+  **Why:** 386 is not arbitrary — it is SPARC's own ~0.12 dex
+  radial-acceleration-relation scatter carried into velocity space. At fixed R,
+  `g ∝ V²/R`, so 0.12 dex in `g` is 0.06 dex in `V`, giving `dV/V = 0.148`;
+  `19.65 / 0.148` implies a characteristic velocity of 132.6 km/s against SPARC's
+  median Vobs of 134.0 km/s. The floor is the data source's own reported scatter
+  at the sample's own median velocity, adopted in preference to inventing a
+  Hermes-specific one.
+
+  Two properties are now stated explicitly, both measured over 133 galaxies /
+  3073 points using the repository's own functions:
+
+  | property | measurement |
+  |---|---|
+  | floor exceeds `errV²` | 2975/3073 points (96.8%) |
+  | median share of variance from the floor | 94.9% |
+  | Spearman(χ² at floor 0, χ² at floor 386) | **0.71** — the floor reorders, not just rescales |
+  | Spearman(χ² at floor 386, Vmax) | **0.705** — the score partly tracks galaxy mass |
+  | floor as % of peak Vobs, dwarfs / giants | 34.0% / 8.7% |
+
+  The second property is the one with consequences for readers: a fixed χ²
+  cutoff used to grade fit quality will partly encode galaxy size. 97% of dwarfs
+  but 23% of giants fall below χ² = 2, and 13 of the 14 galaxies above χ² = 8 are
+  massive spirals. Neither property affects the Hermes-vs-MOND comparison, since
+  the same floor is applied to both models.
+
 ## 2026-09-01
 
 ### Corrected

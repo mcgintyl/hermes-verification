@@ -95,6 +95,29 @@ that line reproduces the published per-galaxy column exactly (133/133, max
 3.6e-13). Both conventions are recorded in
 [`docs/gate_version_history.md`](docs/gate_version_history.md) and in Paper 1's
 methods; the checkers' tolerances are set so that either one passes.
+
+**A note on the χ² error floor.** Scores here use
+`χ²ν = (1/N) Σ (Vobs − Vmodel)² / (errV² + σ_int²)` with **σ_int² = 386 (km/s)²**
+(σ_int = 19.65 km/s). That number is SPARC's own ~0.12 dex acceleration-relation
+scatter expressed in velocity space, not a value fitted to Hermes: 0.12 dex in
+`g` is 0.06 dex in `V`, so `dV/V = 0.148`, and `19.65 / 0.148` implies a
+characteristic velocity of 132.6 km/s against SPARC's median Vobs of 134.0 km/s.
+
+Two things follow, and anyone comparing these scores to other work needs both:
+
+- **The floor dominates.** It exceeds `errV²` at 96.8% of the 3073 data points
+  and supplies a median 94.9% of the variance. Absolute χ² values here are
+  therefore **not** comparable to fits scored with `errV` alone.
+- **The floor is not scale-free.** One global constant is 34% of a dwarf's peak
+  velocity but 9% of a giant's, so it reorders the sample rather than merely
+  compressing it — `Spearman(χ² at floor 0, χ² at floor 386) = 0.71`, and
+  `Spearman(χ² at 386, Vmax) = 0.705`. Fixed χ² cutoffs used to grade fit quality
+  will partly encode galaxy mass.
+
+Neither affects the Hermes-vs-MOND comparison, which applies the same floor to
+both models; Paper 1 Appendix A tabulates both at σ_int² = 0, 100, 386 and 900.
+Full detail, with the numbers reproduced from this repository's own code, is in
+[`docs/chi2_error_floor.md`](docs/chi2_error_floor.md).
 - Papers 2, 4, 5 use only the standard library (math, csv, re)
 
 ```
