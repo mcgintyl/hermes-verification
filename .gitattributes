@@ -1,0 +1,6 @@
+# The Paper 9 package must stay byte-identical to the archive published with the
+# paper: paper9/MANIFEST_SHA256.txt hashes every file, and
+# reproduce_clusters.py compares its generated Table 2 byte-for-byte against
+# expected/table2_seven.csv, which is deliberately CRLF so the comparison holds
+# on any OS. Line-ending conversion would break both.
+paper9/** -text
