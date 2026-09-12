@@ -3,7 +3,16 @@ Hermes Gate Function φ(R)
 =========================
 Reconstructed and verified by Pro (ChatGPT) on March 17, 2026.
 Verified to floating-point precision (max |Δ| ≈ 6.7e-14) against
-all 133 galaxies in Hermes_ConfigG_PerGalaxy_133_Export.csv.
+the phi_last column of Hermes_ConfigG_PerGalaxy_133_Export.csv for all
+133 galaxies, and against the M33 per-point phi (see verify_gates.py).
+
+CONVENTION: this file uses the LOG-GRID shear, s = |d lnV / d lnR|. It does NOT
+reproduce that same file's chi2nu_configg score column, which comes from the
+chain-rule shear, s = |(R/V) dV/dR| -- 0/133 against the scores, 133/133 against
+phi_last. The two forms are algebraically identical and numerically different on
+SPARC's non-uniform radial grid. Before reproducing any published number, read
+docs/gate_version_history.md ("A third lineage: the Paper 1 scoring gate") or run
+docs/check_gate_conventions.py.
 
 This is the complete gate construction for the Hermes equation:
     g_model(R) = g_bar(R) * [1 + β_eff * φ(R)]
