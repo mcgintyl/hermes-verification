@@ -3,6 +3,52 @@
 All notable changes to this repository are recorded here: what changed, when,
 and why. Entries are newest first.
 
+## 2026-09-12
+
+### Added
+
+Paper 9 is published (Zenodo concept DOI 10.5281/zenodo.22719297) and its
+reproduction package now lives in the repository. **No existing code logic, no
+expected value and no published number changed.**
+
+- `paper9/` — **new.** The Paper 9 reproduction package, byte-identical to the
+  archive published with the paper and verified against its own
+  `MANIFEST_SHA256.txt` (47 entries, no mismatches, no unlisted files).
+  `reproduce_clusters.py` rebuilds Table 2 from the CLASH lensing profiles and
+  baryon models and checks every cluster number the paper quotes (24 checks);
+  `reproduce_galaxies.py` rebuilds Table 1 from the SPARC rotation curves
+  (10 checks). SPARC is fetched and checksum-verified by `fetch_sparc.py`, not
+  redistributed.
+- `README.md` — a `paper9/` row in the folder table and a `## Paper 9` section
+  with the commands, the file inventory, and the two conventions that travel with
+  the package.
+- `.github/workflows/verify.yml` — `paper9` added to the compile check, plus
+  two steps running both halves. The galaxy step reuses the SPARC copy the
+  workflow already downloads (`fetch_sparc.py --from-dir "$SPARC_DIR"`) instead of
+  fetching from astroweb on every run.
+- `.gitignore` — excludes `paper9/data/sparc/`, `paper9/results/` and the
+  downloaded archive, so a local run cannot accidentally commit redistributed
+  SPARC data.
+
+### Documented
+
+- `paper1/Hermes_ConfigG_PerGalaxy_133_Export.csv` is now annotated in the
+  README: its `chi2nu_mond` column was computed with **a0 = 3700 exactly**, not
+  3702.8. Verified to 3.6e-15 across all 133 galaxies, while both 3702.x
+  conversions miss all 133 of them. Annotated rather than recomputed, because it
+  is a published artifact.
+- `README.md` and `verify_gates.py` — a scope note on the word "canonical".
+  Paper 9 ships the **chain-rule** gate, `paper9/hermes_clusters/gate.py`, the
+  convention that reproduces Paper 1's published *score* column, while
+  `paper1/hermes_gate_phi.py` reproduces the published *phi* values. Adding a
+  second gate to the repository made the earlier wording, "used for every result
+  in the project", literally false.
+
+  **Why:** the 1.312/1.323 question has already cost several rounds, and the
+  published export carries one column from each convention. With two gate files
+  in the repository the distinction has to be stated where someone will actually
+  read it, not only in `docs/`.
+
 ## 2026-09-06
 
 ### Documented

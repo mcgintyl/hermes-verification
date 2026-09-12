@@ -22,3 +22,8 @@ Thumbs.db
 
 # Claude Code
 .claude/
+
+# Paper 9: SPARC rotation curves are fetched, not redistributed; run outputs are local
+paper9/data/sparc/
+paper9/results/
+paper9/data/Rotmod_LTG.zip

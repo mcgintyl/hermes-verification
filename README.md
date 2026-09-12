@@ -66,6 +66,7 @@ Independent verification tools for eight papers by McGinty (2026):
 | — | *Polar Ring Galaxies and the Shape of the Extra Gravity: A Proof of Concept Test* — DOI: 10.5281/zenodo.19392646 | Reference only — no verification package in this repository |
 | `paper7/` | *Field Audit: Board-Complete Data and the Limits of External Gravity-Model Testing* | M33 external test data package: source-native board, locked Hermes result, MOND comparator, sensitivity + outer-disk audits |
 | `paper8/` | *A Wear-Activated Density-Release Refinement of the Hermes Gravity Equation* (Paper 1 addendum) | Wear-gated eta operator for SPARC rotation curves |
+| `paper9/` | *The Hermes Equation: Cluster Lensing from a Frozen Galaxy Gate* - DOI: 10.5281/zenodo.22719297 | Rebuilds both published tables from public inputs: Table 2 byte for byte from the CLASH lensing and baryon models, Table 1 from the SPARC curves; 34 automated checks |
 | `paper10/` | *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept* | Two-layer age structure in MaNGA DynPop DR17: a dominant SPS mass-to-light layer and a smaller controlled dynamical residual (7/8 mass bins) |
 | `docs/` | Supplementary materials | Age derivation audit trail (151 methods, 77 sources) |
 
@@ -218,6 +219,7 @@ python paper1/verify_ages.py --csv age_results.csv    # write results to CSV
 | `paper1/verify_ages.py` | Age derivation verification — re-derives t₅₀ via three conversion paths |
 | `paper1/hermes_gate_phi.py` | Standalone gate function phi(R), verified to floating-point precision |
 | `paper1/ages_133.csv` | Age table for 133 galaxies (galaxy, t50 in Gyr, g98 in (km/s)^2/kpc) |
+| `paper1/Hermes_ConfigG_PerGalaxy_133_Export.csv` | Published per-galaxy results. Two conventions travel with this file. `chi2nu_configg` comes from the chain-rule shear (see [`docs/gate_version_history.md`](docs/gate_version_history.md)), and `chi2nu_mond` was computed with a0 = 3700 exactly rather than 3702.8 - verified to 3.6e-15 across all 133 galaxies. Annotated, not recomputed: it is a published artifact |
 
 ---
 
@@ -426,6 +428,65 @@ The script exposes `compute_eta_WA`, `compute_g_model_eta`, `compute_g_model_bas
 
 ---
 
+## Paper 9 - Cluster Lensing from a Frozen Galaxy Gate (`paper9/`)
+
+Published on Zenodo: DOI: 10.5281/zenodo.22719297
+
+### What It Implements
+
+The reproduction package for Paper 9: the galaxy baseline of Table 1 on 133 SPARC
+galaxies, and the cluster result of Table 2 on seven relaxed CLASH clusters, from
+published inputs only. `paper9/` is byte-identical to the package archived with the
+paper, verified against `paper9/MANIFEST_SHA256.txt`.
+
+```bash
+python paper9/reproduce_clusters.py                        # Table 2, 24 checks
+python paper9/fetch_sparc.py --from-dir /path/to/rotmod    # or bare, to download
+python paper9/reproduce_galaxies.py                        # Table 1, 10 checks
+```
+
+Each script prints one line per check and exits non-zero if any check fails.
+34 checks in total. `reproduce_clusters.py` needs no external data.
+
+### Two conventions that travel with this package
+
+- **The gate.** `paper9/hermes_clusters/gate.py` implements the **chain-rule**
+  shear, `|(R/V) dV/dR|`, which is the convention Paper 1's published score column
+  was computed with. It is deliberately not the log-grid gate in
+  `paper1/hermes_gate_phi.py`, which reproduces the published *phi* values instead.
+  Both lineages are documented in
+  [`docs/gate_version_history.md`](docs/gate_version_history.md); run
+  [`docs/check_gate_conventions.py`](docs/check_gate_conventions.py) to see which
+  convention reproduces which published column.
+- **a0.** `galaxies.py` uses a0 = 3702.789, from the rounded unit constant
+  `1.2e-10 / 3.2408e-14`, because Table 1 was published with it. `model.py` uses
+  a0 = 3702.813, the exact parsec conversion, because the Table 2 lock used it. The
+  two differ by 6.4e-06 relative, worth 1e-05 on the galaxy MOND median, and each
+  half reproduces its own published table exactly. Do not harmonise them.
+
+### SPARC data
+
+Not redistributed here. `fetch_sparc.py` downloads the public archive, keeps only
+the 133 files the paper scores, and verifies every one against
+`paper9/data/sparc_manifest.csv`, so you can be sure you are running on the same
+bytes the published result used. SPARC's terms ask that users cite Lelli, McGaugh
+& Schombert (2016).
+
+### Paper 9 Files
+
+| Path | Purpose |
+|---|---|
+| `paper9/reproduce_clusters.py` | Table 2 and every cluster number quoted in the paper - 24 checks |
+| `paper9/reproduce_galaxies.py` | Table 1 and the indistinguishability tests - 10 checks |
+| `paper9/fetch_sparc.py` | Fetches and checksum-verifies the 133 SPARC rotation curves |
+| `paper9/hermes_clusters/` | `gate.py` (chain-rule phi), `boards.py` (baryonic carrier and node admission, verbatim from the sealed board build), `model.py` (cluster responses and the GLS amplitude fit), `galaxies.py` (rotation curves, Hermes and MOND velocities) |
+| `paper9/data/` | Famaey and Mistele inputs (CC BY 4.0), Rmax_X, the age table, the SPARC manifest, and `SOURCES.md` with citations and per-file checksums |
+| `paper9/expected/` | The published Table 2 and full-precision reference values |
+| `paper9/MANIFEST_SHA256.txt` | SHA-256 of every shipped file |
+
+---
+
+
 ## Paper 10 — Two Layers of Galaxy Aging in MaNGA DynPop (`paper10/`)
 
 Published on Zenodo: DOI: 10.5281/zenodo.21088606
@@ -465,6 +526,14 @@ See `paper10/README.md` for the complete per-file inventory and guardrails.
 >
 > **`paper1/hermes_gate_phi.py` → `hermes_phi()`** is the one and only gate for
 > current work. Use it for anything new.
+>
+> **Scope of "canonical".** This section and `verify_gates.py` are about the gate
+> that reproduces the published **phi** values. Paper 1's published **score**
+> column came from a different shear convention, the chain rule, shipped as
+> `paper9/hermes_clusters/gate.py`. Neither is an error and they are not
+> interchangeable: see
+> [`docs/gate_version_history.md`](docs/gate_version_history.md) and run
+> [`docs/check_gate_conventions.py`](docs/check_gate_conventions.py).
 >
 > `paper1/verify_hermes.py` carries a self-contained copy of the same function so
 > the verifier runs standalone; the two are cross-checked by

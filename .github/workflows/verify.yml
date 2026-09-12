@@ -29,7 +29,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Compile-check every script (catches syntax errors)
-        run: python -m compileall -q paper1 paper2 paper4 paper5 paper8 historical verify_gates.py
+        run: python -m compileall -q paper1 paper2 paper4 paper5 paper8 paper9 historical verify_gates.py
 
       - name: Download SPARC data (Lelli, McGaugh & Schombert 2016; Zenodo 16284118)
         run: |
@@ -64,5 +64,13 @@ jobs:
 
       - name: One frozen gate reproduces 133 SPARC + M33
         run: python verify_gates.py
+
+      - name: Cluster pipeline, Table 2 (Paper 9)
+        run: python paper9/reproduce_clusters.py
+
+      - name: Galaxy baseline, Table 1 (Paper 9)
+        run: |
+          python paper9/fetch_sparc.py --from-dir "$SPARC_DIR"
+          python paper9/reproduce_galaxies.py
         env:
           SPARC_DIR: ${{ env.SPARC_DIR }}

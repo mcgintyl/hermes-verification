@@ -4,8 +4,14 @@
 verify_gates.py -- one frozen gate reproduces both published datasets.
 
 The gate function phi(R) is defined once, in paper1/hermes_gate_phi.py, and is
-used for every result in the project. This script imports that gate and checks it
-against both published datasets to a tolerance of 1e-10:
+used for every published phi value in the project. This script imports that gate
+and checks it against both published phi datasets to a tolerance of 1e-10:
+
+NOTE ON SCOPE: this checks phi, not scores. Paper 1's published score column
+(chi2nu_configg) came from the chain-rule shear, shipped as
+paper9/hermes_clusters/gate.py; the gate below reproduces the published phi_last
+column and the M33 per-point phi. See docs/gate_version_history.md and
+docs/check_gate_conventions.py.
 
   CLAIM 1  Paper 1 -- 133 SPARC galaxies (phi_last)
   CLAIM 2  Paper 7 -- M33 canonical-gate result (per-point phi)
