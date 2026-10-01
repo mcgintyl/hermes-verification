@@ -65,7 +65,7 @@ expected/               the published Table 2, the per-galaxy Paper 1 scores, an
 
 At galaxy scale, for each of the 133 galaxies:
 
-1. The baryonic acceleration is g_bar = [V_disk² + V_bul² + sign(V_gas) V_gas²] / R, from the SPARC rotation-curve file, at the published mass-to-light ratios.
+1. The baryonic acceleration is g_bar = [V_disk² + V_bul² + sign(V_gas) V_gas²] / R, from the SPARC rotation-curve file at SPARC's default normalisation of Υ* = 1.0 at 3.6 μm, used as given for both models with no per-galaxy adjustment, as in Paper 1 (McGinty 2026a).
 2. The gate φ(R) is computed from g_bar by the same chain-rule construction used at cluster scale.
 3. Hermes 1 predicts V = √(g_bar [1 + β φ] R), with β = π e^(−ψ) − 1/√(2π) and ψ = t₅₀ g₉₈ / 46654.
 4. MOND uses the simple interpolation function, ν(y) = ½ [1 + √(1 + 4/y)] with y = g_bar / a₀.
@@ -99,6 +99,11 @@ The galaxy rotation curves are from SPARC: Lelli, McGaugh & Schombert (2016), AJ
 `data/SOURCES.md` has the full citations and a checksum for every file.
 
 The code in this package (`reproduce_clusters.py`, `reproduce_galaxies.py`, `fetch_sparc.py` and `hermes_clusters/`) is released under the MIT licence; see `LICENSE`.
+
+## Versions
+
+- **v2 (2026-10-01).** Wording and usability fixes from a cold-run audit: the Υ* statement above, a plain message instead of a traceback when the SPARC curves are missing, and the K = 1 reference line labelled per node. No computation and no number changed.
+- **v1 (2026-09-11).** `paper9_reproduction_v1.zip`, SHA-256 `714121dafa8b6e6b4a4346bd7a93d1e276fda8eca7a4723d32fdfcca79c431ae`, the build checked in the 2026-09-30 audit.
 
 ## Tested with
 

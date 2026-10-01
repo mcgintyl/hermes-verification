@@ -16,9 +16,10 @@ g_model(R) = g_bar(R) * [1 + beta * phi(R)]
 **What this repository does.** It lets anyone check those published numbers
 against public data. The scripts take the frozen constants, apply them to the
 public SPARC rotation curves (and the other papers' datasets), and reproduce the
-published results — or fail loudly. Nothing here is fitted: no parameter is
-tuned per galaxy, and the verification either reproduces the paper or it does
-not. Every script runs in CI on each push against a freshly downloaded copy of
+published results — or fail loudly. No parameter is tuned per galaxy, and the
+verification either reproduces the paper or it does not. The one fitted
+quantity in the repository is Paper 9's cluster amplitude K, one per cluster,
+fitted by least squares and described in the Paper 9 section. Every script runs in CI on each push against a freshly downloaded copy of
 SPARC, so a silent breakage cannot accumulate.
 
 ## Quick start
@@ -436,8 +437,9 @@ Published on Zenodo: DOI: 10.5281/zenodo.22719297
 
 The reproduction package for Paper 9: the galaxy baseline of Table 1 on 133 SPARC
 galaxies, and the cluster result of Table 2 on seven relaxed CLASH clusters, from
-published inputs only. `paper9/` is byte-identical to the package archived with the
-paper, verified against `paper9/MANIFEST_SHA256.txt`.
+published inputs only. The paper's PDFs are on Zenodo (DOI above); the code and
+data that reproduce it are published here, in `paper9/`, and every shipped file is
+listed with its SHA-256 in `paper9/MANIFEST_SHA256.txt`.
 
 ```bash
 python paper9/reproduce_clusters.py                        # Table 2, 24 checks
@@ -489,7 +491,7 @@ bytes the published result used. SPARC's terms ask that users cite Lelli, McGaug
 
 ## Paper 10 — Two Layers of Galaxy Aging in MaNGA DynPop (`paper10/`)
 
-Published on Zenodo: DOI: 10.5281/zenodo.21088606
+Published on Zenodo: DOI (concept, resolves to the latest version): 10.5281/zenodo.21088605
 
 ### What It Contains
 

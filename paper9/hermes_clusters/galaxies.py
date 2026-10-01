@@ -107,6 +107,8 @@ def rotmod_path(sparc_dir, galaxy, manifest=None):
     if candidate.is_file():
         return candidate
     target = (stem + "_rotmod.dat").lower()
+    if not sparc_dir.is_dir():
+        return None
     for entry in sparc_dir.iterdir():
         if entry.name.lower() == target:
             return entry

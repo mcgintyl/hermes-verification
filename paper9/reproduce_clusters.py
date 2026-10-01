@@ -199,7 +199,7 @@ for k in "HM":
 check("does K vary between clusters more than its errors allow?", near(hp["H"], 0.005, 3) and near(hp["M"], 0.24, 2),
       "homogeneity p: Hermes 1 %.4f, MOND %.3f" % (hp["H"], hp["M"]))
 k1 = {k: sum(chi(b, k, 1.0) for b in SEVEN) / N for k in "HM"}
-print("  (for reference, K = 1, the equations as written: Hermes 1 %.2f, MOND %.2f chi2/dof)" % (k1["H"], k1["M"]))
+print("  (for reference, K = 1, the equations as written: Hermes 1 %.2f, MOND %.2f chi2 per node, over all 51 nodes)" % (k1["H"], k1["M"]))
 
 # ---------------------------------------------------------------------------
 print("8. Baryon closure (section 5)")

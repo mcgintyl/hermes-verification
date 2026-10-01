@@ -3,5 +3,7 @@
 # NumPy/SciPy versions also run — the verification tolerances absorb platform
 # floating-point drift — but these exact pins reproduce the values the scripts
 # check against. Papers 2, 4, 5 use only the Python standard library.
+# Paper 9 (paper9/) also needs pandas.
 numpy==1.26.4
 scipy==1.15.3
+pandas==2.3.1

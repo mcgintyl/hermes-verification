@@ -3,6 +3,35 @@
 All notable changes to this repository are recorded here: what changed, when,
 and why. Entries are newest first.
 
+## 2026-10-01
+
+### Fixed
+
+Found in a cold-run audit of Paper 9 on 2026-09-30. **No computation, no expected
+value and no published number changed:** `reproduce_clusters.py` 24/24 with Table 2
+still byte-identical (`47ddd6b7…`), `reproduce_galaxies.py` 10/10.
+
+- `requirements.txt` — added `pandas==2.3.1`. CI had failed on every commit since
+  `paper9/` was added (71e896c, 07bc908): the workflow installs only this file, and
+  the Paper 9 scripts import pandas.
+- `README.md` — the 2026-09-12 entry below and the Paper 9 section said `paper9/` is
+  byte-identical to a package archived or published with the paper. It is not: the
+  Zenodo record (10.5281/zenodo.22719297) holds the paper PDFs only, and the
+  reproduction code and data are published here, in `paper9/`. The section now says
+  so. The opening "Nothing here is fitted" now names the one exception, Paper 9's
+  per-cluster amplitude K. The Paper 10 DOI is now the concept DOI (21088605); the
+  version DOI it replaced (21088606) pointed at the superseded v1.
+- `paper9/` — package v2:
+  - `README.md` states the SPARC input as Paper 1 does, the default normalisation
+    Υ* = 1.0 used as given for both models, instead of "the published mass-to-light
+    ratios"; adds a short version note.
+  - `hermes_clusters/galaxies.py` — `reproduce_galaxies.py` run before
+    `fetch_sparc.py` now prints its "Run: python fetch_sparc.py" message instead
+    of a `FileNotFoundError` traceback.
+  - `reproduce_clusters.py` — the K = 1 reference line is labelled chi2 per node
+    (it divides by 51 nodes, not by the 44 degrees of freedom).
+  - `MANIFEST_SHA256.txt` regenerated for the three changed files.
+
 ## 2026-09-12
 
 ### Added
