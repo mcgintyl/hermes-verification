@@ -65,7 +65,7 @@ expected/               the published Table 2, the per-galaxy Paper 1 scores, an
 
 At galaxy scale, for each of the 133 galaxies:
 
-1. The baryonic acceleration is g_bar = [V_disk² + V_bul² + sign(V_gas) V_gas²] / R, from the SPARC rotation-curve file at SPARC's default normalisation of Υ* = 1.0 at 3.6 μm, used as given for both models with no per-galaxy adjustment, as in Paper 1 (McGinty 2026a).
+1. The baryonic acceleration is g_bar = [V_disk² + V_bul² + sign(V_gas) V_gas²] / R, from the SPARC rotation-curve file at SPARC's default normalisation of Υ* = 1.0 at 3.6 μm, used as given for both models with no per-galaxy adjustment, as in Paper 1 (McGinty 2026a). g_bar is negative at only two points in the sample, UGC 01281's two innermost (R = 0.08 and 0.23 kpc). There the baryonic velocity entering the gate, √(g_bar R), is set to zero, both models' predicted accelerations are clipped at zero, so both predict V = 0, and the two points are scored like any other.
 2. The gate φ(R) is computed from g_bar by the same chain-rule construction used at cluster scale.
 3. Hermes 1 predicts V = √(g_bar [1 + β φ] R), with β = π e^(−ψ) − 1/√(2π) and ψ = t₅₀ g₉₈ / 46654.
 4. MOND uses the simple interpolation function, ν(y) = ½ [1 + √(1 + 4/y)] with y = g_bar / a₀.
@@ -86,7 +86,7 @@ At cluster scale, for each cluster:
 ## Assumptions to be aware of
 
 - **t₅₀ = 10 Gyr for every cluster.** It has no effect on χ², because K absorbs ψ exactly (cluster check 3).
-- **The 3–8% baryon-closure estimate assumes that stars make up 10–15% of a cluster's baryons.** This is a benchmark taken from the literature, not a measurement from these data. The carrier's own stellar share is about 7.5%.
+- **The 3–8% baryon-closure estimate assumes that stars make up 10–15% of a cluster's baryons.** This is an assumed benchmark, not a measurement from these data. The carrier's own stellar share is about 7.5%.
 - **The gas beyond R_max,X is the best-fit profile continued outward, as in Famaey et al.'s code.** Mistele et al.'s alternative, a 1/r⁴ tail from R_max,X, reverses the Hermes 1 vs MOND ranking (cluster check 6).
 - **The two halves of the paper convert a₀ = 1.2 × 10⁻¹⁰ m s⁻² to (km/s)²/kpc slightly differently.** Table 1 was computed with a₀ = 3702.789, from the rounded unit constant 1 (km/s)²/kpc = 3.2408 × 10⁻¹⁴ m s⁻²; Table 2 with a₀ = 3702.813, from the exact parsec conversion. The two differ by 6.4 × 10⁻⁶ relative. Each half of this package uses the constant its own published table used, so both tables reproduce exactly. The difference moves the galaxy MOND median χ²/N by 1 × 10⁻⁵ (1.142686 against 1.142696) and changes nothing the paper quotes to three decimals; `reproduce_galaxies.py` prints the median under both conversions so you can see the size of it.
 

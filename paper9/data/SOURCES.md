@@ -6,7 +6,7 @@ The files in `famaey/` and `mistele/` are unmodified copies of files published o
 
 Famaey, B., Pizzuti, L. & Saltas, I. (2025). *On the nature of the missing mass of galaxy clusters in MOND: the view from gravitational lensing* (data and code). Zenodo. https://doi.org/10.5281/zenodo.15299349. Paper: arXiv:2410.02612.
 
-- `famaey/ClusterInfo.py`: the gas-density fit parameters (mostly from Laudato, Salzano & Umetsu 2022, MNRAS 511, 1878, fitted to the Chandra data of Donahue et al. 2014), BCG masses, r₂₀₀, redshifts and dynamical-state flags, and the gas-mass integral.
+- `famaey/ClusterInfo.py`: the gas-density fit parameters, BCG masses, r₂₀₀, redshifts and dynamical-state flags, and the gas-mass integral. Famaey et al. (arXiv:2410.02612, footnote 1) report that the gas profiles were provided by V. Salzano, computed following the prescription of Laudato, Salzano & Umetsu (2022), MNRAS 511, 1878, and double-checked against the Chandra Data Archive. Mistele et al. (2025, §2.2) add that most of these fits come originally from Laudato et al. (2022), based on the Chandra data of Donahue et al. (2014), and that Famaey et al. redid them for a few clusters whose implied gas masses were unreasonably small.
 - `famaey/fgasMACS.txt`: the member-galaxy template.
 - `famaey/profiles/results_profile_NOgnfw_all_*.txt`: nine files from the record's `mass_profiles.zip` (MD5 `931bf31b3d68a04f6f436bd941549ab3`). Only the radius column is used, as the 50-point radial grid of the baryonic carrier.
 

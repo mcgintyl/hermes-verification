@@ -221,7 +221,7 @@ m1 = float(np.median(k_all(1.0)))
 stellar = float(np.mean(fr[:, 0] + fr[:, 2])) / 100.0
 f_lo, f_hi = (1.0 + (s - stellar) / (1.0 - s) for s in STELLAR_BENCHMARK)
 d_lo, d_hi = (100.0 * (1.0 - float(np.median(k_all(f))) / m1) for f in (f_lo, f_hi))
-check("complete baryonic inventories would reduce K by about 3-8%", round(d_lo) == 3 and round(d_hi) == 8,
+check("assuming a 10-15% stellar share, uniformly rescaled, K falls by about 3-8%", round(d_lo) == 3 and round(d_hi) == 8,
       "carrier stellar share %.1f%%; a %.0f-%.0f%% benchmark means f = %.3f-%.3f; median K falls %.1f-%.1f%%" % (
           100 * stellar, 100 * STELLAR_BENCHMARK[0], 100 * STELLAR_BENCHMARK[1], f_lo, f_hi, d_lo, d_hi))
 lo, hi = 1.0, 8.0  # beta changes sign near f = 9.6, so the search stays below it
