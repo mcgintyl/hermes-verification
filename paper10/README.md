@@ -1,88 +1,84 @@
-# Paper 10 — Two Layers of Galaxy Aging in MaNGA DynPop
+# Paper 10: Two Layers of Galaxy Aging in MaNGA DynPop
 
 **Full title:** *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept*
 
-**Zenodo DOI:** [10.5281/zenodo.21088606](https://doi.org/10.5281/zenodo.21088606)
+**Zenodo DOI (concept, resolves to the latest version):** [10.5281/zenodo.21088605](https://doi.org/10.5281/zenodo.21088605)
 
-**Primary dataset:** MaNGA DynPop DR17 public catalogs
+**Primary dataset:** MaNGA DynPop DR17 public catalogs by Zhu et al. and Lu et al. (Zenodo [10.5281/zenodo.17518315](https://doi.org/10.5281/zenodo.17518315) and [10.5281/zenodo.15742825](https://doi.org/10.5281/zenodo.15742825), CC BY 4.0; creators, files and what this package changed: `data/SOURCES.md`)
 **Claim level:** proof of concept / signal documentation, not a detection claim
 
-## What this package contains
+## Reproduce everything with one command
 
-This is the reproducibility and verification package for Paper 10. It tests a principle-level
-prediction — that at fixed stellar mass, younger galaxies show larger mass-to-light discrepancies
-between dynamical and stellar-population estimates — using three joined public MaNGA DynPop DR17
-products (JAM dynamical catalogs, stellar-population/star-formation-history catalogs, and
-circular-velocity-curve tables). After quality cuts, 5,952 galaxies are split into eight equal-count
-stellar-mass bins, and the youngest and oldest quartiles are compared within each bin.
+```
+pip install -r requirements.txt      # Python 3.10 (tested with 3.10.14)
+python reproduce.py                  # about 2.5 minutes on a desktop PC
+```
 
-The result is a **two-layer age structure**:
+`reproduce.py` checks the SHA-256 of the shipped joined table, runs the three analysis scripts below into `reproduce_outputs/`, compares their outputs with the archived and reference files, and checks every analysis number quoted in the v3 main paper and appendix, plus the size/distance sensitivity numbers, against the regenerated values (several hundred checks; literature values such as the DynPop II template ages are quoted, not regenerated). It prints PASS or FAIL for each check and a total, writes `reproduce_outputs/reproduce_report.md`, and exits with status 1 on any FAIL. The report also lists values that the v2 text printed differently; v3 corrects them.
 
-- **Layer 1 (visible SPS layer).** The raw mass-to-light discrepancy (DML) is larger for young
-  galaxies in 8/8 mass bins (observed SPS) and 6/8 bins (intrinsic SPS). A component decomposition
-  shows this is mostly driven by the SPS denominator — older stellar populations have higher stellar
-  mass-to-light ratios, exactly as standard stellar-population synthesis predicts. This is not a discovery.
-- **Layer 2 (controlled dynamical residual).** Under a collinearity-free strict-control model that
-  removes SPS mass-to-light, metallicity, and structural variables, a smaller dynamical residual
-  persists in **7/8 mass bins** across all three SPS control sets. Parametric NFW/gNFW dark-matter
-  fractions do not show the same signal, and the strongest residual tracks the dust-carrying SPS
-  definition. The paper presents this as a proof of concept and an invitation to specialist
-  replication, not a detection claim.
+To start from the public catalogs instead of the shipped table:
 
-The main paper's primary controlled-residual result is the **strict-control specification** (7/8 bins).
-The original kitchen-sink specification (8/8 bins) is retained as supplementary sensitivity only.
+```
+python reproduce.py --from-public --jam SDSSDR17_MaNGA_JAM_v2.fits \
+    --sfh DynPop2_SP_SFH_v2.hdf5.zip --cvc SDSSDR17_MaNGA_gNFW_cyl_Vcirc_ApJS.txt
+```
+
+The three files (21 MB, 1 MB and 229 MB) come from Zenodo records 17518315 and 15742825; their download URLs and MD5 checksums are in the header of `build_merged_table.py`, which checks them. The paths can also come from the `P10_JAM`, `P10_SFH` and `P10_CVC` environment variables. The zip is unpacked to a temporary 3 GB file that is deleted afterwards; the unzipped `SP_SFH_v2.hdf5` from the same record also works. The rebuild passes if every column of both tables matches the shipped one to at most 2 ulps per value with an identical NaN pattern (see `data/` below).
+
+Line endings: the SHA-256 values in `reproduce.py` and `file_manifest.csv` are for the files as committed, with LF line endings. A Git checkout with `core.autocrlf=true` (the Windows default) converts text files to CRLF unless the repository's `.gitattributes` marks `paper10/` as `-text`. `reproduce.py` then checks the data tables' LF-normalized bytes and says so in the check note, and `make_manifest.py --check` lists such files as CRLF-only differences; `make_manifest.py` refuses to rewrite the manifest from a CRLF checkout. The run manifests that the analysis scripts write (`sledgehammer_rerun_manifest.json`, `sensitivity_summary.json`) record the SHA-256 of the input files as read, so in such a checkout they show the CRLF hashes; the numeric outputs are the same.
+
+## What the package tests
+
+A principle-level prediction: at fixed stellar mass, younger galaxies should show larger mass-to-light discrepancies between dynamical and stellar-population estimates. Three public DynPop DR17 products are joined on PlateIFU (JAM dynamical catalog, stellar-population/star-formation-history catalog, circular-velocity-curve table). After the quality cut (`Qual >= 1`) and finite-value requirements, 5,952 PlateIFU entries (5,875 distinct MaNGA IDs) are split into eight equal-count stellar-mass bins of 744, and the youngest and oldest quartiles by `T50` (186 each) are compared within each bin.
+
+## Result
+
+- **Layer 1 (visible SPS layer).** The raw mass-to-light discrepancy (DML) is larger for young galaxies in 8/8 mass bins (observed SPS) and 6/8 bins (intrinsic SPS). A component decomposition shows this is mostly driven by the SPS denominator: older stellar populations have higher stellar mass-to-light ratios, as standard stellar-population synthesis predicts. This is not a discovery.
+- **Layer 2 (controlled dynamical residual).** Under a reduced strict-control model (one term per quantity: one metallicity, one flattening and one dispersion term; the both-SPS set carries both SPS M/L terms) that regresses out SPS mass-to-light, metallicity and structural variables, with galaxy size in kpc, a smaller dynamical residual persists in 7/8 mass bins with observed-SPS controls and 6/8 with both (mass-adjusted +0.0188 and +0.0162), but not with intrinsic-SPS controls (3/8, -0.0008); a linear `T50` term is significant in all three. With angular size, as in v1 and v2, all three sets give 7/8 (+0.0225 intrinsic, +0.0387 observed, +0.0344 both). Parametric NFW/gNFW dark-matter fractions do not show the same signal. The residual is largest with the observed-SPS definition, which, like the JAM dynamical M/L, is referenced to dust-attenuated r-band light.
+- **Size and distance sensitivity.** The size control of v1 and v2, `logRe`, is an angular size (log10 of the MGE effective radius in arcsec); the main result now uses size in kpc (converted with `DA`). At fixed stellar mass the young quartile lies 1.2 to 1.7 times farther away than the old quartile in every bin and is 2 to 3.5 times more often a MaNGA Secondary-sample target. With size in kpc the intrinsic, observed and both-SPS residuals give 3/8, 7/8 and 6/8 bins (mass-adjusted -0.0008, +0.0188, +0.0162); with log distance added to the published controls they give 3/8, 6/8 and 3/8 (-0.0084, +0.0088, +0.0057). Those losses depend on the metallicity control. Across the 12-variant grid (metallicity weighting x flattening term x SPS set), kpc size gives 7/8 in all six light-weighted-metallicity variants and 3/8 to 7/8 in the mass-weighted ones; with distance controlled the grid gives 3/8 to 6/8, the three 3/8 cells all use mass-weighted metallicity, and the other nine give 5/8 or 6/8. No distance-controlled variant reaches 7/8 (a 6/8 count gives count p 0.13 to 0.14 in the sensitivity runs), and with light-weighted metallicity the intrinsic-SPS residual falls to a tenth to a quarter of its angular-size amplitude while the observed- and both-SPS residuals give 6/8. With log distance added to the published controls the magnitude p is 0.010 for observed SPS (bootstrap 95% CI +0.001 to +0.017), 0.055 for both SPS and 0.89 for intrinsic SPS. In the MaNGA Primary sample alone the kpc specification gives 4/8 in all three sets (6/8 with angular size, at 54 to 63% of the full-sample amplitude); in the Secondary sample the bin test finds no young > old residual with either size unit, and the intrinsic-SPS difference is reversed (-0.0192 with angular size, bootstrap 95% CI -0.033 to -0.008; -0.0228, CI -0.042 to -0.014, with size in kpc). A linear `T50` term stays negative and significant in every full-sample variant (HC3 t from -4.2 to -12.7, including the 12-variant grids) and in the Primary sample; in the Secondary sample it is not significant for intrinsic SPS. So the bin counts are size- and distance-sensitive: with mass-weighted metallicity the intrinsic-SPS bin result does not survive a kpc size or distance control, while the observed-SPS residual keeps at least 6/8 bins in every full-sample variant (in the strict specification, at about half of its angular-size amplitude with kpc size and a quarter with distance controlled). The distance-controlled counts also depend on the `T50` tie rule (see Random seeds below). See `03_size_distance_sensitivity/`.
+- **Kitchen-sink specification.** The original v0.6 control set (both metallicity weightings, both flattening terms, raw and log dispersion) gives 8/8 (observed SPS), 8/8 (both SPS) and 6/8 (intrinsic SPS). It is retained as supplementary sensitivity only. With angular size, moving to the strict specification lowered the observed and both-SPS sets from 8/8 to 7/8 and raised the intrinsic set from 6/8 to 7/8.
+
+From v3, the main paper's primary controlled-residual result is the strict-control specification with size in kpc (variant `b_kpc` in `03_size_distance_sensitivity/`); the angular-size version in `00_strict_control_rerun/` was primary in v1 and v2.
 
 ## Folder map
 
-- `manga_two_layers_paper10_final.md` — the main paper.
-- `manga_two_layers_paper10_supplementary_appendix.md` — detailed methodology, literature passes,
-  control-variable specifications, limitation analyses, and sensitivity documentation.
-- `00_strict_control_rerun/` — **primary result.** Strict-control rerun outputs: the collinearity-free
-  reduced-control model, controlled dynamical-residual scoreboards and per-bin tables, model-term and
-  age-coefficient tables, the reduced-spec sensitivity grid, the handoff note, and the rerun pipeline script.
-- `01_clean_pipeline_v0_6/` — original clean-pipeline (v0.6) outputs: the DML sledgehammer report and
-  scoreboards, the M/L split / controlled-residual hardening report (kitchen-sink specification),
-  figures, the simulation/assembly-bias literature pass, and the working draft with revision notes.
-- `file_manifest.csv` — machine-readable manifest with path, byte size, SHA256, and description for every file.
+- `manga_two_layers_paper10_final.md`: the main paper. Each version's texts are committed here after its Zenodo deposit, so the commit that v3 cites holds the v2 texts; Zenodo (DOI above) has every version.
+- `manga_two_layers_paper10_supplementary_appendix.md`: detailed methodology, literature passes, control-variable specifications, limitation analyses and sensitivity documentation.
+- `reproduce.py`: one-command reproduction and number check (see above).
+- `build_merged_table.py`: rebuilds the joined table and the distance/target table from the three public files, checking their Zenodo MD5s; `--compare` checks the rebuild against `data/`.
+- `requirements.txt`: tested package versions.
+- `make_manifest.py`, `file_manifest.csv`: the manifest (path, bytes, SHA-256, description of every file) and the script that refreshes it.
+- `data/manga_dynpop_merged_thin_firstpass.csv`: the joined working table read by every script (10,296 rows by 54 columns, 6,449,865 bytes, SHA-256 `13336cd42d374514d895d51ca1334f9c32ac22d4c813360be3c6b4fa00f51f58`), recovered from the original analysis. A rebuild from the public files matches it in shape, column order and NaN pattern; on the reference platform 52 of 54 columns are bit-identical, and `logRe` (6 rows, 1 ulp) and `cvc_slope_rmax_Re` (227 rows, at most 2 ulps, not used by any analysis) differ only by floating-point rounding of `log10`/`log` between platforms. `logRe` is log10 of `Re_arcsec_MGE`, in arcsec. The table is derived from the CC BY 4.0 DynPop catalogs; `data/SOURCES.md` gives their creators and records, the columns kept and every change.
+- `data/SOURCES.md`: the two Zenodo records (creators, versions, CC BY 4.0), the public files used with their MD5s, and what the package changed (column subset, PlateIFU join, derived columns, sentinels set to NaN).
+- `data/manga_dynpop_DA_target.csv`: `plateifu`, `mangaid`, `DA` (adopted angular-diameter distance, Mpc) and `target` (MaNGA subsample: 0 Primary, 1 Secondary, 2 color-enhanced), copied from `SDSSDR17_MaNGA_JAM_v2.fits` HDU 1 and joined on `plateifu` by the sensitivity script.
+- `00_strict_control_rerun/`: strict-control specification with angular size (the primary result in v1 and v2). Archived strict-control outputs (2026-06-29) and the rerun script.
+  - `run_clean_controls_fast.py`: the strict-control pipeline. The archived script hard-coded `/mnt/data`; this portable version reads `--input`/`--outdir` (or `P10_INPUT`/`P10_OUTDIR`; defaults `../data/` and `regenerated/`), leaves the analysis code unchanged, and writes all six CSVs below plus a Markdown report in about 15 seconds. The archived primary-summary and raw-outcome age-coefficient CSVs were made by a short follow-on step that was not saved; the script now writes both. Its outputs reproduce all six archived CSVs to better than 1e-12 relative.
+  - `manga_paper10_strict_control_primary_summary.csv`: young-vs-old scoreboard for the three SPS control sets.
+  - `manga_paper10_strict_control_residual_scoreboard.csv`: controlled-residual scoreboard with bootstrap intervals and shuffle-null statistics.
+  - `manga_paper10_strict_control_residual_perbin.csv`: per-bin controlled residuals. The sixth of the eight mass bins (index 5 in the CSVs; median NSA log M = 10.66 in the catalog's h^-2 solar-mass units) is the only young < old bin in all three sets, and its bootstrap interval crosses zero in each.
+  - `manga_paper10_strict_control_model_terms.csv`: fully standardized `T50` coefficient (z-scored outcome and predictors), HC3 SE/t/p, R^2, cross-validated Delta R^2 from age, Spearman rho.
+  - `manga_paper10_strict_control_age_coefficients_rawY.csv`: `T50` coefficient on the raw outcome per 1 SD of `T50`, with HC3 SE and p.
+  - `manga_paper10_strict_control_sensitivity_grid.csv`: reduced-spec grid (metallicity weighting x flattening term x SPS set); all 12 variants give 7/8. The grid does not vary the size term or distance.
+  - `manga_paper10_strict_control_claude_handoff.md`: handoff note on the specification choice.
+- `01_clean_pipeline_v0_6/`: archived v0.6 clean-pipeline outputs, unchanged: the DML sledgehammer report and scoreboards, the M/L split and controlled-residual hardening report (kitchen-sink specification: 8/8 observed and both SPS, 6/8 intrinsic SPS), figures, the simulation/assembly-bias literature pass, the working draft with revision notes, and `manifest_sha256.txt` for the bundle as released. Added: `manga_sledgehammer_final_secondary_fdm.csv` (from the 2026-06-26 sledgehammer outputs bundle, so it is not in `manifest_sha256.txt`), the source of Table 1's fDM count p and magnitude p; the report shows only the joint p.
+- `02_sledgehammer_rerun/`: `run_sledgehammer.py` regenerates the raw DML split, the M/L component split, the secondary fDM checks, the nearest-mass paired check, the sample counts and the `T50` grid facts (about 30 seconds). The code behind the v0.6 outputs was not preserved, so this is a re-implementation from the method text (October 2026). It reproduces every v0.6 point estimate exactly (counts, medians, mass-adjusted differences, pair wins 881 and 913); shuffle p-values and bootstrap intervals agree with v0.6 to Monte Carlo precision. `outputs/sledgehammer_vs_v06.csv` records the archived and rerun values side by side. `outputs/` is the reference run; the script writes to `regenerated/` by default.
+- `03_size_distance_sensitivity/`: **primary result** (variant `b_kpc`, size in kpc) and its distance and subsample checks. `run_size_distance_sensitivity.py` reruns the strict specification with size in kpc, with log distance added, with both, in the MaNGA Primary-only and Secondary-only samples, and with the kitchen-sink controls, using the strict-control script's own fit, bin, split, bootstrap and shuffle functions at 5,000 bootstraps and 5,000 shuffles (about 2 minutes). It also writes, per mass bin, the young/old quartile distances, Secondary fractions and SPS attenuation terms; the 12-variant grid under each size treatment, with the HC3 t of a linear `T50` term; and one-cube-per-MaNGA-ID point estimates for every Table 1 row, with the controlled residual in both size units (bin counts unchanged; mass-adjusted differences move by at most 0.002). It also repeats the young/old split with tied `T50` values broken at random (`outputs/tie_rule_redraws.csv`; see the tie rule below). `outputs/sensitivity_summary.md` is a readable summary of the reference run.
 
-## `00_strict_control_rerun/` — primary controlled-residual result
+## Random seeds and shuffle nulls
 
-The strict-control specification removes the v0.7 collinearity issue (including raw `Sigma_Re` and
-`logSigma_Re` together, and duplicate metallicity and flattening terms). The shared controls are
-mass-weighted metallicity (`sp_MW_Metal_Re`), MGE ellipticity (`Eps_MGE`), and `logSigma_Re`, plus
-stellar mass, size, Sérsic index, and `Lambda_Re`. Young galaxies retain higher controlled dynamical
-M/L residuals in **7/8 mass bins** for the intrinsic, observed, and both-SPS control sets; the
-magnitude test is at the shuffle floor and the count-only p is ~0.03–0.04. One bin (bin 5,
-median logM ≈ 10.663) is the lone non-decisive bin in all three sets.
+All Monte Carlo steps use numpy `default_rng` with base seed 20260629.
 
-- `manga_paper10_strict_control_primary_summary.csv` — primary young-vs-old scoreboard for the three SPS control sets.
-- `manga_paper10_strict_control_residual_scoreboard.csv` — controlled-residual scoreboard with bootstrap intervals and shuffle-null statistics.
-- `manga_paper10_strict_control_residual_perbin.csv` — per-bin controlled residuals across the eight mass bins.
-- `manga_paper10_strict_control_model_terms.csv` — standardized T50 coefficient, robust SE/t/p, R², cross-validated ΔR² from age, and Spearman ρ.
-- `manga_paper10_strict_control_age_coefficients_rawY.csv` — age (T50) coefficients on the raw dynamical-M/L outcome per 1 SD.
-- `manga_paper10_strict_control_sensitivity_grid.csv` — reduced-spec sensitivity grid; all 12 variants give 7/8 bins.
-- `manga_paper10_strict_control_claude_handoff.md` — handoff note documenting the specification choice and main-text recommendation.
-- `run_clean_controls_fast.py` — the strict-control rerun pipeline script.
+- Strict control (`00_`): control set i (0 intrinsic, 1 observed, 2 both SPS) uses seed + 1000*i for its 5,000 bootstraps and 5,000 shuffles; the 5-fold cross-validation uses `KFold(shuffle=True, random_state=20260629)`. Null: `T50` is permuted within each mass bin and the quartiles are rebuilt with the real split's tie rule (ties in `T50` broken by stellar mass).
+- Tie rule: `T50` comes on a grid about 0.16 Gyr apart, so 15 of the 16 quartile cuts fall inside a group of tied values; every script breaks those ties by stellar mass (lower mass sorts as younger). `03_size_distance_sensitivity/outputs/tie_rule_redraws.csv` repeats the young/old split with the ties broken at random, 200 draws per row (seed + 9000), for the 12-variant grid under angular size, kpc size and log distance and for the Primary- and Secondary-only rows. The angular-size 7/8 counts of v1 and v2 barely move (7/8 in 598 of the 600 draws over the three SPS sets, 8/8 in the other two), and the kpc counts of the main result move by at most one bin (observed and intrinsic SPS never move; both SPS reaches 7/8 in 15 of the 200 draws). The distance-controlled counts move more: with log distance added to the published controls, observed SPS gives 4/8 to 6/8 (median 5/8) and both SPS 3/8 to 6/8 (median 4/8), and no distance-controlled row reaches 7/8 under either rule; the angular-size Primary-only counts give 4/8 to 6/8. Read the sensitivity bin counts with that granularity. Mass-adjusted differences move by at most 0.006, and the linear `T50` term does not use the quartiles and does not depend on the tie rule.
+- Sensitivity (`03_`): every variant uses the same per-set seeds, so the angular-size variant (`a_published`) reproduces `00_strict_control_rerun/` exactly, variant `b_kpc` gives Table 1, and variants share random numbers.
+- Sledgehammer (`02_`): outcome i (DML intrinsic, DML observed, JAM dynamical M/L, SPS intrinsic, SPS observed, gNFW fDM, NFW fDM) uses seed + 1000*i; paired outcome j uses seed + 100000 + 1000*j. Default null: the outcome values are permuted within each bin over fixed young/old positions (exchangeable groups; equivalent to shuffling `T50` with random tie-breaking), which matches the shuffle statistics of the archived v0.6 run; `--null age_permutation` uses the strict-control null instead. The v0.6 seed is unknown.
 
-## `01_clean_pipeline_v0_6/` — original clean-pipeline outputs
-
-- `manga_sledgehammer_final_report.md`, `manga_sledgehammer_final_scoreboard.csv`, `manga_sledgehammer_final_bin_results.csv` — primary DML sledgehammer split (8/8 observed-SPS, 6/8 intrinsic-SPS) and the secondary fDM checks.
-- `manga_ml_split_hardening_final_report.md`, `manga_ml_split_hardening_scoreboard.csv`, `manga_ml_split_hardening_control_residual_scoreboard.csv`, `manga_ml_split_hardening_per_bin.csv` — M/L component split and the kitchen-sink controlled-residual result (8/8; supplementary sensitivity).
-- `manga_simulation_assembly_bias_pass.md` — simulation/assembly-bias literature pass: no exact mock-MaNGA/JAM/SPS comparator located; the residual is unbenchmarked against cosmological mocks, not proven anomalous relative to ΛCDM.
-- `manga_two_layers_clean_pipeline_draft_v0_6.md`, `manga_two_layers_v0_6_revision_notes.md`, `manga_two_layers_v0_5_to_v0_6.diff` — working draft, revision notes, and diff (retained as provenance; superseded by the final paper).
-- `manga_sledgehammer_final_*.png`, `manga_ml_split_hardening_*.png` — figures (kitchen-table, mass-adjusted, bin-difference, decomposition, controlled-residual plots).
-- `manifest_sha256.txt` — SHA256 checksums for the v0.6 bundle as originally released.
+p-values use the +1 correction, so the floor is 1/5,001 = 0.0002. For a 7/8 bin count the count p sits near the fair-coin value 9/256 = 0.035 with a Monte Carlo error of about 0.003, so the spread 0.031 to 0.037 across the three angular-size strict sets is noise.
 
 ## Guardrails
 
-- DML is a JAM/SPS mass-to-light construction, **not** a board-complete observed rotation curve. This
-  is a principle-level test, not a strict test of the Hermes rotation-curve equation. Treating a
-  JAM-inferred circular-velocity curve as a SPARC-style observed rotation curve would collapse the
-  board-completeness discipline established in prior work.
-- The raw DML signal is mostly SPS-driven and is not clean gravitational evidence. Only the controlled
-  dynamical residual is the interesting layer, and it is modest, one-bin-sensitive, and could still be
-  produced by IMF variation, assembly bias, dust conventions, cold gas, or JAM covariance.
-- No cosmological-mock comparator has been run. The residual is documented for independent groups to
-  test, refine, or falsify — it is not claimed to be new physics.
+- DML is a JAM/SPS mass-to-light construction, **not** a board-complete observed rotation curve. This is a principle-level test, not a strict test of the Hermes rotation-curve equation. Treating a JAM-inferred circular-velocity curve as a SPARC-style observed rotation curve would drop the board-completeness requirement (observed velocities plus independent per-radius gas, stellar disk and bulge components) set out in the supplementary appendix.
+- The raw DML signal is mostly SPS-driven and is not clean gravitational evidence. Only the controlled dynamical residual is the interesting layer, and it is modest and specification-sensitive (size, metallicity weighting, distance, and MaNGA sample). It could still be produced by IMF variation, assembly bias, dust conventions, cold gas, JAM covariance, or distance-dependent selection or systematics.
+- No cosmological-mock comparator has been run. The residual is documented for independent groups to test, refine or falsify; it is not claimed to be new physics.
 
-See the main paper and supplementary appendix for the full result, caveats, and hand-off.
+See the main paper and supplementary appendix for the full result, caveats and hand-off.

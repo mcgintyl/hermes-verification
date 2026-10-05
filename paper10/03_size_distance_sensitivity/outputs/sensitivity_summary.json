@@ -1,0 +1,83 @@
+{
+  "script": "run_size_distance_sensitivity.py",
+  "input": "manga_dynpop_merged_thin_firstpass.csv",
+  "input_sha256": "13336cd42d374514d895d51ca1334f9c32ac22d4c813360be3c6b4fa00f51f58",
+  "da_input": "manga_dynpop_DA_target.csv",
+  "da_input_sha256": "7076255c0b716ca7def8c65bc6de0163e84d6d3d849a78c762b2f596d49a99ec",
+  "seed_rule": "SPS set i (0 int, 1 obs, 2 both) uses SEED + 1000*i in every variant (SEED = 20260629)",
+  "n_boot": 5000,
+  "n_shuffle": 5000,
+  "arcsec_per_radian": 206264.806,
+  "max_abs_resid_difference_c_vs_d": 4.218847493575595e-15,
+  "sample_facts": {
+    "N": 5952,
+    "target_counts_in_sample": {
+      "0": 2776,
+      "1": 2337,
+      "2": 839
+    },
+    "spearman_logDA_vs_T50": -0.17966091141647358,
+    "spearman_logRe_arcsec_vs_logRe_kpc": 0.6187459949533264,
+    "median_Re_arcsec": 5.268658007210568,
+    "median_Re_kpc": 4.510498813778652,
+    "DA_ratio_range": [
+      1.1776518169623496,
+      1.6690226584637926
+    ],
+    "secondary_ratio_range": [
+      2.0540540540540544,
+      3.5416666666666665
+    ],
+    "max_abs_logM_median_diff_young_old": 0.03112556759281304,
+    "attenuation_old_minus_young_by_bin": [
+      0.06489710110677369,
+      0.0762055260225831,
+      0.05987433466011552,
+      0.01629771014618686,
+      0.0012296322982426056,
+      -0.03620604496029006,
+      -0.04819157875604213,
+      -0.03761785652006966
+    ]
+  },
+  "grid_bin_count_histogram_by_size": {
+    "arcsec (published)": {
+      "7": 12
+    },
+    "kpc": {
+      "3": 2,
+      "6": 3,
+      "7": 7
+    },
+    "arcsec + logDA": {
+      "3": 3,
+      "5": 1,
+      "6": 8
+    },
+    "kpc + logDA": {
+      "3": 3,
+      "5": 1,
+      "6": 8
+    }
+  },
+  "grid_T50_t_HC3_range": [
+    -12.683279877311563,
+    -4.188925815029391
+  ],
+  "grid_T50_p_HC3_max": 2.8027799762201646e-05,
+  "one_cube_per_mangaid": {
+    "N_full": 5952,
+    "N_one_cube": 5875,
+    "bin_counts_unchanged": true,
+    "max_abs_change_mass_adjusted": 0.0019160871128425933
+  },
+  "python": "3.10.14",
+  "numpy": "2.2.6",
+  "pandas": "2.3.3",
+  "tie_rule_redraws": {
+    "n_draws": 200,
+    "seed": 20269629,
+    "cells": 54,
+    "rule": "T50 ties at the quartile cuts broken at random instead of by stellar mass"
+  }
+}

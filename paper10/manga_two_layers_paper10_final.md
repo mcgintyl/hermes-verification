@@ -42,14 +42,14 @@ It is not a strict test of the Hermes rotation-curve equation. JAM-inferred circ
 |---|---|---:|---:|---:|---:|---:|
 | **Raw DML** | Observed SPS | 8 / 8 | +0.0669 | [+0.050, +0.083] | 0.006 | 0.0002 |
 | **Raw DML** | Intrinsic SPS | 6 / 8 | +0.0772 | [+0.056, +0.096] | 0.15 | 0.0002 |
-| **Component: JAM dyn** | $\log(M/L)_{\mathrm{dyn}}$ | 0 / 8 | $-$0.1075 | [$-$0.120, $-$0.092] | 1.000 | n/a |
-| **Component: SPS int** | $\log(M_*/L)_{\mathrm{int}}$ | 0 / 8 | $-$0.1693 | [$-$0.179, $-$0.159] | 1.000 | n/a |
-| **Component: SPS obs** | $\log(M_*/L)_{\mathrm{obs}}$ | 0 / 8 | $-$0.1569 | [$-$0.168, $-$0.148] | 1.000 | n/a |
+| **Component: JAM dyn** | $\log(M/L)_{\mathrm{dyn}}$ | 0 / 8 | -0.1075 | [-0.120, -0.092] | 1.000 | n/a |
+| **Component: SPS int** | $\log(M_*/L)_{\mathrm{int}}$ | 0 / 8 | -0.1693 | [-0.179, -0.159] | 1.000 | n/a |
+| **Component: SPS obs** | $\log(M_*/L)_{\mathrm{obs}}$ | 0 / 8 | -0.1569 | [-0.168, -0.148] | 1.000 | n/a |
 | **Controlled residual** | Observed SPS controls | 7 / 8 | +0.0387 | [+0.029, +0.049] | 0.031 | 0.0002 |
 | **Controlled residual** | Both SPS controls | 7 / 8 | +0.0344 | [+0.023, +0.044] | 0.034 | 0.0002 |
 | **Controlled residual** | Intrinsic SPS controls | 7 / 8 | +0.0225 | [+0.011, +0.034] | 0.037 | 0.0002 |
 | **fDM check** | gNFW $f_{\mathrm{DM}}$ | 5 / 8 | +0.0011 | n/a | 0.35 | 0.48 |
-| **fDM check** | NFW $f_{\mathrm{DM}}$ | 4 / 8 | $-$0.0035 | n/a | 0.62 | 0.65 |
+| **fDM check** | NFW $f_{\mathrm{DM}}$ | 4 / 8 | -0.0035 | n/a | 0.62 | 0.65 |
 
 DML, component, and controlled-residual rows report mass-adjusted young-old differences. fDM rows are secondary checks and report mean-bin young-old differences.
 

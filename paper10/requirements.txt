@@ -1,0 +1,10 @@
+# Paper 10 package. Tested with Python 3.10.14 and exactly these versions (2026-10).
+numpy==2.2.6
+pandas==2.3.3
+scipy==1.15.3
+scikit-learn==1.7.2
+statsmodels==0.15.0
+tabulate==0.10.0
+# needed only by build_merged_table.py (rebuilding data/ from the public DynPop files)
+astropy==6.1.7
+h5py==3.16.0

@@ -1,0 +1,3 @@
+outcome,outcome_label,seed,null,n_pairs,young_wins,young_win_fraction,binomial_p_greater_0p5,shuffle_p_win_fraction_ge_real,shuffle_win_fraction_mean,shuffle_win_fraction_sd
+DML_mfl_int,DML intrinsic SPS,20360629,value_permutation,1488,881,0.5920698924731183,6.379736622543549e-13,0.0001999600079984003,0.5001162634408601,0.013155741245255013
+DML_mfl_obs,DML observed SPS,20361629,value_permutation,1488,913,0.6135752688172043,8.6314544467305455e-19,0.0001999600079984003,0.5000555107526882,0.012890306271334643

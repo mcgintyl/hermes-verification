@@ -1,0 +1,53 @@
+{
+  "script": "run_sledgehammer.py",
+  "input": "manga_dynpop_merged_thin_firstpass.csv",
+  "input_sha256": "13336cd42d374514d895d51ca1334f9c32ac22d4c813360be3c6b4fa00f51f58",
+  "input_bytes": 6449865,
+  "seed_base": 20260629,
+  "null": "value_permutation",
+  "seed_rule": "outcome i uses seed_base + 1000*i (order of OUTCOMES); paired outcome j uses seed_base + 100000 + 1000*j",
+  "n_boot": 5000,
+  "n_shuffle": 5000,
+  "n_bins": 8,
+  "k_per_quartile": 186,
+  "sample_counts": {
+    "joined_rows": 10296,
+    "joined_distinct_mangaid": 10160,
+    "qual_ge_1": 6065,
+    "primary_finite_sample": 5952,
+    "primary_sample_distinct_mangaid": 5875,
+    "primary_sample_mangaid_repeated": 72,
+    "primary_sample_rows_of_repeated_mangaid": 149,
+    "galaxies_per_mass_bin": 744,
+    "galaxies_per_quartile": 186
+  },
+  "t50_grid_summary": {
+    "sample_T50_min": 0.642424,
+    "sample_T50_max": 14.133333,
+    "n_distinct_T50_values": 85,
+    "typical_grid_step": 0.16060600000000003,
+    "T50_mode": 12.848485,
+    "n_sample_at_mode": 278,
+    "n_sample_above_mode": 605,
+    "bins_with_old_median_at_mode": 7,
+    "old_quartile_T50_min_over_bins": 12.045454545454549,
+    "young_quartile_T50_max_over_bins": 8.190909090909091,
+    "old_quartile_iqr_range": [
+      0.3212121212121204,
+      0.6424242424242426
+    ],
+    "young_quartile_iqr_range": [
+      1.7666666666666675,
+      3.1719696969696973
+    ],
+    "old_quartile_n_above_mode_range": [
+      62,
+      98
+    ],
+    "quartile_cuts_inside_tie_groups": 15,
+    "quartile_cuts_total": 16
+  },
+  "python": "3.10.14",
+  "numpy": "2.2.6",
+  "pandas": "2.3.3"
+}

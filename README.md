@@ -68,7 +68,7 @@ Independent verification tools for eight papers by McGinty (2026):
 | `paper7/` | *Field Audit: Board-Complete Data and the Limits of External Gravity-Model Testing* | M33 external test data package: source-native board, locked Hermes result, MOND comparator, sensitivity + outer-disk audits |
 | `paper8/` | *A Wear-Activated Density-Release Refinement of the Hermes Gravity Equation* (Paper 1 addendum) | Wear-gated eta operator for SPARC rotation curves |
 | `paper9/` | *The Hermes Equation: Cluster Lensing from a Frozen Galaxy Gate* - DOI: 10.5281/zenodo.22719297 | Rebuilds both published tables from public inputs: Table 2 byte for byte from the CLASH lensing and baryon models, Table 1 from the SPARC curves; 34 automated checks |
-| `paper10/` | *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept* | Two-layer age structure in MaNGA DynPop DR17: a dominant SPS mass-to-light layer and a smaller controlled dynamical residual (7/8 mass bins) |
+| `paper10/` | *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept* - DOI: 10.5281/zenodo.21088605 | Reruns every analysis and checks every analysis number with one command (`reproduce.py`), from the shipped joined table or rebuilt from the public DynPop catalogs: a dominant SPS mass-to-light layer and a smaller controlled dynamical residual (7/8, 6/8 and 3/8 mass bins for observed, both and intrinsic SPS with physical size; no set reaches 7/8 with distance controlled) |
 | `docs/` | Supplementary materials | Age derivation audit trail (151 methods, 77 sources) |
 
 ---
@@ -495,24 +495,28 @@ Published on Zenodo: DOI (concept, resolves to the latest version): 10.5281/zeno
 
 ### What It Contains
 
-The complete reproducibility and verification package for Paper 10, *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept*. It tests a principle-level prediction — that at fixed stellar mass, younger galaxies show larger mass-to-light discrepancies between dynamical and stellar-population estimates — using three joined public MaNGA DynPop DR17 products (JAM dynamical catalogs, stellar-population/star-formation-history catalogs, and circular-velocity-curve tables). After quality cuts, 5,952 galaxies are split into eight equal-count stellar-mass bins and the youngest and oldest quartiles are compared within each bin.
+The reproducibility and verification package for Paper 10, *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept*. It tests a principle-level prediction, that at fixed stellar mass younger galaxies show larger mass-to-light discrepancies between dynamical and stellar-population estimates, using three joined public MaNGA DynPop DR17 products (JAM dynamical catalogs, stellar-population/star-formation-history catalogs, and circular-velocity-curve tables). After quality cuts, 5,952 PlateIFU entries (5,875 distinct MaNGA IDs) are split into eight equal-count stellar-mass bins and the youngest and oldest quartiles are compared within each bin. From the repository root, `python paper10/reproduce.py` reruns every analysis and checks every analysis number that version 3 of the paper quotes against the regenerated values, starting from the shipped joined table (or, with `--from-public`, from the three public Zenodo files, which `paper10/build_merged_table.py` joins). It needs the packages in `paper10/requirements.txt`: install them in their own environment, or add scikit-learn, statsmodels and tabulate to the root environment (`--from-public` also needs astropy and h5py).
 
 This is a **principle-level test, not a strict test of the Hermes rotation-curve equation**: DML is a JAM/SPS mass-to-light construction, not a board-complete observed rotation curve.
 
 ### Result
 
 - **Layer 1 (visible SPS layer).** The raw mass-to-light discrepancy (DML) is larger for young galaxies in 8/8 mass bins (observed SPS) and 6/8 bins (intrinsic SPS). A component decomposition shows this is mostly driven by the SPS denominator — older stellar populations have higher stellar mass-to-light ratios, as standard stellar-population synthesis predicts. This is not a discovery.
-- **Layer 2 (controlled dynamical residual).** Under a collinearity-free strict-control model removing SPS mass-to-light, metallicity, and structural variables, a smaller dynamical residual persists in **7/8 mass bins** across all three SPS control sets. Parametric NFW/gNFW dark-matter fractions do not show the same signal, and the strongest residual tracks the dust-carrying SPS definition.
-- **Interpretation:** a proof of concept and invitation to specialist replication, not a detection claim. The residual is modest, one-bin-sensitive, and could still arise from IMF variation, assembly bias, dust conventions, cold gas, or JAM covariance. No cosmological-mock comparator has been run.
+- **Layer 2 (controlled dynamical residual).** Under a reduced strict-control model that regresses out SPS mass-to-light, metallicity, and structural variables, with galaxy size in kpc, a smaller dynamical residual persists in 7/8 mass bins with observed-SPS controls and 6/8 with both, but not with intrinsic-SPS controls (3/8); a linear age term stays significant in all three. With angular size, as in v1 and v2, all three sets give 7/8; with distance also controlled the observed-SPS residual gives 6/8 and the both- and intrinsic-SPS residuals fall to 3/8; every 3/8 result uses mass-weighted metallicity. With light-weighted metallicity instead, all three sets give 7/8 with size in kpc; with distance also controlled the observed- and both-SPS residuals give 6/8, while the intrinsic-SPS residual falls to a tenth to a quarter of its angular-size amplitude (5/8 to 6/8 bins). In the MaNGA Primary or Secondary sample alone the kpc specification gives at most 4/8. Parametric NFW/gNFW dark-matter fractions do not show the same signal. The residual is largest with the observed-SPS definition, which, like the JAM dynamical M/L, is referenced to dust-attenuated r-band light.
+- **Interpretation:** a proof of concept and invitation to specialist replication, not a detection claim. The residual is modest, specification-sensitive (size, metallicity weighting, distance, and MaNGA sample), and could still arise from IMF variation, assembly bias, dust conventions, cold gas, JAM covariance, or distance-dependent selection or systematics. No cosmological-mock comparator has been run.
 
 ### Folder Map
 
 | Path | Contents |
 |---|---|
-| `paper10/manga_two_layers_paper10_final.md` | The main paper |
+| `paper10/manga_two_layers_paper10_final.md` | The main paper (each version's text is committed after its Zenodo deposit; Zenodo has every version) |
 | `paper10/manga_two_layers_paper10_supplementary_appendix.md` | Detailed methodology, literature passes, control-variable specifications, limitation analyses, and sensitivity documentation |
-| `paper10/00_strict_control_rerun/` | **Primary result.** Strict-control rerun outputs: collinearity-free reduced-control model, controlled dynamical-residual scoreboards and per-bin tables, model-term and age-coefficient tables, reduced-spec sensitivity grid (12 variants, all 7/8), handoff note, and the rerun pipeline script |
-| `paper10/01_clean_pipeline_v0_6/` | Original clean-pipeline (v0.6) outputs: DML sledgehammer report and scoreboards, M/L split / controlled-residual hardening report (kitchen-sink 8/8 specification), figures, simulation/assembly-bias literature pass, and the working draft with revision notes |
+| `paper10/00_strict_control_rerun/` | Angular-size strict-control specification (primary in v1 and v2). Rerun outputs: reduced-control model, controlled dynamical-residual scoreboards and per-bin tables, model-term and age-coefficient tables, reduced-spec sensitivity grid (12 variants, all 7/8; size and distance not varied), handoff note, and the portable rerun script that writes all six CSVs |
+| `paper10/01_clean_pipeline_v0_6/` | Original clean-pipeline (v0.6) outputs: DML sledgehammer report and scoreboards, M/L split / controlled-residual hardening report (kitchen-sink specification: 8/8 observed and both SPS, 6/8 intrinsic SPS), figures, simulation/assembly-bias literature pass, the working draft with revision notes, and the secondary fDM CSV behind Table 1's fDM p-values |
+| `paper10/02_sledgehammer_rerun/` | Re-implementation of the v0.6 raw DML split, component split, fDM and paired checks (the original code was not preserved), with its reference outputs; it reproduces every v0.6 point estimate exactly and its p-values and intervals to Monte Carlo precision |
+| `paper10/03_size_distance_sensitivity/` | **Primary result** (variant `b_kpc`, size in kpc), plus size (arcsec or kpc), distance, and MaNGA Primary/Secondary sensitivity of the controlled residual |
+| `paper10/data/` | The joined working table and the distance/subsample table, derived from the CC BY 4.0 DynPop catalogs (creators, records and changes in `paper10/data/SOURCES.md`) |
+| `paper10/reproduce.py`, `paper10/build_merged_table.py` | One-command reproduction and number check; checksum-verified rebuild of `data/` from the public Zenodo files |
 | `paper10/README.md` | Full package README with per-folder inventory |
 | `paper10/file_manifest.csv` | Machine-readable manifest: path, byte size, SHA256, and description for every file |
 
@@ -723,4 +727,4 @@ MIT
 
 ## Feedback
 
-Anonymous or private technical feedback on the physics, datasets, code, and methodology is welcome: hermesphysics@proton.me. Please do not send confidential, proprietary, personal, restricted, or legally protected material.
+Technical feedback on the physics, datasets, code, and methodology is welcome through the contact address given in each paper. Please do not send confidential, proprietary, personal, restricted, or legally protected material.
