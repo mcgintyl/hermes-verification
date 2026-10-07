@@ -2,25 +2,20 @@
 """
 verify_eta.py — Paper 8 Verification Script
 
-Implements the wear-activated BTFR-safe density-release refinement (eta_WA)
+Implements the wear-activated density-release refinement (eta_WA)
 described in McGinty (2026), "A Wear-Activated Density-Release Refinement
 of the Hermes Gravity Equation: A Paper 1 Addendum."
 
-This script defines the eta operator and, when run against SPARC rotation
-curve data with the Paper 1 gate (phi), reproduces the Paper 8 results.
+This module defines the Paper 8 operator. It reads no data and checks no
+numbers; paper8/reproduce.py rebuilds the paper's results with it.
 
 Requirements:
     - numpy
-    - scipy (for Savitzky-Golay filter used in gate construction)
-    - Paper 1 gate implementation (hermes_gate_phi.py from the verification repo)
-    - SPARC rotation curve files
 
 Usage:
-    # Import the eta functions
     from verify_eta import compute_eta_WA, compute_g_model_eta
-
-    # Or run standalone verification
-    python verify_eta.py --sparc_dir /path/to/SPARC --age_table /path/to/ages.csv
+    python paper8/verify_eta.py                                 # prints the constants
+    python paper8/reproduce.py --sparc /path/to/rotmod_dir      # rebuilds the paper
 
 Author: Team Hermes (Louis A. McGinty)
 AI-assisted implementation; see Paper 8 AI disclosure.
@@ -35,7 +30,7 @@ import warnings
 # =============================================================================
 
 A_KNEE = 1585.0          # Gate threshold, (km/s)^2/kpc
-LOGISTIC_WIDTH = 0.30     # Spatial transition width ratio (inherited from gate)
+LOGISTIC_WIDTH = 0.30     # Width ratio of S(g): the Paper 1 gate-logistic width (there in x = R/r_knee), reused in g
 K_DIVISOR = 46654.0       # c/(2*pi) in SPARC units: Gyr*(km/s)^2/kpc
 SIGMA_INT_SQ = 386.0      # Intrinsic variance floor for chi-squared
 
@@ -45,9 +40,7 @@ SIGMA_INT_SQ = 386.0      # Intrinsic variance floor for chi-squared
 
 A_U = A_KNEE / np.pi                    # Universal numerator, ~504.5
 WEAR_RATE = 2.0 * np.pi**2              # Wear activation rate, ~19.74
-BETA_CEILING = np.pi                     # Max positive coherence
-BETA_FLOOR = -1.0 / np.sqrt(2.0 * np.pi)  # Coherence floor, ~-0.3989
-ETA_CAP = np.pi                          # Max local operator value
+ETA_CAP = np.pi                          # Max local operator value (pi, inherited)
 
 
 # =============================================================================
@@ -178,7 +171,8 @@ def compute_eta_U(g_bar):
     """
     gamma = log_compress(g_bar)
 
-    # Density contrast: low-density branch vs baseline
+    # Density contrast: low-density branch vs baseline. Where g_bar <= 0,
+    # Gamma = 0 and the contrast is set to 1 (no release); V = 0 there anyway.
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", RuntimeWarning)
         contrast = np.where(
@@ -281,9 +275,9 @@ def compute_v_model_eta(g_bar, phi, psi_local, psi_sys, R_kpc):
     """
     g_model = compute_g_model_eta(g_bar, phi, psi_local, psi_sys)
 
-    # Handle negative g_model (floor-saturated cases)
-    v_sq = g_model * R_kpc
-    return np.sign(v_sq) * np.sqrt(np.abs(v_sq))
+    # g_model < 0 only where g_bar < 0 (the bracket is >= 1 - 1/sqrt(2 pi));
+    # V = 0 there, as in Paper 1's published per-galaxy export
+    return np.sqrt(np.maximum(g_model, 0.0) * R_kpc)
 
 
 def compute_chi2nu(v_obs, v_model, v_err, sigma_int_sq=SIGMA_INT_SQ):
@@ -329,7 +323,7 @@ def compute_g_model_baseline(g_bar, phi, psi):
 # MOND SIMPLE (for comparison)
 # =============================================================================
 
-A0_MOND = 3703.0  # MOND acceleration threshold in (km/s)^2/kpc (~1.2e-10 m/s^2)
+A0_MOND = 1.2e-10 * 3.0856775814913673e19 / 1.0e6  # 3702.813 (km/s)^2/kpc: 1.2e-10 m/s^2 with the exact parsec, as Paper 8's per-galaxy production table used (Paper 1's export used 3700)
 
 def compute_g_mond_simple(g_bar):
     """
@@ -400,7 +394,7 @@ def print_constants():
     print(f"\nPaper 8 Constants")
     print(f"{'='*50}")
     print(f"INHERITED from Paper 1:")
-    print(f"  pi          = {np.pi:.10f}")
+    print(f"  pi          = {np.pi:.10f}  (also the eta cap)")
     print(f"  e           = {np.e:.10f}")
     print(f"  a_k         = {A_KNEE}")
     print(f"  0.30        = {LOGISTIC_WIDTH}")
@@ -411,12 +405,10 @@ def print_constants():
     print(f"DERIVED in Paper 8:")
     print(f"  a_u = a_k/pi      = {A_U:.6f}")
     print(f"  2*pi^2            = {WEAR_RATE:.6f}")
-    print(f"  eta cap            = {ETA_CAP:.10f} (= pi)")
     print(f"{'='*50}")
 
 
 if __name__ == "__main__":
-    import sys
 
     print_constants()
 
@@ -431,7 +423,5 @@ if __name__ == "__main__":
     print("                                     - Paper 1 baseline (for comparison)")
     print("  compute_g_mond_simple(g_bar)       - MOND simple nu (for comparison)")
     print("")
-    print("To run full verification, provide SPARC data directory:")
-    print("  python verify_eta.py --sparc_dir /path/to/SPARC --age_table ages.csv")
-    print("")
-    print("See github.com/mcgintyl/hermes-verification for full pipeline.")
+    print("To rebuild the paper's numbers:")
+    print("  python paper8/reproduce.py --sparc /path/to/rotmod_dir")

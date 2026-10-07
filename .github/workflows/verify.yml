@@ -1,7 +1,9 @@
 name: verify
 
-# Runs every verification script on each push / PR so a runtime error
-# (e.g. a wrapper that drops a keyword argument) cannot sit undetected.
+# Runs the Paper 1, Paper 8 and Paper 9 checks, the historical Stage-1 beta
+# reconstruction and the frozen-gate check on each
+# push / PR so a runtime error (e.g. a wrapper that drops a keyword argument)
+# cannot sit undetected. paper2, paper4 and paper5 are compile-checked only.
 
 on:
   push:
@@ -67,6 +69,9 @@ jobs:
 
       - name: Cluster pipeline, Table 2 (Paper 9)
         run: python paper9/reproduce_clusters.py
+
+      - name: Wear-activated refinement, SPARC and M33 (Paper 8)
+        run: python paper8/reproduce.py --sparc "$SPARC_DIR"
 
       - name: Galaxy baseline, Table 1 (Paper 9)
         run: |

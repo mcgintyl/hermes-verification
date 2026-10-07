@@ -9,3 +9,8 @@ paper9/** -text
 # SHA-256 of the shipped data tables, and file_manifest.csv lists the SHA-256 of
 # every file. Line-ending conversion would break both.
 paper10/** -text
+
+# The Paper 8 package hashes its files byte for byte (paper8/MANIFEST_SHA256.txt), and
+# reproduce.py checks the SHA-256 of the shipped CSV files. Line-ending conversion would
+# break both.
+paper8/** -text

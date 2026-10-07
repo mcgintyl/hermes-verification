@@ -1,0 +1,7 @@
+model,median_chi2nu,trimmed_mean_5pct_drop7_refinement,trimmed_mean_5pct_floor6_scipy_like,chi2nu_gt5_count,chi2nu_gt10_count,worsened_gt0p5_vs_baseline_count,improved_gt0p5_vs_baseline_count,new_gt5_vs_baseline_count,new_gt10_vs_baseline_count
+baseline_hermes_recomputed,1.3225930256600442,2.441136253926557,2.4983410845768397,21,12,0,0,0,0
+mond_simple_recomputed,1.1426960216866753,3.189680160861551,3.294631775392661,38,15,44,44,26,13
+previous_BTFR_safe_positive_eta,1.115237101798799,2.2979285092602537,2.357410118290885,21,12,1,15,0,0
+wear_activated_eta_locked,1.1887767190655945,2.293745904199666,2.3531204172556524,21,12,0,13,0,0
+failed_pythagorean_capped,1.3611151073692724,2.5154036820872085,2.5713678738183874,25,14,15,9,4,2
+rejected_phase_transition_FD,1.0526403074278774,2.3476171127962724,2.406394875347819,23,12,14,23,2,0

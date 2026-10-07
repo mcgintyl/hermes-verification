@@ -19,8 +19,9 @@ public SPARC rotation curves (and the other papers' datasets), and reproduce the
 published results — or fail loudly. No parameter is tuned per galaxy, and the
 verification either reproduces the paper or it does not. The one fitted
 quantity in the repository is Paper 9's cluster amplitude K, one per cluster,
-fitted by least squares and described in the Paper 9 section. Every script runs in CI on each push against a freshly downloaded copy of
-SPARC, so a silent breakage cannot accumulate.
+fitted by least squares and described in the Paper 9 section. CI runs the Paper 1, Paper 8 and Paper 9 checks, the historical Stage-1 beta
+reconstruction and the frozen-gate check on each push against a freshly downloaded copy of SPARC; the paper2, paper4 and paper5
+scripts are only compile-checked, and paper7, paper10 and `docs/` are not run in CI (see `.github/workflows/verify.yml`).
 
 ## Quick start
 
@@ -66,7 +67,7 @@ Independent verification tools for eight papers by McGinty (2026):
 | `paper5/` | *Weak Lensing Pilot: Age-Dependent Shear Signal (KiDS x GAMA)* | Pipeline output consistency, 142 checks across 8 test groups |
 | — | *Polar Ring Galaxies and the Shape of the Extra Gravity: A Proof of Concept Test* — DOI: 10.5281/zenodo.19392646 | Reference only — no verification package in this repository |
 | `paper7/` | *Field Audit: Board-Complete Data and the Limits of External Gravity-Model Testing* | M33 external test data package: source-native board, locked Hermes result, MOND comparator, sensitivity + outer-disk audits |
-| `paper8/` | *A Wear-Activated Density-Release Refinement of the Hermes Gravity Equation* (Paper 1 addendum) | Wear-gated eta operator for SPARC rotation curves |
+| `paper8/` | *A Wear-Activated Density-Release Refinement of the Hermes Gravity Equation* (Paper 1 addendum) - DOI: 10.5281/zenodo.20699990 | Rebuilds and checks the paper's SPARC and M33 numbers with one command (`reproduce.py`; candidates 1 and 2 are not rebuilt, and M33 uses the gate as corrected in Paper 7 v3) and ships the paper's ten production CSV files, public for the first time |
 | `paper9/` | *The Hermes Equation: Cluster Lensing from a Frozen Galaxy Gate* - DOI: 10.5281/zenodo.22719297 | Rebuilds both published tables from public inputs: Table 2 byte for byte from the CLASH lensing and baryon models, Table 1 from the SPARC curves; 34 automated checks |
 | `paper10/` | *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept* - DOI: 10.5281/zenodo.21088605 | Reruns every analysis and checks every analysis number with one command (`reproduce.py`), from the shipped joined table or rebuilt from the public DynPop catalogs: a dominant SPS mass-to-light layer and a smaller controlled dynamical residual (7/8, 6/8 and 3/8 mass bins for observed, both and intrinsic SPS with physical size; no set reaches 7/8 with distance controlled) |
 | `docs/` | Supplementary materials | Age derivation audit trail (151 methods, 77 sources) |
@@ -399,31 +400,37 @@ See `paper7/README.md` for the complete per-file inventory and provenance notes.
 
 ## Paper 8 — Wear-Activated Density-Release Refinement (`paper8/`)
 
-Published on Zenodo: DOI: 10.5281/zenodo.20699991
+Published on Zenodo: DOI (concept, resolves to the latest version): 10.5281/zenodo.20699990
 
 ### What It Implements
 
-A Paper 1 addendum introducing the wear-activated density-release operator `eta_WA(R)`, which modulates the baseline Hermes acceleration in low-density outer regions of galaxies with significant stellar wear. The refinement is BTFR-safe and adds no free parameters — all constants are derived in closed form from the Paper 1 inheritance set (`pi`, `e`, `a_k = 1585`, `K = c/(2*pi)`, `sigma_int^2 = 386`).
+A Paper 1 addendum introducing the wear-activated density-release operator `eta_WA(R)`, which modulates the baseline Hermes acceleration in low-density outer regions of galaxies with significant stellar wear. The refinement adds no fitted constants: its two new constants (`a_u = a_k/pi`, `2*pi^2`) are closed-form expressions of Paper 1 constants, chosen by trial on the same 133 galaxies (other closed forms, such as `a_k/e`, also give zero casualties), and it reuses `pi`, `e`, `1/sqrt(2*pi)`, `a_k = 1585`, the gate's logistic width `0.30` and `K = c/(2*pi) = 46654` unchanged. Its density contrast uses a universal numerator rather than each galaxy's `g98`, although `g98` still enters through `psi`; its effect on BTFR scatter has not been tested.
 
 **Modified acceleration:**
 
     g_model(R) = g_bar(R) * [1 + phi(R) * (pi * exp(-psi(R)) * eta_WA(R) - 1/sqrt(2*pi))]
 
-where `eta_WA(R) = 1 + W(psi_sys) * (eta_U(R) - 1)` combines a global wear activation `W = 1 - exp(-2*pi^2 * psi_sys)` with a local density-release branch `eta_U(R)` capped at `pi`. The Paper 1 gate `phi(R)` is inherited unchanged.
+where `eta_WA(R) = 1 + W(psi_sys) * (eta_U(R) - 1)` combines a global wear activation `W = 1 - exp(-2*pi^2 * psi_sys)` with a local density-release branch `eta_U(R)` capped at `pi`. The gate `phi(R)` is the log-grid gate in `paper1/hermes_gate_phi.py`, which Paper 8's numbers use; the chain-rule gate that reproduces Paper 1's published scores (`paper9/hermes_clusters/gate.py`) gives a median of 1.150, not 1.189.
 
 ### Usage
 
 ```
-python paper8/verify_eta.py            # print derived constants and load operator
+python paper8/reproduce.py --sparc "$SPARC_DIR"     # rebuild and check the SPARC and M33 numbers
+python paper8/verify_eta.py                         # print the constants
 ```
 
-The script exposes `compute_eta_WA`, `compute_g_model_eta`, `compute_g_model_baseline`, and `compute_g_mond_simple` for use against SPARC rotation curves with the Paper 1 gate.
+`reproduce.py` prints one PASS/FAIL line per check, writes `paper8/results/`, and exits 1 on any failure. `verify_eta.py` exposes `compute_eta_WA`, `compute_g_model_eta`, `compute_g_model_baseline`, and `compute_g_mond_simple`. See `paper8/README.md` for the conventions, the shipped CSV files and the version notes.
 
 ### Paper 8 Files
 
 | File | Description |
 |---|---|
 | `paper8/verify_eta.py` | Wear-activated eta operator — defines `eta_WA(R)` and the Paper 8 modified `g_model(R)`, plus baseline Hermes and MOND-simple comparisons |
+| `paper8/reproduce.py` | One-command rebuild of the paper's SPARC and M33 numbers, with a check for each |
+| `paper8/expected/` | The paper's ten production CSV files, public for the first time here (the three M33 tables regenerated on the gate as corrected in Paper 7 v3) |
+| `paper8/README.md` | Conventions, file list and version notes |
+| `paper8/paper8_main.md`, `paper8/paper8_supplementary_materials.md` | The paper texts, version 2 (each version's text is committed after its Zenodo deposit; Zenodo has every version) |
+| `paper8/MANIFEST_SHA256.txt` | SHA-256 of every other file in `paper8/` |
 
 ---
 

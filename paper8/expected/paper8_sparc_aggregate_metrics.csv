@@ -1,0 +1,4 @@
+model,N_galaxies,median_chi2nu,trimmed_mean_5pct_floor6_scipy_like,trimmed_mean_5pct_drop7_refinement,chi2nu_gt5_count,chi2nu_gt10_count,worsened_gt0p5_vs_baseline_count,improved_gt0p5_vs_baseline_count,new_gt5_vs_baseline_count,new_gt10_vs_baseline_count,rescued_from_gt5_vs_baseline_count,median_abs_residual_kms,beats_mond_count
+baseline_hermes_recomputed,133,1.3225930256600442,2.4983410845768397,2.441136253926557,21,12,0,0,0,0,0,19.054169404542407,68.0
+mond_simple_recomputed,133,1.1426960216866753,3.294631775392661,3.189680160861551,38,15,44,44,26,13,9,20.2301767131168,
+wear_activated_eta,133,1.1887767190655945,2.353120417255652,2.293745904199666,21,12,0,13,0,0,0,17.841999426965533,77.0
