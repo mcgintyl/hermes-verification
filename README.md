@@ -429,7 +429,7 @@ python paper8/verify_eta.py                         # print the constants
 | `paper8/reproduce.py` | One-command rebuild of the paper's SPARC and M33 numbers, with a check for each |
 | `paper8/expected/` | The paper's ten production CSV files, public for the first time here (the three M33 tables regenerated on the gate as corrected in Paper 7 v3) |
 | `paper8/README.md` | Conventions, file list and version notes |
-| `paper8/paper8_main.md`, `paper8/paper8_supplementary_materials.md` | The paper texts, version 2 (each version's text is committed after its Zenodo deposit; Zenodo has every version) |
+| `paper8/paper8_main.md`, `paper8/paper8_supplementary_materials.md` | The paper texts, version 3 (Zenodo 10.5281/zenodo.23291143; each version's text is committed after its Zenodo deposit; Zenodo has every version) |
 | `paper8/MANIFEST_SHA256.txt` | SHA-256 of every other file in `paper8/` |
 
 ---

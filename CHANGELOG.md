@@ -3,6 +3,25 @@
 All notable changes to this repository are recorded here: what changed, when,
 and why. Entries are newest first.
 
+## 2026-10-11
+
+### Changed
+
+`paper8/` now ships the version 3 paper texts. Version 3 was deposited on Zenodo on
+2026-10-10 (version DOI 10.5281/zenodo.23291143, concept DOI 10.5281/zenodo.20699990).
+Each version's texts are committed after its Zenodo deposit.
+
+- `paper8/paper8_main.md` and `paper8/paper8_supplementary_materials.md` are now the
+  version 3 texts, the sources of the deposited PDFs.
+  - Both pin commit d3355f4; this commit changes none of its code or data.
+  - In the supplement, the six multiplication asterisks in one Supplement E sentence are
+    escaped. Unescaped, Markdown pairs them into italics: the first PDF export printed
+    `phiSWpiexp(-psi)` for `phi*S*W*pi*exp(-psi)`. The deposited PDF prints them correctly.
+- `paper8/README.md`: the file list and version notes now describe the version 3 texts
+  instead of saying version 3 is being prepared.
+- `paper8/MANIFEST_SHA256.txt`: regenerated for the changed files.
+- `README.md`: the Paper 8 file table now says version 3.
+
 ## 2026-10-07
 
 ### Added

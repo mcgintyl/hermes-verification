@@ -17,8 +17,8 @@ The repository README shows how to fetch them from Zenodo 16284118; CI does the 
 runs this script on every push. The script needs NumPy and SciPy (`requirements.txt`).
 It prints one line per check with the place in version 3 of the paper that reports the
 number ("Table 5.1" is the table in Section 5.1), writes `paper8/results/`, and exits 1
-if any check fails; "(support)" marks a check behind a statement whose number is not printed. Until version 3 is deposited, many checked numbers have no
-counterpart in the version 2 texts shipped here (see Version notes).
+if any check fails; "(support)" marks a check behind a statement whose number is not printed. The places refer
+to the version 3 texts shipped here (Zenodo 10.5281/zenodo.23291143).
 
 ## What it checks
 
@@ -59,9 +59,9 @@ Each of these changes a checked value if altered.
 |---|---|
 | `verify_eta.py` | The operator: `eta_WA(R)`, the refined `g_model(R)`, the Paper 1 baseline and MOND |
 | `reproduce.py` | Rebuilds and checks the paper's numbers |
-| `expected/` | The paper's ten production CSV files, public for the first time here (the Zenodo records of versions 1 and 2 hold only the PDFs); see below |
+| `expected/` | The paper's ten production CSV files, made public here first (the Zenodo records of versions 1 and 2 hold only the PDFs; version 3's record holds these ten files too); see below |
 | `MANIFEST_SHA256.txt` | SHA-256 of every file in this folder |
-| `paper8_main.md`, `paper8_supplementary_materials.md` | The version 2 paper texts, the sources of the version 2 PDFs on Zenodo (each version's text is committed after its Zenodo deposit) |
+| `paper8_main.md`, `paper8_supplementary_materials.md` | The version 3 paper texts, the sources of the version 3 PDFs on Zenodo (10.5281/zenodo.23291143; each version's text is committed after its Zenodo deposit) |
 
 `expected/`:
 
@@ -88,4 +88,4 @@ On the corrected gate these become 5.86, 2.60, 4.12, 1.53, 1.30, 0.93 and 85%, w
 
 Version 2's recomputation note gave a precision of "better than 3 x 10^-13". The rebuild agrees with the per-galaxy scores to 9.3e-13 (log-grid, check F.0) and 3.6e-13 (chain-rule, check R.0), so those two checks use 1e-11 and the table comparisons 1e-9.
 
-Version 3 of the paper is being prepared from this package. It adds the stellar-M/L, chain-rule and alternative-constant results and the corrected M33 values. Its texts replace `paper8_main.md` and `paper8_supplementary_materials.md` once it is deposited.
+Version 3 of the paper (Zenodo 10.5281/zenodo.23291143, deposited 2026-10-10) was built from this package and pins commit d3355f4. It adds the stellar-M/L, chain-rule and alternative-constant results and the corrected M33 values. Its texts replaced the version 2 texts as `paper8_main.md` and `paper8_supplementary_materials.md`. In the supplement, the six multiplication asterisks in Supplement E's `A*sqrt(a_u*g_bar)` sentence are escaped (`\*`): unescaped, Markdown renderers pair them into italics. The PDF prints them as plain asterisks.
