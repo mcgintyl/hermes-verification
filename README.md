@@ -19,9 +19,9 @@ public SPARC rotation curves (and the other papers' datasets), and reproduce the
 published results — or fail loudly. No parameter is tuned per galaxy, and the
 verification either reproduces the paper or it does not. The one fitted
 quantity in the repository is Paper 9's cluster amplitude K, one per cluster,
-fitted by least squares and described in the Paper 9 section. CI runs the Paper 1, Paper 8 and Paper 9 checks, the historical Stage-1 beta
+fitted by least squares and described in the Paper 9 section. CI runs the Paper 1, Paper 7, Paper 8 and Paper 9 checks, the historical Stage-1 beta
 reconstruction and the frozen-gate check on each push against a freshly downloaded copy of SPARC; the paper2, paper4 and paper5
-scripts are only compile-checked, and paper7, paper10 and `docs/` are not run in CI (see `.github/workflows/verify.yml`).
+scripts are only compile-checked, and paper10 and `docs/` are not run in CI (see `.github/workflows/verify.yml`).
 
 ## Quick start
 
@@ -66,7 +66,7 @@ Independent verification tools for eight papers by McGinty (2026):
 | `paper4/` | *The Emergent Plane at Cosmological Scale: Chirality Prediction and Exclusion Limits* | Internal consistency of 10 supplementary data files, 185 checks |
 | `paper5/` | *Weak Lensing Pilot: Age-Dependent Shear Signal (KiDS x GAMA)* | Pipeline output consistency, 142 checks across 8 test groups |
 | — | *Polar Ring Galaxies and the Shape of the Extra Gravity: A Proof of Concept Test* — DOI: 10.5281/zenodo.19392646 | Reference only — no verification package in this repository |
-| `paper7/` | *Field Audit: Board-Complete Data and the Limits of External Gravity-Model Testing* | M33 external test data package: source-native board, locked Hermes result, MOND comparator, sensitivity + outer-disk audits |
+| `paper7/` | *Field Audit: Board-Complete Data and the Limits of External Gravity-Model Testing* - DOI: 10.5281/zenodo.20550091 | Rebuilds and checks every M33 number of version 4 with one command (`reproduce.py`; no download): the source-native board from Corbelli et al. (2014), Tables 2, 2b and 3, Appendix A and the prose, on the canonical gate (`01b_hermes_result_canonical_gate/`); ships the board, the MOND comparator, the sensitivity and outer-disk audits, the `expected/` tables and `MANIFEST_SHA256.txt` |
 | `paper8/` | *A Wear-Activated Density-Release Refinement of the Hermes Gravity Equation* (Paper 1 addendum) - DOI: 10.5281/zenodo.20699990 | Rebuilds and checks the paper's SPARC and M33 numbers with one command (`reproduce.py`; candidates 1 and 2 are not rebuilt, and M33 uses the gate as corrected in Paper 7 v3) and ships the paper's ten production CSV files, public for the first time |
 | `paper9/` | *The Hermes Equation: Cluster Lensing from a Frozen Galaxy Gate* - DOI: 10.5281/zenodo.22719297 | Rebuilds both published tables from public inputs: Table 2 byte for byte from the CLASH lensing and baryon models, Table 1 from the SPARC curves; 34 automated checks |
 | `paper10/` | *Two Layers of Galaxy Aging in MaNGA DynPop: A Principle-Level Proof of Concept* - DOI: 10.5281/zenodo.21088605 | Reruns every analysis and checks every analysis number with one command (`reproduce.py`), from the shipped joined table or rebuilt from the public DynPop catalogs: a dominant SPS mass-to-light layer and a smaller controlled dynamical residual (7/8, 6/8 and 3/8 mass bins for observed, both and intrinsic SPS with physical size; no set reaches 7/8 with distance controlled) |
@@ -76,10 +76,11 @@ Independent verification tools for eight papers by McGinty (2026):
 
 ## Requirements
 
-- Python 3.10 (the pinned reference environment; 3.8+ generally works)
+- Python 3.10 (the pinned reference environment; Paper 7 needs 3.10 or later, and the other
+  packages generally run on 3.8+)
 - numpy and scipy, pinned in `requirements.txt` to the reference versions
   (numpy 1.26.4, scipy 1.15.3) that reproduce the committed expected values
-  (Papers 1 and 8). Other recent NumPy/SciPy versions give the same numbers —
+  (Papers 1, 7 and 8); Papers 7 and 9 also need pandas (pinned to 2.3.1). Other recent NumPy/SciPy versions give the same numbers —
   the baseline median has been verified bit-identical under the original
   production environment (Python 3.13.2 / numpy 2.4.3 / scipy 1.17.1).
 
@@ -376,23 +377,30 @@ The board is **source-native, not SPARC-equivalent**: SPS/pixel-SED stellar mass
 - **MOND fixed-simple comparator:** clean on the same frozen board (no M/L tuning, no a0 fitting).
 - **Interpretation:** boundary-case roadmap; the outer-disk stress zone maps to warp, break, disturbed HI, and accretion-sensitive features (disequilibrium audit).
 
-This is a frozen data package — no board edits, reruns, or model reinterpretations are performed within it.
+`python paper7/reproduce.py` rebuilds the board from Corbelli et al. (2014) Table 1 and checks every M33 number of version 4 of the paper (Tables 2, 2b and 3, Appendix A and the prose) on the canonical gate. It needs no download and runs in CI. The board, the age lock and the run records are frozen: the script reruns the calculations and changes no input.
+
+The Hermes values in `01_` to `04_` (and those quoted in `05_` and `99_`) come from the first run's gate copy, which differed from Paper 1's gate in three details, and are superseded. The current values are in `01b_hermes_result_canonical_gate/` and `expected/`; `paper7/README.md` gives the status of each folder.
 
 ### Folder Map
 
 | Folder | Contents |
 |---|---|
+| `paper7/reproduce.py` | One-command reproduction: rebuilds the board and checks every M33 number of version 4 (no download; runs in CI) |
+| `paper7/expected/` | The tables version 4 prints, at full precision; `reproduce.py` compares its output with them |
+| `paper7/MANIFEST_SHA256.txt` | SHA-256 of every file in the package, checked by `reproduce.py`; `paper7/make_manifest.py` refreshes it with `file_manifest.csv` |
+| `paper7/paper7_main.md` | The version 3 text as deposited (10.5281/zenodo.21347359); the version 4 text replaces it after its deposit |
 | `paper7/00_final_board/` | Final reconstructed Format B board, table provenance, kernel, mass closure, overlay benchmark, age-bracket lock |
-| `paper7/01_hermes_result_locked/` | Locked Hermes-only execution package (script, summary, per-point predictions, plots) |
-| `paper7/02_mond_comparator/` | Fixed-simple MOND comparator on the exact same frozen board |
-| `paper7/03_baryonic_convention_sensitivity/` | M/L and stellar-mass convention sensitivity diagnostic |
-| `paper7/04_outer_disk_disequilibrium_audit/` | Outer-disk disequilibrium and radial-mask audit |
-| `paper7/05_interpretive_notes/` | Single-system age assumption note, origin-trail addendum, archive lock |
-| `paper7/99_archive_locks/` | Canon/archive-lock memo preserving the Hermes-only result |
-| `paper7/README.md` | Full package README with per-file inventory |
-| `paper7/file_manifest.csv` | Machine-readable manifest: path, byte size, SHA256, description for every file |
+| `paper7/01_hermes_result_locked/` | The first Hermes run, May 2026 (script, summary, per-point predictions, plots). Superseded gate: historical record |
+| `paper7/01b_hermes_result_canonical_gate/` | The M33 Hermes run on the canonical gate (Paper 1's), the source of the M33 Hermes numbers from version 3 on |
+| `paper7/02_mond_comparator/` | Fixed-simple MOND comparator on the exact same frozen board. MOND current; its Hermes comparison values are superseded |
+| `paper7/03_baryonic_convention_sensitivity/` | M/L and stellar-mass convention sensitivity diagnostic. Hermes values superseded (the canonical sweep is `paper7/expected/table3_vdisk_sweep.csv`) |
+| `paper7/04_outer_disk_disequilibrium_audit/` | Outer-disk disequilibrium and radial-mask audit. Hermes values superseded; MOND and the literature map current |
+| `paper7/05_interpretive_notes/` | Single-system age assumption note, origin-trail addendum, archive lock (historical; they quote the superseded Hermes values) |
+| `paper7/99_archive_locks/` | Canon/archive-lock memo preserving the first Hermes-only result (historical) |
+| `paper7/README.md` | Package README: the command, the checks, the conventions, the status of each folder and the version notes |
+| `paper7/file_manifest.csv` | Machine-readable manifest: path, byte size, SHA-256 and description for every file except itself and `MANIFEST_SHA256.txt` |
 
-See `paper7/README.md` for the complete per-file inventory and provenance notes.
+See `paper7/README.md` for the checks, the conventions, the status of each folder and the version notes; `paper7/file_manifest.csv` describes every file.
 
 ---
 

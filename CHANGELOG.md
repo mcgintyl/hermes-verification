@@ -3,6 +3,86 @@
 All notable changes to this repository are recorded here: what changed, when,
 and why. Entries are newest first.
 
+## 2026-10-12
+
+### Added
+
+`paper7/` is now a reproduction package for Paper 7, the field audit (Zenodo concept DOI
+10.5281/zenodo.20550091), built for version 4. Before this, the folder held the M33
+board and the run records but nothing that checked a printed number. The canonical-gate
+convention sweep behind Table 3 existed nowhere in the repository.
+
+- `paper7/reproduce.py` rebuilds and checks every M33 number of version 4 (178 checks;
+  exit 1 on any failure). It needs no download and Python 3.10 or later. It covers:
+  - the board, rebuilt from Corbelli et al. (2014) Table 1 through the frozen kernel
+    to floating-point precision (about 1e-14 km/s; checked to 1e-9), and the 840 kpc
+    distance Appendix A states;
+  - the gate against the canonical phi of v3, and the scoring statements;
+  - Table 2 (24 rows), Table 2b (the floor sweep) and Table 3 (a Vdisk scaling sweep
+    with its minimum at both ages);
+  - Appendix A at 3 dp: it reproduces every chi2/N cell of Tables 2 and 3 and every
+    prose number except the floor-free Hermes values of Table 2b (118.51 and 87.54
+    against the printed 118.48 and 87.49), which need the CSV. A version 4 text must
+    print its Appendix A at 3 dp;
+  - every M33 number in the prose, including Section 6's Paper 8 refinement and, as
+    support, that neither of its two parts alone closes the outer residual;
+  - the chain-rule gate of Paper 1's published scores, which gives the same chi2/N to
+    2 dp in all 38 Hermes cells of Tables 2 and 3;
+  - the shipped hashes and tables. Operating-system and editor files (`.DS_Store`,
+    `Thumbs.db`, `desktop.ini`, `*.pyc`, `*.swp`) are ignored.
+
+  It runs in CI.
+- `paper7/expected/` holds the tables version 4 prints, at full precision:
+  - Table 2, Table 2b, the full Table 3 sweep and the 11 printed Table 3 rows (each
+    at its printed scale; the minimum row at 1.368, the 3-dp rounding of the fine-grid
+    minimum 1.3677);
+  - Appendix A with Vgas and Vdisk to 3 dp;
+  - every checked prose number.
+- `paper7/MANIFEST_SHA256.txt` (Paper 8 style), checked by `reproduce.py`, and
+  `paper7/make_manifest.py`, which refreshes it together with `file_manifest.csv`.
+- `paper7/paper7_main.md`: the version 3 text as deposited (10.5281/zenodo.21347359).
+  The version 4 text replaces it after its deposit.
+- `README_SUPERSEDED_GATE.md` notes in `02_mond_comparator/`,
+  `03_baryonic_convention_sensitivity/` and `04_outer_disk_disequilibrium_audit/`.
+  Their Hermes values come from the first run's superseded gate copy; their MOND values
+  are current.
+- `paper7/.gitignore`: keeps `paper7/results/` out of git.
+
+### Changed
+
+- `paper7/README.md` is rewritten. It was the May 2026 package README and did not
+  mention `01b_hermes_result_canonical_gate/`. It now gives:
+  - the command and the checks;
+  - the conventions;
+  - a folder map that marks the canonical and superseded folders;
+  - version notes for v1 to v4.
+- `paper7/file_manifest.csv` now lists every file. Before, it omitted
+  `01b_hermes_result_canonical_gate/` (the source of v3's numbers),
+  `01_hermes_result_locked/README_SUPERSEDED_GATE.md` and `README.md`. Rows whose
+  Hermes values are on the superseded gate say so.
+- `.gitattributes`: `paper7/** -text`, so the hashed files keep their bytes.
+- `.github/workflows/verify.yml`: compile-checks `paper7` and runs
+  `paper7/reproduce.py`. The header comment now matches what CI runs.
+- `README.md` (root): CI now runs the Paper 7 checks. The Paper 7 rows name
+  `reproduce.py`, `01b_hermes_result_canonical_gate/`, `expected/`,
+  `MANIFEST_SHA256.txt` and the Zenodo concept DOI, and mark the Hermes values of
+  `01_` to `04_` as the superseded gate's, pointing to `paper7/README.md`. The
+  "frozen data package, no reruns" sentence is replaced: `reproduce.py` reruns
+  everything.
+
+### Documented
+
+Found while building the package. No committed data file or deposited text changes;
+version 4 corrects the printed v3 numbers below.
+
+- Version 3's Table 3 kept the superseded sweep's minimum scale (1.325) as "the lowest
+  Hermes scaling", so Section 4 printed 2.45. On the canonical gate the minimum is 2.41 at
+  Vdisk x 1.368, and the unit-M/L analogue is 2.55, not "approximately 2.5".
+  Version 4 corrects both.
+- The 01b per-point file was written with beta rounded to 5 dp (1.83421, 1.69876).
+  Its V_Hermes values differ from the full-precision closed form by up to 7e-5 km/s.
+  The file is unchanged: Paper 8 and `verify_gates.py` read its phi.
+
 ## 2026-10-11
 
 ### Changed

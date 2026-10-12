@@ -14,3 +14,9 @@ paper10/** -text
 # reproduce.py checks the SHA-256 of the shipped CSV files. Line-ending conversion would
 # break both.
 paper8/** -text
+
+# The Paper 7 package hashes its files byte for byte (paper7/MANIFEST_SHA256.txt and
+# paper7/file_manifest.csv), and reproduce.py checks the SHA-256 of the board, its
+# Corbelli input table, the kernel, the age lock and the canonical-gate predictions.
+# Line-ending conversion would break all three.
+paper7/** -text

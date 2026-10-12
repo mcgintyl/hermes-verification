@@ -1,0 +1,60 @@
+id,location,quantity,value,printed,tolerance
+B.5,Sec 4 para 3,radial points,58.0000000000,58,0
+B.6,Sec 4 para 3,innermost radius (kpc),0.2400000000,0.24,0.005
+B.7,Sec 4 para 3,outermost radius (kpc),22.7200000000,22.72,0.005
+B.14,App A,"distance of the board's radii (01b script's D0_KPC, kpc)",840.0000000000,840,0.5
+G.5,Sec 2,c/(2 pi) in Gyr (km/s)^2/kpc,46653.8418365617,46654,0.5
+G.9,Sec 2.1,"full board on the superseded gate (01_, t50 6.0)",3.1258347363,3.13,0.005
+G.10,Sec 2.1,full board on the canonical gate (t50 6.0),3.2238023777,3.22,0.005
+G.11,Sec 2.5,a0 = 1.2e-10 m/s^2 in (km/s)^2/kpc,3702.8130977896,3702.8,0.05
+G.13,Sec 2.7,sigma_int = sqrt(386) km/s,19.6468827044,19.6,0.05
+G.14,Sec 2.7,radii where the floor exceeds errV^2 (of 58),58.0000000000,58,0
+G.15,Sec 2.7,median floor share of each point's variance (%),97.9385225096,98,0.5
+P.1,Abstract,Hermes chi2/N (approx. 3.2),3.2238023777,3.2,0.05
+P.2,Abstract,MOND chi2/N (approx. 0.1),0.1187806250,0.1,0.05
+P.3,Sec 4 para 3,MOND chi2/N,0.1187806250,0.12,0.005
+P.4,Sec 4 para 3,MOND median |residual| (km/s),3.6872724609,3.7,0.05
+P.5,Sec 4 para 3,MOND chi2/N without the floor,2.8835446468,2.88,0.005
+P.6,Sec 4 para 3,Hermes chi2/N without the floor,118.4787991338,118,0.5
+P.7,Sec 4 para 4,"Hermes chi2/N, primary age",3.2238023777,3.22,0.005
+P.8,Sec 4 para 4,"Hermes chi2/N, conservative age",3.3853342543,3.39,0.005
+P.9,Sec 4 para 4,Hermes median |residual| (approx. 32 km/s),32.0025748312,32,0.5
+P.10,Sec 4 para 6,Hermes R <= 10 chi2/N,0.9291808488,0.93,0.005
+P.11,Sec 4 para 6,Hermes R <= 10 mean residual (km/s),-7.2054407116,-7.2,0.05
+P.12,Sec 4 para 6,Hermes R > 10 chi2/N,5.8583678368,5.86,0.005
+P.13,Sec 4 para 6,Hermes R > 10 mean residual (km/s),-51.9190269705,-51.9,0.05
+P.14,Sec 4 para 6,share of Hermes chi2 at R > 10 (approx. 85%),84.5948639168,85,0.5
+P.16,Sec 4 para 6,overshoot at 0.46-1.45 kpc: smallest (km/s),10.5506147103,11,0.5
+P.17,Sec 4 para 6,overshoot at 0.46-1.45 kpc: largest (km/s),17.3241394069,17,0.5
+P.18,Sec 4 para 6,errV at 0.46-1.45 kpc: smallest (km/s),2.5000000000,2.5,0.05
+P.19,Sec 4 para 6,errV at 0.46-1.45 kpc: largest (km/s),5.0000000000,5.0,0.05
+P.21,Sec 4 para 6,deficit zone: first radius (kpc),4.6400000000,4.6,0.05
+P.22,Sec 4 para 6,deficit zone: last radius (kpc),9.5300000000,9.5,0.05
+P.23,Sec 4 para 6,deficit at 4.64-9.53 kpc: smallest (km/s),19.3263592326,19,0.5
+P.24,Sec 4 para 6,deficit at 4.64-9.53 kpc: largest (km/s),35.2805164502,35,0.5
+P.25,Sec 4 para 6,errV at 4.64-9.53 kpc: smallest (km/s),1.4000000000,1.4,0.05
+P.26,Sec 4 para 6,errV at 4.64-9.53 kpc: largest (km/s),3.2000000000,3.2,0.05
+P.27,Sec 4 para 6,share of Hermes chi2 at R > 10 without the floor (%),60.5303296721,61,0.5
+P.28,Sec 4 para 6,t50 6.0 - 1.2 Gyr: full chi2/N,3.0535629842,3.05,0.005
+P.29,Sec 4 para 6,t50 6.0 - 1.2 Gyr: R > 10 chi2/N,5.5138432768,5.51,0.005
+P.30,Sec 4 para 6,t50 6.0 + 1.2 Gyr: full chi2/N,3.4002338712,3.40,0.005
+P.31,Sec 4 para 6,t50 6.0 + 1.2 Gyr: R > 10 chi2/N,6.1991217137,6.20,0.005
+P.32,Sec 4 para 7,unit-M/L analogue (Vdisk x 1.210): Hermes chi2/N,2.5547218147,2.55,0.005
+P.33,Sec 4 para 7,unit-M/L analogue: MOND chi2/N,0.1933416103,0.19,0.005
+P.37,Sec 6,"Paper 8 refinement, outer age 1 Gyr: R > 10 chi2/N",1.2967780928,1.30,0.005
+P.38,Sec 6,"Paper 8 refinement, outer age 2 Gyr: R > 10 chi2/N",1.5324450461,1.53,0.005
+T3.1,Table 3 rows 1-2,source-native M*/L at 3.6 um,0.6826468334,0.683,0.0005
+T3.4,Table 3 row 3,Vdisk scale of the lowest Hermes chi2/N (t50 6.0),1.3677000000,1.368,0.0005
+T3.5,Table 3 / Sec 4 para 7,lowest Hermes chi2/N on the scaling (t50 6.0),2.4100902107,2.41,0.005
+T3.6,Sec 4 para 7,"disk mass there, x source-native (scale^2)",1.8706032900,1.87,0.005
+T3.7,Sec 4 para 7,MOND chi2/N there,0.5279267494,0.53,0.005
+A.2,App A / Sec 4 para 4,"from the 3-dp table: Hermes chi2/N, t50 6.0",3.2241286334,3.22,0.005
+A.3,App A / Sec 4 para 4,"from the 3-dp table: Hermes chi2/N, t50 7.1",3.3856522971,3.39,0.005
+A.4,App A / Sec 4 para 6,from the 3-dp table: Hermes R <= 10 chi2/N,0.9296404309,0.93,0.005
+A.5,App A / Sec 4 para 6,from the 3-dp table: Hermes R > 10 chi2/N,5.8585410141,5.86,0.005
+A.6,App A / Sec 4 para 3,from the 3-dp table: MOND chi2/N,0.1187814124,0.12,0.005
+A.7,App A / Table 2,from the 3-dp table: MOND R > 10 chi2/N,0.2279594569,0.23,0.005
+S.1,Sec 4 para 5,Paper 1 published median chi2/N (chain-rule scores),1.3115347250,1.312,0.0005
+S.2,Sec 4 para 5,MOND median chi2/N (a0 3702.813; Paper 8 table),1.1426960217,1.143,0.0005
+S.3,Sec 4 para 5,"Hermes galaxies below chi2/N 5 (%, of 133)",84.2105263158,84,0.5
+S.4,Sec 4 para 5,"MOND galaxies below chi2/N 5 (%, a0 3702.813; Paper 8 table)",71.4285714286,71,0.5

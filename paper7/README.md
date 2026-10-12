@@ -1,121 +1,168 @@
-# M33-Corbelli Paper 7 Complete Package
+# Paper 7 reproduction package
 
-**Package name:** `m33_corbelli_paper7_complete_package.zip`
+*Field Audit: Board-Complete Data and the Limits of External Gravity-Model Testing*
+(McGinty 2026). Zenodo, all versions: 10.5281/zenodo.20550091.
 
-**Lane label:** `M33-Corbelli source-native thick-disk reconstruction`
+One command rebuilds the M33 board from Corbelli et al. (2014)'s Table 1 and checks every
+M33 number of version 4 of the paper: Tables 2, 2b and 3, Appendix A and the prose.
 
-**Included:** final board, locked Hermes result, MOND comparator, baryonic-convention sensitivity diagnostic, outer-disk disequilibrium audit, origin-trail addendum, single-system age assumption note, and archive-lock notes.
+```bash
+python paper7/reproduce.py
+```
 
-## Current locked status
+Nothing is downloaded: every input is in this repository. The script needs Python 3.10 or
+later (the frozen kernel's type annotations use the `X | Y` syntax), NumPy, SciPy and
+pandas (`requirements.txt`; the frozen kernel reads its table with pandas) and runs in
+about ten seconds. CI runs it on every push.
 
-- Final reconstructed Format B board: included.
-- Hermes full-board result: pass/elevated under both bracketed Amber-age lanes.
-- MOND fixed-simple comparator: clean on the same frozen board.
-- M33 interpretation: boundary-case roadmap; Hermes main disk is clean/near-clean, outer disk is the localized stress zone.
+It prints one line per check with the place in version 4 of the paper that reports the
+number, the value it got, the printed value and the tolerance:
+- "Sec 4 para 6" is the sixth paragraph of Section 4.
+- "(support)" marks a check behind a statement whose number is not printed.
+- "[INFO]" marks a value printed for information only (C.1); it has no pass/fail and is
+  not counted as a check.
 
-## Guardrails
+It writes `paper7/results/` (git-ignored) and exits 1 if any check fails. A printed number
+passes when the recomputed value is within half a unit of its last printed digit; ties
+are allowed.
 
-- No board edits, reruns, or model reinterpretations are performed in this package.
-- No nested older ZIP packages are included. Current files are included directly.
-- Files named `prelock` or `age_anchor_audit` are retained only as provenance for how the age bracket was derived. The controlling age decision is `m33_age_bracketed_amber_lock_addendum.md` and `m33_age_bracketed_amber_lock.csv`.
-- This board is **source-native**, not SPARC-equivalent: SPS/pixel-SED stellar mass profile, radially varying M/L provenance, helium factor 1.33, H2 prescription, flaring stellar disk, gas half-thickness 0.5 kpc, and `Vbul=0`.
-- The `f≈1.21` baryonic-convention branch is a SPARC-like unit-M/L diagnostic analogue, **not** a literal SPARC rotmod/unit-M/L board.
+Version 4 is in preparation. Until it is deposited, `paper7_main.md` is the version 3
+text (see Version notes).
+
+## What it checks
+
+| Group | What |
+|---|---|
+| H, shipped files | `MANIFEST_SHA256.txt` matches every file and lists them all (operating-system and editor files such as `.DS_Store`, `Thumbs.db`, `desktop.ini`, `*.pyc` and `*.swp` are ignored). `file_manifest.csv` agrees with it. SHA-256 of the Table 1 import, the board, the kernel, the age lock and the canonical per-point file (Paper 8's `reproduce.py` and `verify_gates.py` read it). |
+| B, board | Vgas and Vdisk rebuilt from Table 1 through the frozen kernel, against the board CSV, to floating-point precision (about 1e-14 km/s; checked to 1e-9). The 58 radii from 0.24 to 22.72 kpc, Vbulge = 0, and the kernel constants and distance that Appendix A states (840 kpc, the 01b script's `D0_KPC`). Mass closure (support). |
+| G, gate and scoring | The log-grid gate against the canonical phi of v3. g98 and beta. The canonical per-point predictions. The correction from 3.13 to 3.22 (Sec 2.1). a0 (Sec 2.5). The floor statements of Sec 2.7. |
+| T2, Table 2 | All 24 rows: N, R range, chi2/N, chi2 fraction, mean, median and RMS residual. |
+| T2b, Table 2b | All 24 cells of the floor sweep (sigma_int^2 = 0, 100, 386, 900). |
+| P, prose | Abstract and Sections 4 and 6. This covers no-floor values, the inner overshoot and mid-disk deficit against errV alone, the age bracket, the unit-M/L analogue and the Paper 8 refinement (P.37, P.38). Section 6's "neither alone closes the residual" (support): with Paper 8's operator, the density release alone leaves the R > 10 chi2/N at 2.60, and a younger outer age alone (0 Gyr beyond 10 kpc) at 4.12 (P.39, P.40); both stay above 1. |
+| T3, Table 3 | The minimum of the Vdisk scaling sweep at both ages. The 11 printed rows, the M/L columns and the caption's claim. |
+| A, Appendix A | The 3-dp table reproduces 3.22, 3.39, 0.93, 5.86 and MOND 0.12 and 0.23 (A.2 to A.7), every chi2/N cell of Tables 2 and 3 (A.11) and every prose number that P.1 to P.38 check except the floor-free Hermes 118 (A.12), each at its printed precision. It does not reproduce the floor-free Hermes cells of Table 2b: it gives 118.51 and 87.54 where the table prints 118.48 and 87.49 (A.13, A.14). Those, and some residual and chi2-fraction cells, need the full-precision board CSV. Every cell of the Appendix A in `paper7_main.md` equals the board at its printed precision, and a version 4 text must print Vgas and Vdisk to 3 dp (A.10). |
+| C, chain-rule gate | Paper 1's chain-rule gate (`paper9/hermes_clusters/gate.py`) gives the same chi2/N to 2 dp in all 38 Hermes chi2/N cells of Tables 2 and 3 (Sec 2.1). C.1 prints the largest difference between the two gates' phi on the board (0.0045) for information. |
+| S, SPARC context | The SPARC medians and fractions that Sec 4 para 5 quotes, from the shipped Paper 1 table (Hermes) and Paper 8 table (MOND, a0 3702.813). |
+| F, shipped tables | Each regenerated table in `results/` against `expected/`, cell by cell: numbers to 1e-9, relative or absolute, and text exactly. |
+
+Not rebuilt:
+- **Section 5's numbers** (the Repetto case and the SPARC-overlap THINGS and dwarf runs).
+  Their inputs were extracted from published figures and are not in this repository;
+  version 4 quotes them from the original runs.
+- **Tables 1 and 1b**, a record of the source audit with no computed values.
+
+## Conventions
+
+Each of these changes a checked value if altered.
+
+- **Board:** g_bar = (Vdisk^2 + Vbulge^2 + sign(Vgas) Vgas^2) / R. g98 is the 98th percentile of the board's g_bar: 2653.950 (km/s)^2/kpc.
+- **Gate:** the log-grid gate in `paper1/hermes_gate_phi.py`, imported, not copied. The chain-rule gate of Paper 1's published scores is checked separately (group C). The two gates are described in `docs/gate_version_history.md`.
+- **Hermes:** beta = pi exp(-t50 g98 / 46654) - 1/sqrt(2 pi), at t50 = 6.0 Gyr (primary) and 7.1 Gyr (conservative). V = sqrt(max(g_bar (1 + beta phi), 0) R).
+- **MOND:** simple interpolating function. a0 = 1.2e-10 m/s^2 with the exact parsec, 3702.813 (km/s)^2/kpc.
+- **chi2/N:** the mean over the N points of (Vobs - V)^2 / (errV^2 + 386). N is not reduced.
+- **Residual:** V_model - Vobs.
+- **Table 3:**
+  - Vdisk is multiplied by the scale, and g98, beta and phi are recomputed at each scale.
+  - The M/L factor is scale^2. The global M*/L at 3.6 um is 0.682647 scale^2, where 0.682647 = 4.9e9 / 10^(0.4 (24.60 + 3.24 - 3.2)): Corbelli's stellar mass, total [3.6] = 3.2, distance modulus 24.60, solar 3.24.
+  - The sweep runs from 0.5 to 3.0 in steps of 0.0025. Within 0.005 of each age's coarse minimum it runs in steps of 0.0001.
+  - Each printed row is evaluated at its printed scale. The minimum row is evaluated at 1.368, the 3-dp rounding of the fine-grid minimum at 1.3677. At 1.3677 the row's chi2/N cells are the same, but its global M*/L, Hermes outer mean and MOND outer mean would print 1.277, -42.58 and 5.12 instead of 1.278, -42.57 and 5.13.
+  - The unit-M/L analogue is Vdisk x 1.210 (sqrt(1/0.683)).
+
+## Files
+
+| File | What it is |
+|---|---|
+| `reproduce.py` | Rebuilds and checks the paper's M33 numbers |
+| `expected/` | The tables version 4 prints, at full precision (see below) |
+| `MANIFEST_SHA256.txt` | SHA-256 of every file in this folder except itself, `results/`, `__pycache__/` and operating-system or editor files; `reproduce.py` checks it (H.1, H.2) |
+| `file_manifest.csv` | Path, bytes, SHA-256 and a description of every file except itself and `MANIFEST_SHA256.txt`. Kept because the paper's Data Availability cites it for the board's SHA-256 (H.10); `reproduce.py` checks it agrees with `MANIFEST_SHA256.txt` (H.3) |
+| `make_manifest.py` | Refreshes both manifests (descriptions are kept in `file_manifest.csv`; a new file needs a row first); `--check` compares without writing |
+| `paper7_main.md` | The version 3 text, the source of the version 3 PDF on Zenodo (10.5281/zenodo.21347359) |
+| `.gitignore` | Keeps `results/` out of git |
+
+`expected/`:
+
+- `table2_masks.csv`: Table 2, the 24 rows.
+- `table2b_floor_sweep.csv`: Table 2b, the four floors.
+- `table3_vdisk_sweep.csv`: the full canonical-gate sweep behind Table 3, 1,193 scales.
+- `table3_rows_printed.csv`: the 11 rows Table 3 prints, each at its printed scale (the minimum row at 1.368, the 3-dp rounding of 1.3677).
+- `appendix_a_board_3dp.csv`: Appendix A as version 4 prints it, with Vgas and Vdisk to 3 dp.
+- `prose_numbers.csv`: every number checked outside the tables, with its location, full-precision value, printed value and tolerance.
 
 ## Folder map
 
-- `00_final_board/` — Final reconstructed board, table provenance, kernel, mass closure, overlay benchmark, and age-bracket lock.
-- `01_hermes_result_locked/` — Locked Hermes-only execution package contents.
-- `02_mond_comparator/` — MOND comparator execution on the exact same frozen board.
-- `03_baryonic_convention_sensitivity/` — M/L and stellar-mass convention sensitivity diagnostic; includes the SPARC-like-not-SPARC-equivalent clarification.
-- `04_outer_disk_disequilibrium_audit/` — Outer-disk disequilibrium and radial-mask audit.
-- `05_interpretive_notes/` — Single-system age assumption note, origin-trail addendum, and accepted archive lock.
-- `99_archive_locks/` — Canon/archive-lock memo for Hermes-only result preservation.
-- `file_manifest.csv` — machine-readable manifest with path, byte size, SHA256, and description for every included file.
+| Folder | What it holds | Status |
+|---|---|---|
+| `00_final_board/` | The inputs (see below) and the board-freeze memos | Current |
+| `01_hermes_result_locked/` | The first Hermes run, from May 2026 | Superseded gate; historical record (`README_SUPERSEDED_GATE.md`) |
+| `01b_hermes_result_canonical_gate/` | The M33 Hermes run on the canonical gate, from Paper 7 v3 onwards | Current |
+| `02_mond_comparator/` | The MOND run on the same board | MOND current; Hermes comparison columns superseded |
+| `03_baryonic_convention_sensitivity/` | The first Vdisk-scaling sweep and its report | Hermes values superseded; MOND and M/L columns current |
+| `04_outer_disk_disequilibrium_audit/` | Radial masks and the outer-disk literature map | Hermes values superseded; MOND and the literature map current |
+| `05_interpretive_notes/`, `99_archive_locks/` | Interpretive notes and the archive lock of the first run | Historical; their Hermes numbers are the superseded gate's (for example 3.126) |
 
-## File inventory
+`00_final_board/` holds:
+- Corbelli et al. (2014) Table 1 as imported (`m33_corbelli2014_table1_import.csv`);
+- the frozen thick-disk kernel (`m33_corbelli_reconstruction_kernel.py`);
+- the 58-radius board (`m33_corbelli_reconstructed_board.csv`);
+- the age lock (`m33_age_bracketed_amber_lock.csv`: t50 = 6.0 +/- 1.2 and 7.1 +/- 1.3 Gyr);
+- the mass-closure table.
 
-### `00_final_board/`
-- `00_final_board/README_final_board_package.md` — Board-freeze package README from the bracketed-age final board package, renamed to avoid conflicting with the master README.
-- `00_final_board/board_freeze_manifest.json` — Board-freeze package manifest from the bracketed-age final board package, renamed to board-level manifest.
-- `00_final_board/corbelli_fig12_overlay_reconstruction.png` — Published-figure overlay benchmark image comparing reconstructed components against Corbelli et al. Figure 12 top-panel source-native curves.
-- `00_final_board/m33_age_bracketed_amber_lock.csv` — Machine-readable Amber bracketed t50 age lock: primary 6.0±1.2 Gyr and conservative 7.1±1.3 Gyr.
-- `00_final_board/m33_age_bracketed_amber_lock_addendum.md` — Current controlling age-decision addendum: both age lanes are locked for sensitivity use and must be reported.
-- `00_final_board/m33_age_conversion_memo_prelock.md` — Age-conversion analysis memo that produced the candidate values; retained as provenance only. The controlling age document is the bracketed lock addendum.
-- `00_final_board/m33_corbelli2014_table1_import.csv` — Imported Corbelli 2014 Table 1 engineering table with R, Vobs, uncertainty, HI surface density, and stellar surface density.
-- `00_final_board/m33_corbelli_age_anchor_audit.md` — Initial age-source audit retained as provenance only. The controlling age decision is the bracketed lock addendum.
-- `00_final_board/m33_corbelli_board_summary.json` — Compact JSON summary of source-native board status, age bracket, and reconstruction metadata.
-- `00_final_board/m33_corbelli_engineering_memo.md` — Format B reconstruction engineering memo documenting source-native board construction from public profiles.
-- `00_final_board/m33_corbelli_final_board_freeze_memo.md` — Current final board-freeze memo with bracketed Amber age update and no-run status at board freeze.
-- `00_final_board/m33_corbelli_kernel_provenance_review.md` — Kernel/provenance review explaining annular quadrature thick-disk kernel, Casertano-equivalence target, and SPARC non-equivalence.
-- `00_final_board/m33_corbelli_kernel_specification.md` — Frozen provisional annular thick-disk kernel specification used to compute Vgas and Vdisk.
-- `00_final_board/m33_corbelli_mass_closure_table.csv` — Mass closure checks for stellar mass, H2 mass, HI profile, total gas, and total baryonic mass.
-- `00_final_board/m33_corbelli_overlay_benchmark_report.md` — Published-figure overlay benchmark report supporting provisional kernel freeze.
-- `00_final_board/m33_corbelli_reconstructed_board.csv` — Final reconstructed board CSV: R, Vobs, errV, Vgas, Vdisk, Vbul, Vbar and provenance fields.
-- `00_final_board/m33_corbelli_reconstruction_kernel.py` — Python implementation of the annular thick-disk reconstruction kernel.
-- `00_final_board/m33_corbelli_remaining_limitations.md` — Remaining limitations and caveats for the M33-Corbelli source-native reconstruction.
+Two things to keep in mind about `00_final_board/`:
+- The controlling age decision is `m33_age_bracketed_amber_lock_addendum.md` with the age-lock CSV. Files named `*prelock*` or `*age_anchor_audit*` are provenance only: they record how the bracket was derived.
+- The board is source-native, not SPARC-equivalent: Corbelli's pixel-SED stellar mass, helium factor 1.33, an H2 prescription, a flaring stellar disk and no bulge. The Vdisk x 1.210 case is a SPARC-like diagnostic analogue, not a SPARC board.
 
-### `01_hermes_result_locked/`
-- `01_hermes_result_locked/corbelli_fig12_overlay_reconstruction.png` — Overlay benchmark image carried in the locked Hermes package for traceability.
-- `01_hermes_result_locked/m33_age_bracketed_amber_lock.csv` — Age bracket table carried in the locked Hermes execution package.
-- `01_hermes_result_locked/m33_baryonic_components_vbar_context.png` — Baryonic components / Vbar context plot from the Hermes execution.
-- `01_hermes_result_locked/m33_corbelli_final_board_freeze_memo.md` — Board-freeze memo carried in the locked Hermes execution package.
-- `01_hermes_result_locked/m33_corbelli_kernel_specification.md` — Kernel specification carried in the locked Hermes execution package.
-- `01_hermes_result_locked/m33_corbelli_reconstructed_board_input.csv` — Exact reconstructed board input used for the locked Hermes execution.
-- `01_hermes_result_locked/m33_first_external_hermes_execution_report.md` — Hermes-only execution report under both bracketed Amber age lanes.
-- `01_hermes_result_locked/m33_hermes_age_bracket_results.csv` — Hermes result table for t50=6.0±1.2 and 7.1±1.3 Gyr age lanes.
-- `01_hermes_result_locked/m33_hermes_age_uncertainty_sensitivity.csv` — Hermes age-uncertainty sensitivity table around the two locked age brackets.
-- `01_hermes_result_locked/m33_hermes_chi2_contribution_vs_radius.png` — Hermes radial chi-squared contribution plot.
-- `01_hermes_result_locked/m33_hermes_execution_script.py` — Script used for the locked Hermes-only M33 execution.
-- `01_hermes_result_locked/m33_hermes_execution_summary.json` — Machine-readable summary of the locked Hermes execution.
-- `01_hermes_result_locked/m33_hermes_gate_profile.png` — Hermes gate profile plot for the locked M33 board.
-- `01_hermes_result_locked/m33_hermes_per_point_predictions.csv` — Per-radius Hermes predictions, residuals, phi, beta, and diagnostic values for both age lanes.
-- `01_hermes_result_locked/m33_hermes_radial_failure_structure.csv` — Hermes radial mask metrics showing main-disk performance and outer-tail underprediction.
-- `01_hermes_result_locked/m33_hermes_residuals_vs_radius.png` — Hermes residuals versus radius plot.
-- `01_hermes_result_locked/m33_observed_vs_hermes_two_ages.png` — Observed rotation curve vs Hermes predictions for both age brackets.
+`01b_hermes_result_canonical_gate/` holds:
+- `compute_m33_hermes_canonical.py`;
+- the per-point predictions;
+- the mask summary;
+- the correction memo;
+- the radius-uncertainty note.
 
-### `02_mond_comparator/`
-- `02_mond_comparator/m33_hermes_vs_mond_residual_comparison.png` — Hermes vs MOND residual comparison plot on the same frozen board.
-- `02_mond_comparator/m33_mond_comparator_execution_report.md` — Fixed-simple MOND comparator execution report. No M/L tuning and no a0 fitting.
-- `02_mond_comparator/m33_mond_comparator_per_point_predictions.csv` — Per-radius MOND predictions/residuals plus Hermes comparison values.
-- `02_mond_comparator/m33_mond_comparator_result_summary.csv` — MOND result summary table with N, chi2, reduced chi2, residual metrics, and classification.
-- `02_mond_comparator/m33_mond_comparator_run_config.json` — Machine-readable MOND run configuration: fixed simple interpolation, fixed a0, no M/L tuning.
-- `02_mond_comparator/m33_mond_radial_failure_structure.csv` — MOND radial mask metrics and comparison to Hermes radial structure.
-- `02_mond_comparator/m33_mond_residuals_vs_radius.png` — MOND residuals versus radius plot.
-- `02_mond_comparator/m33_observed_baryons_hermes_mond_context.png` — Observed, baryons, Hermes, and MOND context plot.
-- `02_mond_comparator/m33_observed_vs_mond_fixed_simple.png` — Observed rotation curve vs fixed-simple MOND prediction.
-- `02_mond_comparator/m33_radial_chi2_contribution_comparison.png` — Radial chi-squared contribution comparison for Hermes and MOND.
+The current values of every superseded column are in `expected/` and `01b_`. The first run's gate was a separately coded copy that differed from Paper 1's in three details:
+- the knee radius;
+- the Savitzky-Golay edge mode;
+- the curvature regularisation.
 
-### `03_baryonic_convention_sensitivity/`
-- `03_baryonic_convention_sensitivity/m33_baryonic_convention_provenance_clarification_addendum.md` — Provenance clarification: f≈1.21 is a SPARC-like diagnostic analogue, not a true SPARC-equivalent unit-M/L board.
-- `03_baryonic_convention_sensitivity/m33_baryonic_convention_sensitivity_report.md` — Final M33 baryonic-convention sensitivity diagnostic report with provenance clarification included.
-- `03_baryonic_convention_sensitivity/m33_outer_disk_hermes_diagnostic_inversion_primary_age.csv` — Outer-disk diagnostic inversion for Hermes under the primary 6.0 Gyr age lane.
-- `03_baryonic_convention_sensitivity/m33_vdisk_scaling_chi2_sensitivity.png` — Chi-squared sensitivity plot as Vdisk is scaled.
-- `03_baryonic_convention_sensitivity/m33_vdisk_scaling_dense_sweep_primary_age.csv` — Dense Vdisk scaling sweep for the primary age lane.
-- `03_baryonic_convention_sensitivity/m33_vdisk_scaling_outer_residuals.png` — Outer residual behavior versus Vdisk scaling plot.
-- `03_baryonic_convention_sensitivity/m33_vdisk_scaling_series_both_ages.csv` — Vdisk scaling series for both locked age brackets, with recomputed g98/beta and Hermes/MOND metrics.
+Two things about `01b_` that `reproduce.py` makes explicit:
+- The per-point file was written with beta rounded to 5 dp (1.83421 and 1.69876, as the correction memo quotes). Its V_Hermes values therefore differ from the full-precision closed form by up to 7e-5 km/s (G.6, G.7). No printed number changes.
+- The correction memo's last "Effect on results" sentence says the convention-sweep values are in its two CSV files. They are not. The canonical-gate sweep is `expected/table3_vdisk_sweep.csv`.
 
-### `04_outer_disk_disequilibrium_audit/`
-- `04_outer_disk_disequilibrium_audit/m33_chi2_disequilibrium_zone_overlay.png` — Overlay plot showing radial chi-squared contribution with disequilibrium/outer-disk zones marked.
-- `04_outer_disk_disequilibrium_audit/m33_outer_disk_disequilibrium_audit_memo.md` — Outer-disk disequilibrium audit memo mapping Hermes stress zone to warp, break, disturbed HI, and accretion-sensitive features.
-- `04_outer_disk_disequilibrium_audit/m33_outer_disk_literature_feature_map.csv` — Radius-feature map for M33 outer-disk complexity literature.
-- `04_outer_disk_disequilibrium_audit/m33_outer_disk_mask_metrics.csv` — Radial mask metrics for Hermes and MOND under main-disk and outer-disk cuts.
-- `04_outer_disk_disequilibrium_audit/m33_residuals_disequilibrium_zone_overlay.png` — Residual plot with disequilibrium/outer-disk zones marked.
+The memo is left as written; its bytes are part of the v3 record. Do not change the per-point file: `paper8/reproduce.py` (M.0a) and `verify_gates.py` read it. Do not change the board either: it is the hashed input of every M33 number (H.5), and the paper's Data Availability gives its SHA-256 (H.10).
 
-### `05_interpretive_notes/`
-- `05_interpretive_notes/m33_origin_trail_archive_lock.md` — Archive classification lock for origin-trail addendum: moderate support for multi-origin gravitational-biography boundary case.
-- `05_interpretive_notes/m33_outer_disk_origin_trail_addendum.md` — Origin-trail addendum assessing accretion-sensitive, disturbed, or multi-origin evidence for M33 outer disk/HI.
-- `05_interpretive_notes/m33_single_system_age_assumption_note.md` — Interpretive note on M33 and the single-system age assumption / dynamic-aging roadmap.
+## Version notes
 
-### `99_archive_locks/`
-- `99_archive_locks/m33_corbelli_hermes_only_canon_archive_lock.md` — Canon lock memo preserving the original Hermes-only M33 execution status and checksum.
+**Versions 1 and 2** printed the M33 numbers of the first run, on the superseded gate copy:
+- full board 3.13 and 3.30;
+- R <= 10 kpc 0.80;
+- R > 10 kpc 5.79;
+- outer share 86%;
+- a best continuous scaling of 2.38 and a unit-M/L analogue of "approximately 2.5".
 
-### Root files
-- `README.md` — this file. Lists every included file and its purpose.
-- `file_manifest.csv` — manifest with checksums and descriptions.
+Version 1 (May 2026) was not deposited. Zenodo holds version 2 (10.5281/zenodo.20550092, 2026-06-05) and version 3.
 
-## Excluded as superseded or duplicate
+**Version 3** (10.5281/zenodo.21347359, 2026-07-13) corrected the gate:
+- Every M33 Hermes number was recomputed on Paper 1's gate (`01b_`): full board 3.22 and 3.39, R <= 10 kpc 0.93, R > 10 kpc 5.86, outer share 85%. MOND was unchanged (0.12).
+- It added Appendix A, the board with Vgas and Vdisk printed to 2 dp.
 
-- Older unbracketed board-freeze ZIPs and earlier reconstruction package ZIPs.
-- The unupdated baryonic-convention sensitivity package; the updated provenance-corrected individual files are included instead.
-- Nested Hermes/MOND/disequilibrium package ZIPs; their current individual files are included directly.
-- The separate age-sweep thought-experiment package, because it was not requested for this consolidated Paper 7 package.
+The correction was not carried through Table 3 and its paragraph:
+- v3 kept the 1.325 row, the minimum of the superseded sweep on its 0.025 grid, labelled as the lowest Hermes scaling, and printed its canonical value, 2.45, as "the best continuous stellar scaling".
+- It kept "approximately 2.5" for the unit-M/L analogue.
+- In that row, v3 printed the global M*/L as 1.199 (recomputed: 1.198) and the MOND outer mean as 3.43 (recomputed: 3.42498).
+
+Separately, Appendix A at 2 dp gives 3.38, not 3.39, at 7.1 Gyr and 0.92, not 0.93, for R <= 10 kpc (A.8, A.9). Every other M33 number in v3 reproduces on the canonical gate, including all 168 numeric cells of Table 2.
+
+**Version 4** (in preparation) is checked here. Table 2 and the cited numbers (3.22, 3.39, 0.93, 5.86, 85%, MOND 0.12 and 0.23) are unchanged. It adds or corrects:
+- **Table 2b and Sec 2.7, the error floor.** sigma_int^2 = 386 (km/s)^2 exceeds errV^2 at all 58 radii. Without it, Hermes scores 118 and MOND 2.88.
+- **Table 3.** The 1.325 row is replaced by the canonical minimum, 2.41 at Vdisk x 1.368 (t50 = 6.0 Gyr; 2.48 at x 1.415 for 7.1 Gyr). The row is evaluated at its printed scale, 1.368, the 3-dp rounding of the fine-grid minimum at 1.3677 (see Conventions). The unit-M/L analogue becomes 2.55, with MOND 0.19.
+- **Sec 4.** New statements against errV alone: Hermes runs 11-17 km/s high at 0.46-1.45 kpc and 19-35 km/s low at 4.6-9.5 kpc, and 61% of its chi2 lies beyond 10 kpc. Also the +/-1.2 Gyr age range: full board 3.05-3.40, R > 10 kpc 5.51-6.20.
+- **Sec 6.** A cross-check with the Paper 8 refinement: its density release combined with a younger effective age for the outer gas lowers the R > 10 kpc chi2/N from 5.86 to 1.30-1.53 (P.37, P.38), and neither alone closes the residual (P.39, P.40, support).
+- **Appendix A** with Vgas and Vdisk to 3 dp, so the printed table reproduces 3.39 and 0.93. At its printed precision it reproduces every chi2/N cell of Tables 2 and 3 and every prose number except the floor-free 118 of Sec 4 (A.11, A.12). The floor-free Hermes values of Table 2b (118.48 and 87.49) and some residual and chi2-fraction cells need the CSV: from the 3-dp table the two floor-free values come out 118.51 and 87.54 (A.13, A.14).
+
+Each version's paper text is committed here after its Zenodo deposit. `paper7_main.md` (SHA-256 aa02551b...) is the version 3 text, byte for byte the source of the deposited PDF. The version 4 text will replace it after the v4 deposit. When it does, first edit the `paper7_main.md` description in `file_manifest.csv` (it says "version 3"; `make_manifest.py` keeps descriptions as they are), then refresh the manifests with `python paper7/make_manifest.py`.
+
+Check A.10 parses Appendix A from whichever text is shipped and compares every cell with the board at its printed precision:
+- the v3 text gives 2 dp for Vgas and Vdisk, and passes;
+- a v4 text (recognised by the words "Version 4" anywhere in it, as its version note has) must give 3 dp, or A.10 fails.
+
+The places in the check lines refer to the version 4 text.
